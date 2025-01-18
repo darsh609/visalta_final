@@ -1,0 +1,370 @@
+[
+    {
+        "id":"1",
+        "PlaceName":"Chitrakote Waterfalls",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/PQJhn4NuvdjBUSUB9",
+        "Timing":"8AM-6PM",
+        "Ticket":"free"
+    },
+
+    {
+        "id":"2",
+        "PlaceName":"Bogatha Waterfall",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/tAdAtEFQszMrsYvr7",
+        "Timing":"9AM-5PM",
+        "Ticket":"free"
+    },
+
+    {
+        "id":"3",
+        "PlaceName":"Raikal Waterfalls",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/uKv7eqFdUiBydfJw7",
+        "Timing":"7AM-4:30PM",
+        "Ticket":"free"
+    },
+
+    {
+        "id":"4",
+        "PlaceName":"Mutyala dhara waterfalls",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/UTtrjcAgeXrd82fB7",
+        "Timing":"8AM-5PM",
+        "Ticket":"free"
+    },
+
+    {
+        "id":"5",
+        "PlaceName":"Bheemuni Paadam Waterfalls",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/AaVpGxJdHMFLxedA9",
+        "Timing":"8AM-5PM",
+        "Ticket":"free"
+    },
+
+    {
+        "id":"6",
+        "PlaceName":"Elgandal Fort",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/RiLq9j9AefwNpcwq5",
+        "Timing":"9AM-5PM",
+        "Ticket":"free"
+    },
+
+    {
+        "id":"7",
+        "PlaceName":"Ujwala Park Telangana Tourism",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/5JPvMdtpqHZ3mhFDA",
+        "Timing":"10AM-6PM",
+        "Ticket":"free"
+    },
+
+    {
+        "id":"8",
+        "PlaceName":"Sri Raja Rajeshwara Swami Temple - Vemulawada Town",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/rRoRLjNFwN9JSYCk9",
+        "Timing":"4AM-10PM",
+        "Ticket":"free"
+    },
+
+    {
+        "id":"9",
+        "PlaceName":"Tipu Sultan's Summer Palace",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/ScnS6CwCbqivgfPw8",
+        "Timing":"8:30AM-5:30PM",
+        "Ticket":"Rs250/person"
+    },
+
+    {
+        "id":"10",
+        "PlaceName":"Sri Bhramaramba Mallikarjuna Swamy varla Devasthanam",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/r8uNvNwBNtYTYDLZA",
+        "Timing":"6AM-3:30PM,6PM-10PM",
+        "Ticket":"free"
+    },
+
+    {
+        "id":"11",
+        "PlaceName":"Salar Jung Museum",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/rNfGPJbokAyH9sQA7",
+        "Timing":"10AM-5PM",
+        "Ticket":"Rs50/-per Adult"
+    },
+
+    {
+        "id":"12",
+        "PlaceName":"Sudha Car Museum",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/22KguMASe2FKzHz76",
+        "Timing":"9:30AM-6PM",
+        "Ticket":"Rs100/-per Adult"
+    },
+
+    {
+        "id":"13",
+        "PlaceName":"Telangana State Archaeology Museum",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/jv5KG2JGwYfAtgfn9",
+        "Timing":"10:30AM-4:30PM",
+        "Ticket":"Rs10/-per Adult"
+    },
+
+    {
+        "id":"14",
+        "PlaceName":"The Nizam's Museum",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/PDxqoV82V6QPgn946",
+        "Timing":"10AM-5PM",
+        "Ticket":"free"
+    },
+
+    {
+        "id":"15",
+        "PlaceName":"Golconda Fort",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/YfyR19NsqTxfKwJz6",
+        "Timing":"8:30AM-5:30PM",
+        "Ticket":"Rs20/-per Adult"
+    },
+
+    {
+        "id":"16",
+        "PlaceName":"Chowmahalla Palace",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/d51jNJY4GANRGQPS8",
+        "Timing":"10AM-5PM",
+        "Ticket":"Rs100/-per Adult"
+    },
+
+    {
+        "id":"17",
+        "PlaceName":"Kasu Brahmanandha Reddy National Park (KBR)",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/h9nGuM4n3hSEfU7q6",
+        "Timing":"5AM-9:30AM,4PM-6:30PM",
+        "Ticket":"Rs20/-per Adult"
+    },
+
+    {
+        "id":"18",
+        "PlaceName":"Nehru Zoological Park Hyderabad",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/MANghiTahfjzGTtp7",
+        "Timing":"8:30AM-4PM",
+        "Ticket":"Rs70/-per Adult"
+    },
+
+    {
+        "id":"19",
+        "PlaceName":"B.M. Birla Science Center",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/qRWhenW6LFGWW63u6",
+        "Timing":"10:30AM-8PM",
+        "Ticket":"Rs150/-per Adult"
+    },
+
+    {
+        "id":"20",
+        "PlaceName":"Snow World",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/21nfgwJThwYnrXee9",
+        "Timing":"10:30AM-7:30PM",
+        "Ticket":"Rs650/-per Adult"
+    },
+
+    {
+        "id":"21",
+        "PlaceName":"Jalavihar Water Park",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/oM9nPUbYZuirQn7WA",
+        "Timing":"11AM-7PM",
+        "Ticket":"Rs400/-per Adult"
+    },
+
+    {
+        "id":"22",
+        "PlaceName":"NTR Gardens",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/eUWafhRv4xBPNYQH6",
+        "Timing":"9AM-9PM",
+        "Ticket":"Rs20/-per Adult"
+    },
+
+    {
+        "id":"23",
+        "PlaceName":"Lumbini Park",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/c2aJRnkDvEDhoN1E6",
+        "Timing":"9AM-9PM",
+        "Ticket":"Rs20/-per Adult"
+    },
+
+    {
+        "id":"24",
+        "PlaceName":"Sanjeevaiah Children's Park",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/QA6DfDrZ6roWVK3y5",
+        "Timing":"9AM-6PM",
+        "Ticket":"Rs5/-per Adult"
+    },
+
+    {
+        "id":"25",
+        "PlaceName":"Krishna Kanth Park",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/GKq8ns2bHZaGKr3u8",
+        "Timing":"5AM-9PM",
+        "Ticket":"Rs20/-per Adult"
+    },
+
+    {
+        "id":"26",
+        "PlaceName":"Charminar",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/5KwpGUTfRKAWESaX7",
+        "Timing":"9AM-5:30PM",
+        "Ticket":"Rs5/-per Adult"
+    },
+
+    {
+        "id":"26",
+        "PlaceName":"Birla Mandir",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/fR7cDpvF5HgGGnpm8",
+        "Timing":"7AM-12PM,2PM-9PM",
+        "Ticket":"Free"
+    },
+
+    {
+        "id":"27",
+        "PlaceName":"Qutub Shahi Tombs",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/h9in2YBWtAVakEtZ6",
+        "Timing":"9:30AM-5:30PM",
+        "Ticket":"Rs10/-per Adult"
+    },
+
+    {
+        "id":"28",
+        "PlaceName":"Buddha Statue",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/8HtJ6CtQQDnvFSjr5",
+        "Timing":"9AM-9PM",
+        "Ticket":"Free"
+    },
+
+    {
+        "id":"29",
+        "PlaceName":"Priyadarshini Park",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/J7cNNoT5EaMPPWdX6",
+        "Timing":"5AM-9AM,3PM-8PM",
+        "Ticket":"Rs5/-per Adult"
+    },
+
+    {
+        "id":"30",
+        "PlaceName":"Ramoji Film City",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/cVxqoJEaZGVJ8p8U9",
+        "Timing":"9AM-9PM",
+        "Ticket":"Rs1350/-per Adult"
+    },
+
+    {
+        "id":"31",
+        "PlaceName":"Rajiv Gandhi Park",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/8HtJ6CtQQDnvFSjr5",
+        "Timing":"5AM-9AM,5PM-8PM",
+        "Ticket":"Rs5/-per Adult"
+    },
+
+    {
+        "id":"32",
+        "PlaceName":"Mini Shilparamam Park Uppal",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/3gg62e1pvCJHBmq36",
+        "Timing":"12PM-8:30PM",
+        "Ticket":"Rs20/-per Adult"
+    },
+
+    {
+        "id":"33",
+        "PlaceName":"Dino World Dinosaur Park Hyderabad",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/yZNaEQsBey9t2G6RA",
+        "Timing":"11AM-6PM",
+        "Ticket":"Rs400/-per Adult + GST"
+    },
+
+    {
+        "id":"34",
+        "PlaceName":"Escape Water Park",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/xzneCHxRhUwVio2u6",
+        "Timing":"11AM-6PM",
+        "Ticket":"Rs600/-per Adult"
+    },
+
+    {
+        "id":"35",
+        "PlaceName":"Wild Waters - Water & Amusement Theme Park - Hyderabad",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/fHNCCmanjNBtYNjZ7",
+        "Timing":"11AM-6PM",
+        "Ticket":"Rs1200/-per Adult"
+    },
+
+    {
+        "id":"36",
+        "PlaceName":"Wonderla Amusement Park, Hyderabad",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/z1EGGofAupLBMApa9",
+        "Timing":"11AM-6PM",
+        "Ticket":"Rs1600/-per Adult"
+    },
+
+    {
+        "id":"37",
+        "PlaceName":"BluThunder Water Park",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/xZ9iBa8tSVCLK8zUA",
+        "Timing":"11AM-6PM",
+        "Ticket":"Rs295/-per Adult"
+    },
+
+    {
+        "id":"38",
+        "PlaceName":"Ocean Park",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/9DP3HYPfxaKaeNHz6",
+        "Timing":"11AM-5:30PM",
+        "Ticket":"Rs350/-per Adult"
+    },
+
+    {
+        "id":"39",
+        "PlaceName":"Shower N Tower Waterpark",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/MvYePsbwoDmQnsKa9",
+        "Timing":"9:30AM-5:30PM",
+        "Ticket":"Rs899/-per Adult"
+    },
+
+    {
+        "id":"40",
+        "PlaceName":"Jalavihar Water Park",
+        "Image":"",
+        "Location":"https://maps.app.goo.gl/Li9kXQ7QFVEJCE3a9",
+        "Timing":"11AM-7PM",
+        "Ticket":"Rs400/-per Adult"
+    }
+]

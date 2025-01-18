@@ -1,0 +1,117 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f4f9; /* Light background for body */
+    color: #333;
+  }
+  
+  .auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #121212, #2c2c2c); /* Dark background for form container */
+    animation: fadeIn 1.2s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .auth-form {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+    transform: scale(0.9);
+    animation: formPop 0.6s ease-out;
+  }
+  
+  @keyframes formPop {
+    0% {
+      transform: scale(0.5);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  .auth-title {
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fff;
+    animation: slideDown 0.8s ease;
+  }
+  
+  @keyframes slideDown {
+    0% {
+      transform: translateY(-50px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .input-field {
+    width: 100%;
+    padding: 0.8rem;
+    margin: 0.5rem 0;
+    border: none;
+    border-radius: 10px;
+    background: #2e2e3e;
+    color: #fff;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+  }
+  
+  .input-field:focus {
+    background-color: #444455;
+    transform: scale(1.05);
+    outline: none;
+  }
+  
+  .submit-btn {
+    width: 100%;
+    padding: 0.8rem;
+    margin: 0.5rem 0;
+    background: #5e60ce;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+  }
+  
+  .submit-btn:hover {
+    background: #7449f2;
+    transform: scale(1.05);
+  }
+  
+  .auth-footer {
+    text-align: center;
+    margin-top: 1rem;
+    color: #aaa;
+  }
+  
+  .auth-footer a {
+    color: #5e60ce;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .auth-footer a:hover {
+    text-decoration: underline;
+    color: #7449f2;
+  }
+  
