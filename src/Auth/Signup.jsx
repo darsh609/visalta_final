@@ -2,29 +2,33 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import "./Auth.css";
 import { FaEye, FaEyeSlash, FaUserShield, FaGraduationCap } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux"
-// React Router
-import { Route, Routes, useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
+import { sendOtp } from "../services/operations/authAPI"
+import { setSignupData } from "../slices/authSlice"
+import { ACCOUNT_TYPE } from "../utils/constants"
 const Signup = () => {
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
-    accountType: "",
+    confirmPassword: "",
+    accountType: "Student", // Default account type set to Student
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [passwordMatchError, setPasswordMatchError] = useState("");
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData((prevData) => ({
+      ...prevData,
+      [e.target.name]: e.target.value,
+    }))
   };
 
   const handleAccountTypeChange = (accountType) => {
@@ -33,7 +37,29 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Sign Up Data: ", formData);
+    if (formData.password !== formData.confirmPassword) {
+      setPasswordMatchError("Passwords do not match!");
+      return;
+    }
+    const signupData = {
+      ...formData
+    }
+
+    
+    dispatch(setSignupData(signupData))
+    // Send OTP to user for verification
+    dispatch(sendOtp(formData.email, navigate))
+
+    setFormData({
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      accountType: "Student",
+    })
+    
+    // Dispatch signup action or navigate
   };
 
   return (
@@ -211,6 +237,46 @@ const Signup = () => {
             {showPassword ? <FaEyeSlash /> : <FaEye />}
           </span>
         </div>
+
+        <div style={{ position: "relative", marginBottom: "1.5rem" }}>
+          <input
+            type={showConfirmPassword ? "text" : "password"}
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            required
+            className="input-field"
+            style={{
+              width: "100%",
+              padding: "0.8rem",
+              borderRadius: "5px",
+              border: "none",
+              background: "#333",
+              color: "#fff",
+            }}
+          />
+          <span
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            style={{
+              position: "absolute",
+              top: "50%",
+              right: "10px",
+              transform: "translateY(-50%)",
+              cursor: "pointer",
+              color: "#5e60ce",
+              fontSize: "1.2rem",
+            }}
+          >
+            {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
+
+        {passwordMatchError && (
+          <p style={{ color: "red", marginBottom: "1rem", fontSize: "0.9rem" }}>
+            {passwordMatchError}
+          </p>
+        )}
 
         <motion.button
           type="submit"
