@@ -45,7 +45,10 @@ app.use("/api/v1/profile", profileRoutes);
 app.use("/api/v1/course", courseRoutes);
 app.use("/api/v1/contact", contactus);
 // app.use("/api/v1/payment", paymentRoutes);
-
+const updateRoutes = require("./routes/Update");
+app.use("/api/v1/update", updateRoutes);
+const Admin = require("./routes/Admin");
+app.use("/api/v1/admin", Admin);
 
 //def route
 

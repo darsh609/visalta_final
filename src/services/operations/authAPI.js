@@ -53,8 +53,8 @@ export function signUp(
   navigate
 ) {
   return async (dispatch) => {
-    const toastId = toast.loading("Loading...")
-    dispatch(setLoading(true))
+    const toastId = toast.loading("Loading...") // Show a loading toast
+    dispatch(setLoading(true)) // Set the loading state
     try {
       const response = await apiConnector("POST", SIGNUP_API, {
         accountType,
@@ -69,17 +69,28 @@ export function signUp(
       console.log("SIGNUP API RESPONSE............", response)
 
       if (!response.data.success) {
-        throw new Error(response.data.message)
+        throw new Error(response.data.message) // Server returned an error
       }
-      toast.success("Signup Successful")
-      navigate("/login")
+
+      // If signup is successful
+      toast.success("Signup Successful") // Success toast
+      navigate("/login") // Navigate to login page
     } catch (error) {
       console.log("SIGNUP API ERROR............", error)
-      toast.error("Signup Failed")
+
+      // Extract error message from response or use a fallback message
+      const errorMessage =
+        error.response?.data?.message || "Signup Failed. Please try again."
+
+      // Display the error toast with the specific message
+      toast.error(errorMessage)
+
+      // Optional: Navigate back to signup
       navigate("/signup")
+    } finally {
+      dispatch(setLoading(false)) // Reset loading state
+      toast.dismiss(toastId) // Dismiss the loading toast
     }
-    dispatch(setLoading(false))
-    toast.dismiss(toastId)
   }
 }
 

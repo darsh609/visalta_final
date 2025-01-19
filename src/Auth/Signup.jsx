@@ -35,32 +35,43 @@ const Signup = () => {
     setFormData({ ...formData, accountType });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    // Check if passwords match
     if (formData.password !== formData.confirmPassword) {
       setPasswordMatchError("Passwords do not match!");
       return;
     }
+  
     const signupData = {
-      ...formData
+      ...formData,
+    };
+  
+    try {
+      // Dispatch signup data
+      dispatch(setSignupData(signupData));
+  
+      // Wait for OTP dispatch to complete
+      await dispatch(sendOtp(formData.email, navigate));
+  
+      // Clear form only after successful OTP dispatch
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        accountType: "Student",
+      });
+  
+      // Success feedback can be shown here if needed
+    } catch (error) {
+      // Log or handle error (optional)
+      console.error("Failed to send OTP:", error);
     }
-
-    
-    dispatch(setSignupData(signupData))
-    // Send OTP to user for verification
-    dispatch(sendOtp(formData.email, navigate))
-
-    setFormData({
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      accountType: "Student",
-    })
-    
-    // Dispatch signup action or navigate
   };
+  
 
   return (
     <motion.div
