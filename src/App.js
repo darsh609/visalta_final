@@ -17,6 +17,7 @@ import Travel from "./Extras/Travel";
 import BuyPage from "./Exchange/Buy";
 import VerifyEmail from "./Auth/VerifyEmail";
 import OpenRoute from "./Auth/OpenRoute";
+import UpdateSection from "./Updates/Update";
 
 function App() {
   const dispatch = useDispatch()
@@ -64,6 +65,7 @@ function App() {
         
           }
         />
+        <Route path="update" element={<UpdateSection/>}/>
         <Route path="insight" element={<Insighthome/>}/>
         <Route path="/" element={<Home/>}/>
         <Route path="contact" element={<Contact/>}/>

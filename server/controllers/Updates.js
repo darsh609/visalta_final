@@ -42,14 +42,30 @@ exports.deleteUpdate = async (req, res) => {
   }
 };
 
-// // Edit an update
-// exports.updateUpdate = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const updateData = req.body;
-//     const updatedUpdate = await Update.findByIdAndUpdate(id, updateData, { new: true });
-//     res.status(200).json(updatedUpdate);
-//   } catch (error) {
-//     res.status(500).json({ error: "Error updating update" });
-//   }
-// };
+exports.updateUpdate = async (req, res) => {
+    try {
+      const { id, title, description, date, createdBy, link } = req.body;
+  
+      // Validate ID
+      if (!id) {
+        return res.status(400).json({ success: false, message: "ID is required to update an update." });
+      }
+  
+      // Update the update
+      const updatedUpdate = await Update.findByIdAndUpdate(
+        id,
+        { title, description, date, createdBy, link },
+        { new: true } // Return the updated document
+      );
+  
+      if (!updatedUpdate) {
+        return res.status(404).json({ success: false, message: "Update not found." });
+      }
+  
+      res.status(200).json({ success: true, message: "Update updated successfully.", update: updatedUpdate });
+    } catch (error) {
+      console.error("Error updating update:", error);
+      res.status(500).json({ success: false, message: "Failed to update update." });
+    }
+  };
+  
