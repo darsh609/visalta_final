@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+
 const User = require("../models/User");
 const OTP = require("../models/OTP");
 const jwt = require("jsonwebtoken");
@@ -10,6 +11,8 @@ require("dotenv").config();
 
 // Signup Controller for Registering USers
 ////////////////////////////////CLEAR HO GYA HAI//////////////////////////////////////
+const AdminWhitelist = require("../models/Admin");
+
 exports.signup = async (req, res) => {
 	try {
 		// Destructure fields from the request body
@@ -23,7 +26,8 @@ exports.signup = async (req, res) => {
 			contactNumber,
 			otp,
 		} = req.body;
-		// Check if All Details are there or not
+
+		// Check if all details are provided
 		if (
 			!firstName ||
 			!lastName ||
@@ -34,15 +38,15 @@ exports.signup = async (req, res) => {
 		) {
 			return res.status(403).send({
 				success: false,
-				message: "All Fields are required",
+				message: "All fields are required",
 			});
 		}
+
 		// Check if password and confirm password match
 		if (password !== confirmPassword) {
 			return res.status(400).json({
 				success: false,
-				message:
-					"Password and Confirm Password do not match. Please try again.",
+				message: "Password and Confirm Password do not match.",
 			});
 		}
 
@@ -57,17 +61,7 @@ exports.signup = async (req, res) => {
 
 		// Find the most recent OTP for the email
 		const response = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
-		////////////////////
-		console.log(response);
-		if (response.length === 0) {
-			// OTP not found for the email
-			return res.status(400).json({
-				success: false,
-				message: "The OTP is not valid",
-			});
-		} 
-		else if (otp !== response[0].otp) {
-			// Invalid OTP
+		if (response.length === 0 || otp !== response[0].otp) {
 			return res.status(400).json({
 				success: false,
 				message: "The OTP is not valid",
@@ -77,26 +71,35 @@ exports.signup = async (req, res) => {
 		// Hash the password
 		const hashedPassword = await bcrypt.hash(password, 10);
 
-		// Create the user
-		// let approved = "";
-		// approved === "Instructor" ? (approved = false) : (approved = true);
+		// Dynamic Admin Check
+		let approved = true; // Default for students
+		if (accountType === "Admin") {
+			const isAdminAuthorized = await AdminWhitelist.findOne({ email });
+			if (!isAdminAuthorized) {
+				return res.status(403).json({
+					success: false,
+					message: "You are not authorized for admin.",
+				});
+			}
+		}
 
-		// Create the Additional Profile For User
+		// Create the Additional Profile for User
 		const profileDetails = await Profile.create({
 			gender: null,
 			dateOfBirth: null,
 			about: null,
 			contactNumber: null,
 		});
+
+		// Create the User
 		const user = await User.create({
 			firstName,
 			lastName,
 			email,
 			contactNumber,
 			password: hashedPassword,
-			accountType: accountType,
-			////////i changed
-			approved: true,
+			accountType,
+			approved,
 			additionalDetails: profileDetails._id,
 			image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
 		});
@@ -106,8 +109,7 @@ exports.signup = async (req, res) => {
 			user,
 			message: "User registered successfully",
 		});
-	} 
-	catch (error) {
+	} catch (error) {
 		console.error(error);
 		return res.status(500).json({
 			success: false,
@@ -115,6 +117,7 @@ exports.signup = async (req, res) => {
 		});
 	}
 };
+
 
 // Login controller for authenticating users
 ///////////////////////////////////////////////////////////////////////////////////////////////

@@ -4,7 +4,7 @@ import "./Auth.css"; // Add your CSS file for styling
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
-
+import { login } from "../services/operations/authAPI"
 
 
 export const Login = () => {
@@ -18,10 +18,10 @@ export const Login = () => {
   const { email, password } = formData
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData((prevData) => ({
+      ...prevData,
+      [e.target.name]: e.target.value,
+    }))
   };
 
 //   const handleSubmit = (e) => {
@@ -31,7 +31,7 @@ export const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // dispatch(login(email, password, navigate))
+    dispatch(login(email, password, navigate))
   }
   
 
