@@ -3,7 +3,6 @@ import { useEffect } from "react"
 import "./App.css"
 // Redux
 import { useDispatch, useSelector } from "react-redux"
-// React Router
 import { Route, Routes, useNavigate } from "react-router-dom"
 import { Login } from "./Auth/Login";
 import Signup from "./Auth/Signup";
@@ -16,7 +15,9 @@ import Worship from "./Extras/worship";
 import Foodfilter from "./Extras/foodfilter";
 import Travel from "./Extras/Travel";
 import BuyPage from "./Exchange/Buy";
-
+import VerifyEmail from "./Auth/VerifyEmail";
+import OpenRoute from "./Auth/OpenRoute";
+import UpdateSection from "./Updates/Update";
 
 function App() {
   const dispatch = useDispatch()
@@ -24,8 +25,47 @@ function App() {
   return (
     <div className={`relative min-h-screen z-0 overflow-x-hidden`}>
       <Routes>
-        <Route path="login" element={<Login/>} />
-        <Route path="signup" element={<Signup/>} />
+      <Route
+          path="login"
+          element={
+            
+              <Login />
+          
+          }
+        />
+        {/* <Route
+          path="forgot-password"
+          element={
+            <OpenRoute>
+              <ForgotPassword />
+            </OpenRoute>
+          }
+        /> */}
+        {/* <Route
+          path="update-password/:id"
+          element={
+            <OpenRoute>
+              <UpdatePassword />
+            </OpenRoute>
+          }
+        /> */}
+        <Route
+          path="signup"
+          element={
+            
+              <Signup />
+            
+          }
+        />
+        <Route
+          path="verify-email"
+          element={
+    
+              <VerifyEmail />
+        
+          }
+        />
+        <Route path="update" element={<UpdateSection/>}/>
         <Route path="insight" element={<Insighthome/>}/>
         <Route path="/" element={<Home/>}/>
         <Route path="contact" element={<Contact/>}/>
