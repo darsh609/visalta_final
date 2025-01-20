@@ -1,41 +1,88 @@
 import React, { useState } from 'react';
-import { Edit2, Heart, Package, Camera } from 'lucide-react';
+import { Heart, Package, Camera, LogOut, Settings } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
-const Card = ({ children, className = '' }) => (
-  <div className={`
-    bg-zinc-800/70 
-    backdrop-blur-xl 
-    border border-zinc-700/50 
-    rounded-xl 
-    shadow-[0_8px_32px_rgba(0,0,0,0.5)]
-    hover:shadow-[0_16px_48px_rgba(0,0,0,0.7)]
-    transition-all 
-    duration-300
-    ${className}
-  `}>
+const Card = ({ children, className = '', delay = 0 }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ 
+      duration: 0.5,
+      delay,
+      ease: [0.4, 0, 0.2, 1]
+    }}
+    whileHover={{ 
+      scale: 1.02,
+      transition: { duration: 0.2 }
+    }}
+    className={`
+      bg-zinc-800/70 
+      backdrop-blur-xl 
+      border border-zinc-700/50 
+      rounded-xl 
+      shadow-[0_8px_32px_rgba(0,0,0,0.5)]
+      hover:shadow-[0_16px_48px_rgba(0,0,0,0.7)]
+      transition-all 
+      duration-300
+      ${className}
+    `}
+  >
     {children}
-  </div>
+  </motion.div>
 );
+
+const LogoutModal = ({ isOpen, onClose, onLogout }) => {
+  if (!isOpen) return null;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
+    >
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        className="bg-zinc-800 rounded-lg p-6 max-w-sm w-full"
+      >
+        <h2 className="text-xl font-semibold text-white mb-2">Confirm Logout</h2>
+        <p className="text-zinc-400 mb-6">Are you sure you want to logout?</p>
+        <div className="flex justify-end space-x-3">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={onClose}
+            className="px-4 py-2 rounded-lg bg-zinc-700 text-zinc-300 hover:bg-zinc-600"
+          >
+            Cancel
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={onLogout}
+            className="px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600"
+          >
+            Logout
+          </motion.button>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+};
 
 const ProfileComponent = () => {
   const navigate = useNavigate();
-  const [profileData, setProfileData] = useState({
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const [profileImage, setProfileImage] = useState(null);
+  
+  const profileData = {
     firstName: 'tyagi',
     lastName: 'papa',
     email: 'at760440@gmail.com',
     phone: ''
-  });
-
-  const [isEditing, setIsEditing] = useState(false);
-  const [profileImage, setProfileImage] = useState(null);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setProfileData(prev => ({
-      ...prev,
-      [name]: value
-    }));
   };
 
   const handleImageUpload = (e) => {
@@ -49,51 +96,59 @@ const ProfileComponent = () => {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsEditing(false);
+  const handleLogout = () => {
+    console.log('Logging out...');
+    setIsLogoutModalOpen(false);
   };
 
   return (
-    
-    <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
-      <div className="container mx-auto max-w-3xl p-6">
-        <div className="space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 flex justify-center">
+      <div className="w-full max-w-3xl px-4 py-8 flex flex-col">
+        <motion.h1 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-3xl font-bold text-white mb-8 text-center"
+        >
+          My Profile
+        </motion.h1>
+
+        <div className="flex-grow space-y-6">
           {/* Personal Information Card */}
-          <Card className="p-6">
-            <form onSubmit={handleSubmit}>
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-[#1db954] font-semibold">Personal Information</h3>
-                <button
-                  type="button"
-                  className="text-zinc-400 hover:text-[#1db954]"
-                  onClick={() => setIsEditing(!isEditing)}
-                >
-                  <Edit2 size={18} />
-                </button>
+          <Card delay={0.1}>
+            <div className="p-6">
+              <div className="mb-6">
+                <h3 className="text-[#1db954] text-xl font-semibold">Personal Information</h3>
               </div>
 
               <div className="flex flex-col items-center mb-8">
-                <div className="relative group">
-                  <div className="h-24 w-24 rounded-full bg-gradient-to-r from-[#1db954] to-[#1db954]/70 p-1">
-                    <div className="h-full w-full rounded-full bg-zinc-800 flex items-center justify-center text-2xl font-bold text-white relative overflow-hidden">
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                  className="relative group"
+                >
+                  <div className="h-32 w-32 rounded-full bg-gradient-to-r from-[#1db954] to-[#1db954]/70 p-1">
+                    <div className="h-full w-full rounded-full bg-zinc-800 flex items-center justify-center text-3xl font-bold text-white relative overflow-hidden">
                       {profileImage ? (
                         <img src={profileImage} alt="Profile" className="h-full w-full object-cover" />
                       ) : (
                         'TP'
                       )}
-                      <label className="absolute -right-1 -bottom-1 p-1.5 rounded-full bg-[#1db954] cursor-pointer">
+                      <motion.label 
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        className="absolute right-1 bottom-1 p-2 rounded-full bg-[#1db954] cursor-pointer hover:bg-[#1db954]/80 transition-colors"
+                      >
                         <input
                           type="file"
                           accept="image/*"
                           className="hidden"
                           onChange={handleImageUpload}
                         />
-                        <Camera size={14} className="text-white" />
-                      </label>
+                        <Camera size={18} className="text-white" />
+                      </motion.label>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               </div>
 
               <div className="grid grid-cols-2 gap-6">
@@ -102,102 +157,122 @@ const ProfileComponent = () => {
                   { label: 'Last Name', name: 'lastName' },
                   { label: 'Email', name: 'email' },
                   { label: 'Phone', name: 'phone' }
-                ].map((field) => (
-                  <div key={field.name} className="space-y-1">
+                ].map((field, index) => (
+                  <motion.div 
+                    key={field.name}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.2 + index * 0.1 }}
+                    className="space-y-1"
+                  >
                     <p className="text-sm text-zinc-500">{field.label}</p>
-                    {isEditing ? (
-                      <input
-                        type="text"
-                        name={field.name}
-                        value={profileData[field.name]}
-                        onChange={handleInputChange}
-                        className="w-full bg-zinc-700/30 text-white p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1db954]"
-                      />
-                    ) : (
-                      <p className="text-white">{profileData[field.name] || 'Not set'}</p>
-                    )}
-                  </div>
+                    <p className="text-white">{profileData[field.name] || 'Not set'}</p>
+                  </motion.div>
                 ))}
               </div>
-
-              {isEditing && (
-                <div className="mt-6 flex justify-end space-x-3">
-                  <button
-                    type="button"
-                    onClick={() => setIsEditing(false)}
-                    className="px-4 py-2 rounded-lg bg-zinc-700/30 text-zinc-400 hover:bg-zinc-700/50"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-4 py-2 rounded-lg bg-[#1db954] text-white hover:bg-[#1db954]/90"
-                  >
-                    Save Changes
-                  </button>
-                </div>
-              )}
-            </form>
+            </div>
           </Card>
 
-          {/* Overview Cards Parent Div */}
+          {/* Overview Cards */}
           <div className="space-y-4">
-            <h3 className="text-[#1db954] font-semibold">Overview</h3>
+            <motion.h3 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3 }}
+              className="text-[#1db954] text-lg font-semibold"
+            >
+              Overview
+            </motion.h3>
             <div className="grid grid-cols-2 gap-4">
               {/* Favorites Card */}
-              <Card className="p-4">
-                <button className="w-full">
+              <Card delay={0.4}>
+                <motion.button 
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full p-4"
+                >
                   <div className="flex justify-between items-center">
                     <div className="flex items-center space-x-3">
-                      <Heart size={18} className="text-[#1db954]" />
+                      <Heart size={24} className="text-[#1db954]" />
                       <span className="text-zinc-400">Favorites</span>
                     </div>
-                    <span className="text-white font-semibold">28</span>
+                    <span className="text-white text-xl font-semibold">28</span>
                   </div>
-                </button>
+                </motion.button>
               </Card>
 
               {/* Products Card */}
-              <Card className="p-4">
-                <button className="w-full">
+              <Card delay={0.5}>
+                <motion.button 
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full p-4"
+                >
                   <div className="flex justify-between items-center">
                     <div className="flex items-center space-x-3">
-                      <Package size={18} className="text-[#1db954]" />
+                      <Package size={24} className="text-[#1db954]" />
                       <span className="text-zinc-400">Products</span>
                     </div>
-                    <span className="text-white font-semibold">12</span>
+                    <span className="text-white text-xl font-semibold">12</span>
                   </div>
-                </button>
+                </motion.button>
               </Card>
             </div>
           </div>
 
-          {/* Quick Actions Cards Parent Div */}
+          {/* Quick Actions */}
           <div className="space-y-4">
-            <h3 className="text-[#1db954] font-semibold">Quick Actions</h3>
-            <div className="grid grid-cols-2 gap-4">
-              {/* Settings Card */}
-              <Card className="p-4">
-                <button onClick={()=>navigate("settings")}  className="w-full text-left">
-                  <div className="space-y-2">
+            <motion.h3 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.6 }}
+              className="text-[#1db954] text-lg font-semibold"
+            >
+              Quick Actions
+            </motion.h3>
+            <Card delay={0.7}>
+              <motion.button 
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => navigate("settings")} 
+                className="w-full text-left p-4"
+              >
+                <div className="flex items-center space-x-3">
+                  <Settings size={24} className="text-[#1db954]" />
+                  <div>
                     <h4 className="text-white font-medium">Settings</h4>
-                    <p className="text-zinc-400 text-sm">Manage your account settings</p>
+                    <p className="text-sm text-zinc-400">Manage your account settings</p>
                   </div>
-                </button>
-              </Card>
-
-              {/* My Orders Card */}
-              <Card className="p-4">
-                <button className="w-full text-left">
-                  <div className="space-y-2">
-                    <h4 className="text-white font-medium">My Orders</h4>
-                    <p className="text-zinc-400 text-sm">View your order history</p>
-                  </div>
-                </button>
-              </Card>
-            </div>
+                </div>
+              </motion.button>
+            </Card>
           </div>
         </div>
+
+        {/* Logout Button */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8 }}
+          className="mt-6"
+        >
+          <motion.button
+            whileHover={{ scale: 1.02, backgroundColor: 'rgba(239, 68, 68, 0.2)' }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => setIsLogoutModalOpen(true)}
+            className="w-full p-3 rounded-lg bg-red-500/10 text-red-500 hover:bg-red-500/20 flex items-center justify-center space-x-3"
+          >
+            <LogOut size={20} />
+            <span>Logout</span>
+          </motion.button>
+        </motion.div>
+
+        {/* Custom Logout Modal */}
+        <LogoutModal
+          isOpen={isLogoutModalOpen}
+          onClose={() => setIsLogoutModalOpen(false)}
+          onLogout={handleLogout}
+        />
       </div>
     </div>
   );

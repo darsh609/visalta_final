@@ -78,8 +78,8 @@ function App() {
         <Route path="food/filters" element={<Foodfilter/>}/>
         <Route path="Travel" element={<Travel/>}/>
         <Route path="/Buy" element={<BuyPage/>}/>
-        <Route path="profile" element={<ProfileComponent/>}/>
-        <Route path="/profile/settings" element={<Settings/>}/>
+        <Route path="dashboard/my-profile" element={<ProfileComponent/>}/>
+        <Route path="dashboard/my-profile/settings" element={<Settings/>}/>
 
       </Routes>
     </div>
