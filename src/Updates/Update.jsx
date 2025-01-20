@@ -1,17 +1,14 @@
 
 //media query//delete card after time //when no word match a ui for that//improve the form //writring contenet
-//improve the icons //auth laga doisme
+//improve the icons //auth laga do isme
 
-//improve the ui
+//improve the uiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
 
 //media query//delete card after time //when no word match a ui for that//improve the form //writring contenet
 //improve the icons //auth laga doisme
-
 
 //media query//delete card after time //when no word match a ui for that//improve the form //writring contenet
 //improve the icons //auth laga do for studuent and amdin later
-
-
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
