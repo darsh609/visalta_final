@@ -15,9 +15,12 @@ import Worship from "./Extras/worship";
 import Foodfilter from "./Extras/foodfilter";
 import Travel from "./Extras/Travel";
 import BuyPage from "./Exchange/Buy";
+import ProfileComponent from "./Profile/ProfileComponent";
+import Settings from "./Profile/Settings";
 import VerifyEmail from "./Auth/VerifyEmail";
 import OpenRoute from "./Auth/OpenRoute";
 import UpdateSection from "./Updates/Update";
+
 
 function App() {
   const dispatch = useDispatch()
@@ -75,7 +78,8 @@ function App() {
         <Route path="food/filters" element={<Foodfilter/>}/>
         <Route path="Travel" element={<Travel/>}/>
         <Route path="/Buy" element={<BuyPage/>}/>
-
+        <Route path="profile" element={<ProfileComponent/>}/>
+        <Route path="/profile/settings" element={<Settings/>}/>
 
       </Routes>
     </div>
