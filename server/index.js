@@ -49,6 +49,10 @@ const updateRoutes = require("./routes/Update");
 app.use("/api/v1/updates", updateRoutes);
 const Admin = require("./routes/Admin");
 app.use("/api/v1/admin", Admin);
+app.use("/api/v1/review", require("./routes/RatingAndReview"));
+
+
+// app.use("/api/v1/user", require("./routes/User"));
 
 //def route
 

@@ -27,7 +27,7 @@ const ratingAndReviewSchema = new mongoose.Schema({
 	// 	index: true,
 	// },
 
-});
+}, { timestamps: true });
 
 // Export the RatingAndReview model
 module.exports = mongoose.model("RatingAndReview", ratingAndReviewSchema);
