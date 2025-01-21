@@ -3,7 +3,7 @@ import { Star, Send, Sparkles, X, Loader } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Ballpit from '../blocks/Backgrounds/Ballpit/Ballpit';
 
-const MAX_CHARS = 500;
+const MAX_CHARS = 300;
 
 const RatingReviewForm = () => {
   const [rating, setRating] = useState(0);
