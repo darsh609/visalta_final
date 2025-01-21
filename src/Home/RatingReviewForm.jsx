@@ -1,17 +1,28 @@
 import React, { useState } from 'react';
 import { Star, Send, Sparkles, X, Loader } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Ballpit from '../blocks/Backgrounds/Ballpit/Ballpit';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const MAX_CHARS = 300;
 
+
 const RatingReviewForm = () => {
+  
+  
+  const [showPopup, setShowPopup] = useState(false);
+  const [error, setError] = useState("");
+
+  const { user } = useSelector((state) => state.profile);
+  const navigate = useNavigate();
+  
   const [rating, setRating] = useState(0);
   const [hoveredRating, setHoveredRating] = useState(0);
   const [review, setReview] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [step, setStep] = useState(1);
-  const [showPopup, setShowPopup] = useState(false);
 
   const handleReviewChange = (e) => {
     const text = e.target.value;
@@ -22,21 +33,139 @@ const RatingReviewForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Check if user is logged in
+    if (!user) {
+      toast.error("Please log in to submit a review", {
+        icon: '🔐',
+        duration: 3000,
+        style: {
+          background: '#333',
+          color: '#fff',
+          borderRadius: '10px',
+          border: '1px solid #444',
+        },
+      });
+      navigate("/login");
+      return;
+    }
+
+    // Show loading toast
+    const loadingToast = toast.loading("Submitting your review...", {
+      style: {
+        background: '#333',
+        color: '#fff',
+        borderRadius: '10px',
+        border: '1px solid #444',
+      },
+    });
+
     setIsSubmitting(true);
+
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      console.log({ rating, review });
-      setShowPopup(true);
-      setRating(0);
-      setReview('');
-      setStep(1);
+      const token = JSON.parse(localStorage.getItem("token"));
+      
+      if (!token) {
+        throw new Error("Authentication token not found");
+      }
+
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      };
+
+      const data = {
+        rating: Number(rating),
+        review: review.trim(),
+      };
+
+      const response = await axios.post(
+        'http://localhost:4000/api/v1/review/create',
+        data,
+        config
+      );
+
+      if (response.data.success) {
+        // Dismiss loading toast and show success toast
+        toast.dismiss(loadingToast);
+        toast.success("Thank you! Your review has been submitted.", {
+          icon: '⭐',
+          duration: 4000,
+          style: {
+            background: '#333',
+            color: '#fff',
+            borderRadius: '10px',
+            border: '1px solid #444',
+          },
+        });
+
+        // Reset form
+        setRating(0);
+        setReview('');
+        setStep(1);
+      }
     } catch (error) {
-      alert('Failed to submit review.');
+      console.error("Review submission error:", error);
+      
+      // Dismiss loading toast
+      toast.dismiss(loadingToast);
+      
+      // Handle different error scenarios with custom toasts
+      if (error.response) {
+        if (error.response.status === 401) {
+          toast.error("Session expired. Please login again.", {
+            icon: '⚠️',
+            duration: 4000,
+            style: {
+              background: '#333',
+              color: '#fff',
+              borderRadius: '10px',
+              border: '1px solid #444',
+            },
+          });
+          localStorage.removeItem("token");
+          setTimeout(() => navigate("/login"), 2000);
+        } else {
+          toast.error(error.response.data.message || "Failed to submit review", {
+            icon: '❌',
+            duration: 4000,
+            style: {
+              background: '#333',
+              color: '#fff',
+              borderRadius: '10px',
+              border: '1px solid #444',
+            },
+          });
+        }
+      } else if (error.request) {
+        toast.error("Network error. Please check your connection.", {
+          icon: '🌐',
+          duration: 4000,
+          style: {
+            background: '#333',
+            color: '#fff',
+            borderRadius: '10px',
+            border: '1px solid #444',
+          },
+        });
+      } else {
+        toast.error(error.message || "Something went wrong", {
+          icon: '❌',
+          duration: 4000,
+          style: {
+            background: '#333',
+            color: '#fff',
+            borderRadius: '10px',
+            border: '1px solid #444',
+          },
+        });
+      }
     } finally {
       setIsSubmitting(false);
     }
   };
-
   return (
     <div className=" w-full flex items-center justify-center p-4 ">
      
@@ -193,8 +322,8 @@ const RatingReviewForm = () => {
             )}
           </AnimatePresence>
         </form>
-
-        {/* Success Popup */}
+{/* 
+        Success Popup
         <AnimatePresence>
           {showPopup && (
             <motion.div
@@ -216,7 +345,7 @@ const RatingReviewForm = () => {
               </button>
             </motion.div>
           )}
-        </AnimatePresence>
+        </AnimatePresence> */}
 
 
         
