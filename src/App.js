@@ -2,6 +2,7 @@ import "./App.css";
 import { useEffect } from "react"
 import "./App.css"
 // Redux
+import { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from "react-redux"
 import { Route, Routes, useNavigate } from "react-router-dom"
 import { Login } from "./Auth/Login";
@@ -20,13 +21,34 @@ import Settings from "./Profile/Settings";
 import VerifyEmail from "./Auth/VerifyEmail";
 import OpenRoute from "./Auth/OpenRoute";
 import UpdateSection from "./Updates/Update";
-
-
+import { getUserDetails } from "./services/operations/profileAPI"
+import { setUser } from "./slices/profileSlice";
 function App() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const { user } = useSelector((state) => state.profile)
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      const token = JSON.parse(localStorage.getItem("token"))
+      dispatch(getUserDetails(token, navigate))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+
+  // useEffect(() => {
+  //   // Check for stored user data on app initialization
+  //   const storedUser = localStorage.getItem("user")
+  //   if (storedUser) {
+  //     dispatch(setUser(JSON.parse(storedUser)))
+  //   }
+  // }, [dispatch])
   return (
     <div className={`relative min-h-screen z-0 overflow-x-hidden`}>
+
+
+<Toaster position="top-center" />
       <Routes>
       <Route
           path="login"

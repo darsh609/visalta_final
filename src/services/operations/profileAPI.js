@@ -10,7 +10,6 @@ const {
   GET_USER_ENROLLED_COURSES_API,
   GET_INSTRUCTOR_DATA_API,
 } = profileEndpoints
-
 export function getUserDetails(token, navigate) {
   return async (dispatch) => {
     const toastId = toast.loading("Loading...")
@@ -37,7 +36,6 @@ export function getUserDetails(token, navigate) {
     dispatch(setLoading(false))
   }
 }
-
 export async function getUserEnrolledCourses(token) {
   const toastId = toast.loading("Loading...")
   let result = []
