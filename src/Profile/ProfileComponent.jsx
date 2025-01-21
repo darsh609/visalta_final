@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Heart, Package, Camera, LogOut, Settings } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-
+import { useSelector } from 'react-redux';
 const Card = ({ children, className = '', delay = 0 }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
@@ -74,14 +74,16 @@ const LogoutModal = ({ isOpen, onClose, onLogout }) => {
 };
 
 const ProfileComponent = () => {
+  const { user } = useSelector((state) => state.profile)
   const navigate = useNavigate();
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
+  console.log("user", user)
   
   const profileData = {
-    firstName: 'tyagi',
-    lastName: 'papa',
-    email: 'at760440@gmail.com',
+    firstName: user?.firstName,
+    lastName: user?.lastName,
+    email: user?.email,
     phone: ''
   };
 
