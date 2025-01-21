@@ -503,7 +503,7 @@ const FeedbackSlider = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/v1/review/");
+        const response = await fetch("http://localhost:4000/api/v1/review/");
         const data = await response.json();
         if (data.success) {
           setFeedbacks(data.data); // Assuming reviews are in `data` field
@@ -524,7 +524,7 @@ const FeedbackSlider = () => {
     if (userNames[userId]) return userNames[userId]; // Use cached name if available
 
     try {
-      const response = await fetch("http://localhost:5000/api/v1/review/getUser", {
+      const response = await fetch("http://localhost:4000/api/v1/review/getUser", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
