@@ -826,7 +826,8 @@
 
 
 
-
+//ashihs need to make the delete icon and modal look better in review slider
+//make it like even when we r not hivering the icon of delte should come
 import React, { useState, useEffect } from 'react';
 import { Star, Trash2, AlertCircle } from 'lucide-react';
 import moment from 'moment';
