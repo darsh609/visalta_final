@@ -3,6 +3,7 @@ import food from '../datas/food.json';
 import { filterData } from '../datas/filters';
 import { RxCross1 } from "react-icons/rx";
 import { FiFilter, FiMap } from "react-icons/fi";
+import Form from './Form';
 
 export const Food = () => {
   const [restaurants, setRestaurants] = useState([]);
@@ -140,6 +141,9 @@ export const Food = () => {
             </div>
           </div>
         )}
+        <div>
+          <Form />
+        </div>
 
         {/* Restaurant Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
