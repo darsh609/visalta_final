@@ -1,31 +1,34 @@
-import React, { useState } from 'react';
-
+import React, { useState,useEffect } from 'react';
+import { apiConnector } from "../services/apiConnector"
+import { contactusEndpoint } from "../services/apis"
+import countryCodes from "../datas/countrycode.json"
+import { useForm } from "react-hook-form"
 const ContactForm = () => {
   const [tiltStyle, setTiltStyle] = useState({ transform: 'perspective(1000px)' });
   
-  // Country codes data
-  const countryCodes = [
-    { code: '+1', country: 'USA/Canada' },
-    { code: '+44', country: 'UK' },
-    { code: '+91', country: 'India' },
-    { code: '+61', country: 'Australia' },
-    { code: '+86', country: 'China' },
-    { code: '+49', country: 'Germany' },
-    { code: '+33', country: 'France' },
-    { code: '+81', country: 'Japan' },
-    { code: '+7', country: 'Russia' },
-    { code: '+55', country: 'Brazil' },
-    { code: '+34', country: 'Spain' },
-    { code: '+39', country: 'Italy' },
-    { code: '+82', country: 'South Korea' },
-    { code: '+31', country: 'Netherlands' },
-    { code: '+64', country: 'New Zealand' },
-    { code: '+65', country: 'Singapore' },
-    { code: '+46', country: 'Sweden' },
-    { code: '+41', country: 'Switzerland' },
-    { code: '+52', country: 'Mexico' },
-    { code: '+971', country: 'UAE' }
-  ].sort((a, b) => a.country.localeCompare(b.country));
+  // // Country codes data
+  // const countryCodes = [
+  //   { code: '+1', country: 'USA/Canada' },
+  //   { code: '+44', country: 'UK' },
+  //   { code: '+91', country: 'India' },
+  //   { code: '+61', country: 'Australia' },
+  //   { code: '+86', country: 'China' },
+  //   { code: '+49', country: 'Germany' },
+  //   { code: '+33', country: 'France' },
+  //   { code: '+81', country: 'Japan' },
+  //   { code: '+7', country: 'Russia' },
+  //   { code: '+55', country: 'Brazil' },
+  //   { code: '+34', country: 'Spain' },
+  //   { code: '+39', country: 'Italy' },
+  //   { code: '+82', country: 'South Korea' },
+  //   { code: '+31', country: 'Netherlands' },
+  //   { code: '+64', country: 'New Zealand' },
+  //   { code: '+65', country: 'Singapore' },
+  //   { code: '+46', country: 'Sweden' },
+  //   { code: '+41', country: 'Switzerland' },
+  //   { code: '+52', country: 'Mexico' },
+  //   { code: '+971', country: 'UAE' }
+  // ].sort((a, b) => a.country.localeCompare(b.country));
   
   const handleMouseMove = (e) => {
     const card = e.currentTarget;
@@ -49,10 +52,50 @@ const ContactForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add your form submission logic here
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   // Add your form submission logic here
+  // };
+
+
+
+  const [loading, setLoading] = useState(false)
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitSuccessful },
+  } = useForm()
+
+  const submitContactForm = async (data) => {
+    console.log("Form Data - ", data)
+    try {
+      setLoading(true)
+      const res = await apiConnector(
+        "POST",
+        contactusEndpoint.CONTACT_US_API,
+        data
+      )
+      // console.log("Email Res - ", res)
+      setLoading(false)
+    } catch (error) {
+      console.log("ERROR MESSAGE - ", error.message)
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset({
+        email: "",
+        firstname: "",
+        lastname: "",
+        message: "",
+        phoneNo: "",
+      })
+    }
+  }, [reset, isSubmitSuccessful])
+
 
   return (
     <div className="min-h-screen bg-zinc-950 flex items-center justify-center p-4">
@@ -91,7 +134,7 @@ const ContactForm = () => {
           <h3 className="text-2xl font-bold mb-6">Let's team up</h3>
           <p className="text-zinc-400 mb-8">Tell us more about yourself and what you're got in mind.</p>
           
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit(submitContactForm)} className="space-y-6">
             <div className="flex flex-col md:flex-row gap-4">
               <div className="flex-1">
                 <label className="block text-sm mb-2">First Name</label>
@@ -100,6 +143,7 @@ const ContactForm = () => {
                   className="w-full bg-zinc-800 rounded-md p-3 text-zinc-100 border border-zinc-700 focus:outline-none focus:border-zinc-500 transition-colors"
                   placeholder="Enter first name"
                   required
+                  {...register("firstname", { required: true })}
                 />
               </div>
               <div className="flex-1">
@@ -109,6 +153,7 @@ const ContactForm = () => {
                   className="w-full bg-zinc-800 rounded-md p-3 text-zinc-100 border border-zinc-700 focus:outline-none focus:border-zinc-500 transition-colors"
                   placeholder="Enter last name"
                   required
+                  {...register("lastname")}
                 />
               </div>
             </div>
@@ -120,6 +165,7 @@ const ContactForm = () => {
                 className="w-full bg-zinc-800 rounded-md p-3 text-zinc-100 border border-zinc-700 focus:outline-none focus:border-zinc-500 transition-colors"
                 placeholder="Enter email address"
                 required
+                {...register("email", { required: true })}
               />
             </div>
             
@@ -129,6 +175,7 @@ const ContactForm = () => {
                 <select 
                   className="bg-zinc-800 rounded-md p-3 text-zinc-100 border border-zinc-700 focus:outline-none focus:border-zinc-500 transition-colors w-40"
                   required
+                  {...register("countrycode", { required: true })}
                 >
                   {countryCodes.map((country) => (
                     <option key={country.code} value={country.code}>
@@ -141,6 +188,15 @@ const ContactForm = () => {
                   className="flex-1 bg-zinc-800 rounded-md p-3 text-zinc-100 border border-zinc-700 focus:outline-none focus:border-zinc-500 transition-colors"
                   placeholder="12345 67890"
                   required
+
+                  {...register("phoneNo", {
+                    required: {
+                      value: true,
+                      message: "Please enter your Phone Number.",
+                    },
+                    maxLength: { value: 12, message: "Invalid Phone Number" },
+                    minLength: { value: 10, message: "Invalid Phone Number" },
+                  })}
                 />
               </div>
             </div>
@@ -151,10 +207,12 @@ const ContactForm = () => {
                 className="w-full bg-zinc-800 rounded-md p-3 text-zinc-100 border border-zinc-700 focus:outline-none focus:border-zinc-500 transition-colors h-32 resize-none"
                 placeholder="Enter your message here"
                 required
+                {...register("message", { required: true })}
               />
             </div>
 
             <button
+               disabled={loading}
               type="submit"
               className="w-full bg-zinc-100 text-zinc-900 py-3 px-6 rounded-md font-semibold 
                          hover:bg-zinc-200 active:bg-zinc-300 transition-colors duration-200
