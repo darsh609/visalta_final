@@ -48,7 +48,7 @@ const { auth, isStudent, isAdmin } = require("../middlewares/auth")
 // ********************************************************************************************************
 
 // Courses can Only be Created by Instructors
-router.post("/createCourse", auth, isStudent, createCourse)
+router.post("/createCourse", auth , createCourse)
 //Add a Section to a Course
 // router.post("/addSection", auth, isInstructor, createSection)
 // // Update a Section
@@ -62,7 +62,7 @@ router.post("/createCourse", auth, isStudent, createCourse)
 // // Add a Sub Section to a Section
 // router.post("/addSubSection", auth, isInstructor, createSubSection)
 // // Get all Registered Courses
-router.get("/getAllCourses", getAllCourses)
+router.get("/getAllCourses", auth,getAllCourses)
 // Get Details for a Specific Courses
 router.post("/getCourseDetails", getCourseDetails)
 
@@ -81,5 +81,10 @@ router.post("/getCourseDetails", getCourseDetails)
 // router.post("/createRating", auth, isStudent, createRating)
 // router.get("/getAverageRating", getAverageRating)
 // router.get("/getReviews", getAllRating)
+router.get("/mycourses",auth,require("../controllers/Course").getInstructorCourses )
+router.post("/dolike",auth,require("../controllers/Liked").Like)
+router.post("/dislike",auth,require("../controllers/Liked").Dislike)
+router.get("/getalllike",auth,require("../controllers/Liked").getAllLikedCourses)
+
 
 module.exports = router
