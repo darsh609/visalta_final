@@ -981,7 +981,7 @@ const FeedbackSlider = () => {
     const [userName, setUserName] = useState("Loading...");
 
     useEffect(() => {
-      if (typeof review.user === "object" && review.user._id) {
+      if (typeof review.user === "object" && review?.user?._id) {
         fetchUserName(review.user._id).then((name) => setUserName(name));
       } else {
         setUserName("Unknown User");
