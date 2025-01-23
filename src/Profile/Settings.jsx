@@ -1,4 +1,4 @@
-import React, { useState,useRef } from 'react';
+import React, { useState,useRef,useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Camera ,Eye, EyeOff  } from 'lucide-react';
 import { useDispatch, useSelector } from "react-redux";
@@ -89,13 +89,32 @@ const Settings = () => {
 
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
+  // const [profileData, setProfileData] = useState({
+  //   firstName: user?.firstName || "",
+  //   lastName: user?.lastName || "",
+  //   dateOfBirth: user?.additionalDetails?.dateOfBirth || "",
+  //   gender: user?.additionalDetails?.gender || "",
+  //   contactNumber: user?.additionalDetails?.contactNumber || ""
+  // });
   const [profileData, setProfileData] = useState({
-    firstName: user?.firstName || "",
-    lastName: user?.lastName || "",
-    dateOfBirth: user?.additionalDetails?.dateOfBirth || "",
-    gender: user?.additionalDetails?.gender || "",
-    contactNumber: user?.additionalDetails?.contactNumber || ""
+    firstName: "",
+    lastName: "",
+    dateOfBirth: "",
+    gender: "",
+    contactNumber: ""
   });
+
+  useEffect(() => {
+    if (user) {
+      setProfileData({
+        firstName: user.firstName || "",
+        lastName: user.lastName || "",
+        dateOfBirth: user.additionalDetails?.dateOfBirth || "",
+        gender: user.additionalDetails?.gender || "",
+        contactNumber: user.additionalDetails?.contactNumber || ""
+      });
+    }
+  }, [user]);
 
   const [passwordLoading, setPasswordLoading] = useState(false);
   const [passwords, setPasswords] = useState({
