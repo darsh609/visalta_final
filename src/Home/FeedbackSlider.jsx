@@ -826,7 +826,8 @@
 
 
 
-
+//ashihs need to make the delete icon and modal look better in review slider
+//make it like even when we r not hivering the icon of delte should come
 import React, { useState, useEffect } from 'react';
 import { Star, Trash2, AlertCircle } from 'lucide-react';
 import moment from 'moment';
@@ -905,21 +906,24 @@ const FeedbackSlider = () => {
   }, []);
 
   // Handle delete review
-  const handleDeleteReview = async (reviewId) => {
+  const handleDeleteReview = async (id) => {
     try {
       const token = JSON.parse(localStorage.getItem("token"));
-      console.log(reviewId)
+      console.log(id)
       
       const response = await fetch(`http://localhost:4000/api/v1/review/delete`, {
         method: 'POST',
         headers: {
+          
+          
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({ reviewId })
+        body: JSON.stringify({ id })
       });
 
       const data = await response.json();
+      console.log("----data-->",JSON.stringify({ id}))
 
       if (data.success) {
         toast.success('Review deleted successfully', {
@@ -994,6 +998,7 @@ const FeedbackSlider = () => {
                       hover:-translate-y-2 hover:shadow-xl
                       group relative overflow-hidden">
         {/* Admin Delete Button */}
+
         {isAdmin && (
           <button
             onClick={() => {

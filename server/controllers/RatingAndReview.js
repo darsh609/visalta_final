@@ -59,6 +59,7 @@ exports.deleteRatingAndReview = async (req, res) => {
 
     const deletedReview = await RatingAndReview.findByIdAndDelete(id);
     if (!deletedReview) {
+      ///
       return res.status(404).json({ success: false, message: "Review not found" });
     }
 
