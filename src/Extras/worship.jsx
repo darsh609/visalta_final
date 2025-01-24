@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import worship from '../datas/worship.json';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { FiMap } from "react-icons/fi";
+import TempleForm from './TempleForm';
 
 const Worship = () => {
   const navigate = useNavigate();
@@ -59,6 +60,10 @@ const Worship = () => {
               </div>
             )}
           </div>
+        </div>
+
+        <div>
+          <TempleForm />
         </div>
 
         {/* Temple Grid */}
