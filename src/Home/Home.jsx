@@ -78,18 +78,17 @@ export const Home = () => {
         <div className='border-t-2 border-zinc-800 mt-20 flex justify-between items-center py-5 px-20'>
             {["forxxxxxxx","xxxxxxxx"].map((item,index)=>(
             <p className='text-md font-light'>{item}</p>))}
-            <div className='start flex items-center gap-2'>
-                <div onClick={()=> navigate("sell")} className='px-5 py-2 border-[1px] border-zinc-400 rounded-full font-lighter text-md uppercase  hover:bg-white hover:text-black transition-all duration-500'>
-                   sell items
-                    
-                </div>
-                <div onClick={()=> navigate("sell")} className='w-10 h-10 border-[1px] flex items-center justify-center border-zinc-400 rounded-full  hover:bg-white hover:text-black transition-all duration-500'>
-                    <span className='rotate-[50deg]'>
-                    <FaArrowUpLong/>
-                </span>
-                    
-              </div>
-          </div>
+           <div className='start flex items-center gap-2'>
+    <div 
+        onClick={() => navigate("sell")} 
+        className='px-5 py-2 border-[1px] border-zinc-400 rounded-full font-lighter text-md uppercase tracking-tighter hover:bg-white hover:text-black transition-all duration-300 flex items-center gap-2 group cursor-pointer'
+    >
+        sell items
+        <div className='w-2 h-2 bg-white rounded-full group-hover:w-5 group-hover:h-5 group-hover:rotate-[50deg] transition-all duration-500 flex items-center justify-center'>
+            <FaArrowUpLong className='opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
+        </div>
+    </div>
+</div>
       </div>
   </div>
     
