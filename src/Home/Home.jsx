@@ -52,7 +52,7 @@ export const Home = () => {
   return (
       <div className='w-full h-screen text-white'>
       <Navbar/>
-      <div  ref ={gsapRef} className='LandingPage w-full h-screen bg-zinc-900 pt-1'>
+      <div ref ={gsapRef} className='LandingPage w-full h-screen bg-zinc-900 pt-1'>
         <div className='textstructure mt-40 px-20'>
             
                 {["Navigating", "Student's", "life" ].map((item,index)=>{
@@ -63,7 +63,7 @@ export const Home = () => {
                             <img src={maskerImg} alt="" />
                         </motion.div>
                         )}
-                    <h1 className='flex items-center uppercase text-[9vw] h-full leading-[7vw] font-["Founders_Grotesk_Condensed"] font-bold'>
+                    <h1 className='flex items-center uppercase text-[9vw] h-full leading-[7vw] font-["Founders_Grotesk"] font-bold'>
                         {item}
                     </h1>
                     </div>
