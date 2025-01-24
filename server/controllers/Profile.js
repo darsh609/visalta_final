@@ -15,6 +15,7 @@ exports.updateProfile = async (req, res) => {
       dateOfBirth = "",
       contactNumber = "",
       gender = "",
+	  hostel=""
     } = req.body
     const id = req.user.id
 
@@ -33,6 +34,7 @@ exports.updateProfile = async (req, res) => {
     
     profile.contactNumber = contactNumber
     profile.gender = gender
+	profile.hostel=hostel
 
     // Save the updated profile
     await profile.save()
