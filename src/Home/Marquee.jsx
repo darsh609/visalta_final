@@ -13,7 +13,7 @@ const Marquee = () => {
              repeat: Infinity,
              ease: "linear",
            }}
-          className='text-[24vw] text-[#F6F5F4] leading-none font-["Founders_Grotesk_Condensed"] font-semibold -mt-[5vw] -mb-[2vw] pr-20'>
+          className='text-[24vw] text-[#F6F5F4] leading-none font-["Founders_Grotesk"] font-semibold -mt-[5vw] -mb-[2vw] pr-20'>
             We are Visalta
           </motion.h1>
           <motion.h1 
@@ -24,7 +24,7 @@ const Marquee = () => {
              repeat: Infinity,
              ease: "linear",
            }}
-          className='text-[24vw] text-[#F6F5F4] leading-none font-["Founders_Grotesk_Condensed"] font-semibold -mt-[5vw] -mb-[2vw] pr-20'>
+          className='text-[24vw] text-[#F6F5F4] leading-none font-["Founders_Grotesk"] font-semibold -mt-[5vw] -mb-[2vw] pr-20'>
             We are Visalta
           </motion.h1>
       </div>
