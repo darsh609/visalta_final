@@ -8,6 +8,9 @@ const profileSchema = new mongoose.Schema({
 	dateOfBirth: {
 		type: String,
 	},
+	hostel:{
+		type:String
+	},
 	
 	
 

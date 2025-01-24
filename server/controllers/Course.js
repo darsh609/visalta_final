@@ -130,6 +130,8 @@ exports.getAllCourses = async (req, res) => {
 				courseName: true,
 				price: true,
 				contact:true,
+				courseDescription: true,
+				address: true,
 
 				thumbnail: true,
 				instructor: true,

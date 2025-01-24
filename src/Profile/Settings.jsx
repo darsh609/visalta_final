@@ -101,7 +101,8 @@ const Settings = () => {
     lastName: "",
     dateOfBirth: "",
     gender: "",
-    contactNumber: ""
+    contactNumber: "",
+    hostel:""
   });
 
   useEffect(() => {
@@ -111,7 +112,8 @@ const Settings = () => {
         lastName: user.lastName || "",
         dateOfBirth: user.additionalDetails?.dateOfBirth || "",
         gender: user.additionalDetails?.gender || "",
-        contactNumber: user.additionalDetails?.contactNumber || ""
+        contactNumber: user.additionalDetails?.contactNumber || "",
+        hostel:user.additionalDetails?.hostel || ""
       });
     }
   }, [user]);
@@ -440,6 +442,7 @@ const Settings = () => {
           {[
             { label: 'First Name', name: 'firstName' },
             { label: 'Last Name', name: 'lastName' },
+            { label: 'Hostel-Name', name: 'hostel' },
             { label: 'Date of Birth', name: 'dateOfBirth', type: 'date' },
             { label: 'Gender', name: 'gender', type: 'select', options: ['Male', 'Female', 'Other'] },
             { label: 'Contact Number', name: 'contactNumber', type: 'tel', colspan: true }
@@ -490,7 +493,8 @@ const Settings = () => {
               lastName: user?.lastName || "",
               dateOfBirth: user?.additionalDetails?.dateOfBirth || "",
               gender: user?.additionalDetails?.gender || "",
-              contactNumber: user?.additionalDetails?.contactNumber || ""
+              contactNumber: user?.additionalDetails?.contactNumber || "",
+              hostel:user?.additionalDetails?.hostel || ""
             })}
             className="w-full sm:w-auto px-4 py-2 bg-zinc-700/30 text-zinc-400 rounded-lg hover:bg-zinc-700/50"
             disabled={loading}
