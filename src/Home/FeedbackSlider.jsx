@@ -874,6 +874,7 @@ const DeleteConfirmationModal = ({ isOpen, onClose, onConfirm, reviewId }) => {
 
 const FeedbackSlider = () => {
   const { user } = useSelector((state) => state.profile);
+  console.log("---->",user)
   const isAdmin = user?.accountType === "Admin";
   
   const [feedbacks, setFeedbacks] = useState([]);
