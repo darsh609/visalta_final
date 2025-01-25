@@ -1,115 +1,9 @@
-// import React from "react";
-// import { motion } from "framer-motion";
-
-// const BuyPage = () => {
-//   const categories = ["Books", "Electronics", "Stationery", "Furniture", "Miscellaneous"];
-//   const items = [
-//     { id: 1, name: "Mathematics Book", price: "₹500", category: "Books", image: "https://via.placeholder.com/150" },
-//     { id: 2, name: "Laptop", price: "₹45,000", category: "Electronics", image: "https://via.placeholder.com/150" },
-//     { id: 3, name: "Study Table", price: "₹2,500", category: "Furniture", image: "https://via.placeholder.com/150" },
-//     { id: 4, name: "Notebook Pack", price: "₹200", category: "Stationery", image: "https://via.placeholder.com/150" },
-//     { id: 5, name: "Graphing Calculator", price: "₹1,200", category: "Electronics", image: "https://via.placeholder.com/150" },
-//   ];
-
-//   return (
-//     <div className="bg-gray-900 text-white min-h-screen">
-//       {/* Hero Section */}
-//       <header className="py-10 text-center">
-//         <motion.h1
-//           className="text-4xl font-bold text-yellow-400"
-//           initial={{ opacity: 0, y: -50 }}
-//           animate={{ opacity: 1, y: 0 }}
-//           transition={{ duration: 0.8 }}
-//         >
-//           Welcome to the Student Marketplace
-//         </motion.h1>
-//         <motion.p
-//           className="text-gray-300 mt-4"
-//           initial={{ opacity: 0 }}
-//           animate={{ opacity: 1 }}
-//           transition={{ delay: 0.5, duration: 0.8 }}
-//         >
-//           Buy and sell items from fellow students!
-//         </motion.p>
-//         <motion.button
-//           className="mt-6 bg-yellow-400 text-gray-900 px-6 py-2 rounded-md font-semibold hover:bg-yellow-500 transition duration-300"
-//           whileHover={{ scale: 1.1 }}
-//           whileTap={{ scale: 0.9 }}
-//         >
-//           Start Shopping
-//         </motion.button>
-//       </header>
-
-//       {/* Search Bar */}
-//       <div className="max-w-3xl mx-auto mt-10">
-//         <motion.input
-//           type="text"
-//           placeholder="Search for items..."
-//           className="w-full px-4 py-2 rounded-md text-gray-900"
-//           initial={{ opacity: 0, scale: 0.8 }}
-//           animate={{ opacity: 1, scale: 1 }}
-//           transition={{ delay: 1, duration: 0.6 }}
-//         />
-//       </div>
-
-//       {/* Categories Section */}
-//       <div className="max-w-7xl mx-auto mt-10 px-4">
-//         <h2 className="text-2xl font-semibold text-yellow-400">Categories</h2>
-//         <div className="flex flex-wrap gap-4 mt-6">
-//           {categories.map((category, index) => (
-//             <motion.div
-//               key={index}
-//               className="bg-gray-800 p-4 rounded-md text-center cursor-pointer hover:bg-gray-700 transition duration-300"
-//               whileHover={{ scale: 1.1 }}
-//             >
-//               {category}
-//             </motion.div>
-//           ))}
-//         </div>
-//       </div>
-
-//       {/* Items Grid */}
-//       <div className="max-w-7xl mx-auto mt-10 px-4">
-//         <h2 className="text-2xl font-semibold text-yellow-400">Available Items</h2>
-//         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-//           {items.map((item) => (
-//             <motion.div
-//               key={item.id}
-//               className="bg-gray-800 rounded-md overflow-hidden shadow-lg hover:shadow-yellow-400 transition duration-300"
-//               whileHover={{ scale: 1.05 }}
-//               whileTap={{ scale: 0.95 }}
-//             >
-//               <img src={item.image} alt={item.name} className="w-full h-40 object-cover" />
-//               <div className="p-4">
-//                 <h3 className="text-xl font-semibold text-yellow-400">{item.name}</h3>
-//                 <p className="text-gray-300">{item.price}</p>
-//               </div>
-//             </motion.div>
-//           ))}
-//         </div>
-//       </div>
-
-//       {/* Footer */}
-//       <footer className="mt-20 py-10 text-center border-t border-gray-700">
-//         <p className="text-sm text-gray-400">
-//           &copy; 2025 Student Marketplace. All Rights Reserved.
-//         </p>
-//       </footer>
-//     </div>
-//   );
-// };
-
-// export default BuyPage;
-
-
-
-//bro on clicking on clipboard whatsapp email is also opening alongwith copying..just copy ..on clicking clipboard..and make sure in front of whatsapp icon its clipboard..in front of mail its clipboard
 
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaWhatsapp, FaEnvelope, FaCopy } from 'react-icons/fa';
-
+import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
 // import { Copy, Mail, WhatsApp, Clock, Tag } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 
@@ -209,7 +103,8 @@ const CardContent = ({ children, className }) => (
 const CourseCard = ({ course, searchTerm, onDelete,deleteCourse,setShowModal, setCourseToDelete }) => {
   const { user } = useSelector((state) => state.profile);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
-
+  const [isSaved, setIsSaved] = useState(course.isSaved || false);
+  const [isLoading, setIsLoading] = useState(false);
   const handleCopyToClipboard = (text) => {
     navigator.clipboard.writeText(text)
       .then(() => toast.success('Copied to clipboard!'))
@@ -290,6 +185,65 @@ const CourseCard = ({ course, searchTerm, onDelete,deleteCourse,setShowModal, se
     setIsDescriptionExpanded(!isDescriptionExpanded);
   };
 
+
+  // Persist save state in localStorage
+  useEffect(() => {
+    const savedCourses = JSON.parse(localStorage.getItem('savedCourses') || '[]');
+    setIsSaved(savedCourses.includes(course._id));
+  }, [course._id]);
+
+  const handleSaveToggle = async () => {
+    try {
+      setIsLoading(true);
+      const token = JSON.parse(localStorage.getItem('token'));
+      
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/course/dolike`, 
+        { courseId: course._id },
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      // Update saved courses in localStorage
+      const savedCourses = JSON.parse(localStorage.getItem('savedCourses') || '[]');
+      
+      if (!isSaved) {
+        // Save course
+        const updatedSavedCourses = [...new Set([...savedCourses, course._id])];
+        localStorage.setItem('savedCourses', JSON.stringify(updatedSavedCourses));
+        setIsSaved(true);
+        toast.success('Course saved successfully!', {
+          style: {
+            background: '#4B5563',
+            color: 'white',
+          },
+          icon: '📚',
+        });
+      } else {
+        // Unsave course
+        const updatedSavedCourses = savedCourses.filter(id => id !== course._id);
+        localStorage.setItem('savedCourses', JSON.stringify(updatedSavedCourses));
+        setIsSaved(false);
+        toast.error('Course unsaved', {
+          style: {
+            background: '#4B5563',
+            color: 'white',
+          },
+          icon: '❌',
+        });
+      }
+    } catch (error) {
+      console.error('Save/Unsave failed:', error);
+      toast.error('Failed to save/unsave course');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div 
       
@@ -309,7 +263,29 @@ const CourseCard = ({ course, searchTerm, onDelete,deleteCourse,setShowModal, se
     <DeleteIcon/>
   
   </button>
-)}
+                       )}
+
+<div className="absolute bottom-4 left-4 z-10">
+          <button 
+            onClick={handleSaveToggle}
+            disabled={isLoading}
+            className="p-2 bg-zinc-900/50 rounded-full hover:bg-zinc-900/75 transition flex items-center justify-center"
+            title={isSaved ? "Unsave Course" : "Save Course"}
+          >
+            {isLoading ? (
+              <div className="animate-spin">
+                <svg className="w-8 h-8 text-gray-300" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+              </div>
+            ) : isSaved ? (
+              <FaBookmark className="text-blue-500 text-4xl" />
+            ) : (
+              <FaRegBookmark className="text-gray-300 text-4xl" />
+            )}
+          </button>
+        </div>
       
         <CardHeader className="flex justify-between items-center bg-zinc-900">
           <div className="flex items-center space-x-2">
@@ -489,7 +465,7 @@ const BuyPage = () => {
   };
 
   const { user } = useSelector((state) => state.profile);
-  console.log("oooooooooo--------------->",user)
+  // console.log("oooooooooo--------------->",user)
   const userHostel = user?.additionalDetails?.hostel;
 
   useEffect(() => {
