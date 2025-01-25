@@ -1,155 +1,144 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { FaArrowUpLong } from "react-icons/fa6";
 
 const Footer = () => {
-  const socialIcons = [
-    {
-      platform: "Facebook",
-      icon: "fab fa-facebook-f",
-      color: "text-blue-500",
-      href: "https://facebook.com",
-    },
-    {
-      platform: "LinkedIn",
-      icon: "fab fa-linkedin-in",
-      color: "text-blue-400",
-      href: "https://linkedin.com",
-    },
-    {
-      platform: "Instagram",
-      icon: "fab fa-instagram",
-      color: "text-pink-500",
-      href: "https://instagram.com",
-    },
-    {
-      platform: "WhatsApp",
-      icon: "fab fa-whatsapp",
-      color: "text-green-500",
-      href: "https://wa.me/1234567890", // Replace with your WhatsApp number
-    },
-    {
-      platform: "Phone",
-      icon: "fas fa-phone",
-      color: "text-yellow-400",
-      href: "tel:+1234567890", // Replace with your phone number
-    },
-  ];
+ return (
+   <footer className="bg-[#D2D2D2] text-gray-800 py-10 space-y-44">
+     <div className="max-w-6xl mx-auto">
+       <div className="flex justify-between">
+         {/* Left Section: Social Links */}
+         <div className="space-y-6">
+           <h2 className="text-sm font-light tracking-tighter">JOIN OUR SOCIALS</h2>
+           <div className=" text-3xl">
+             <div>Instagram</div>
+             <div>Facebook</div>
+             <div>LinkedIn</div>
+           </div>
+         </div>
 
-  return (
-    <footer className="bg-zinc-900 text-zinc-200 py-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* About Section */}
-          <div>
-            <h2 className="text-xl font-semibold text-yellow-400">About Visalta</h2>
-            <p className="mt-4 text-zinc-400">
-              Visalta strives to redefine creativity and collaboration through
-              cutting-edge technology and innovative solutions. Join us in
-              shaping the future!
-            </p>
-          </div>
+         {/* Right Section: Contact and Form */}
+         <div className="space-y-12">
+           <div className="space-y-6">
+             <div className="text-sm font-light tracking-tighter">MONDAY–FRIDAY, 9AM–6PM</div>
+             <div className="text-3xl">visalta@gmail.com</div>
+           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h2 className="text-xl font-semibold text-yellow-400">Quick Links</h2>
-            <ul className="mt-4 space-y-2">
-              {["Home", "Services", "Projects", "Contact"].map((link, index) => (
-                <li key={index}>
-                  <a
-                    href={`/${link.toLowerCase()}`}
-                    className="hover:text-yellow-400 transition duration-300"
-                  >
-                    {link}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+           <div className="space-y-7">
+             <div className="text-sm font-light uppercase tracking-tighter">We respond within a few hours</div>
+             
+             <div className="text-3xl flex gap-2">
+               <span>827</span>
+               <span>346</span>
+               <span>3662</span>
+             </div>
+             <div className="text-sm font-light tracking-tighter flex flex-col">
+               <span>NIT Warangal,</span>
+               <span>1K Hostel,</span> 
+               <span>Telangana 506004</span>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+     <div className="flex justify-between max-w-6xl mx-auto">
+       <form className="space-y-4">
+         <div className="text-3xl flex flex-col">
+           <span className="relative">
+             <span>Leave a request and</span>
+           </span>
+           <span className="relative">
+             <span>we'll call you.</span>
+           </span>
+         </div>
+         <div className="flex">
+           <div className="flex justify-between gap-56">
+             <div className="flex flex-col w-full">
+               <label className="text-sm font-md text-black mb-2">
+                 FULL NAME
+               </label>
+               <input
+                 type="text"
+                 placeholder="Name"
+                 className="
+                   w-full 
+                   border-b 
+                   border-gray-400 
+                   text-sm 
+                   uppercase 
+                   py-2 
+                   px-0 
+                   focus:outline-none 
+                   focus:border-black
+                   bg-transparent
+                 "
+               />
+             </div>
+             <div className="flex flex-col w-full">
+               <label className="text-sm font-md text-black mb-2">
+                 PHONE NUMBER
+               </label>
+               <input
+                 type="text"
+                 placeholder="Phone"
+                 className="
+                   w-full 
+                   border-b 
+                   border-gray-400 
+                   text-sm 
+                   uppercase 
+                   py-2 
+                   px-0 
+                   focus:outline-none 
+                   focus:border-black
+                   bg-transparent
+                 "
+               />
+             </div>
+             <div className="flex flex-col w-full">
+               <label className="text-sm font-md text-black mb-2">
+                 EMAIL
+               </label>
+               <input
+                 type="email"
+                 placeholder="Email"
+                 className="
+                   w-full 
+                   border-b 
+                   border-gray-400 
+                   text-sm 
+                   uppercase 
+                   py-2 
+                   px-0 
+                   focus:outline-none 
+                   focus:border-black
+                   bg-transparent
+                 "
+               />
+             </div>
+           </div>
 
-          {/* Social Links */}
-          <div>
-            <h2 className="text-xl font-semibold text-yellow-400">
-              Connect with Us
-            </h2>
-            <div className="mt-4 flex flex-wrap gap-4 justify-start">
-              {socialIcons.map((social, index) => (
-                <motion.a
-                  key={index}
-                  href={social.href}
-                  aria-label={social.platform}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`w-14 h-14 bg-zinc-800 rounded-full flex items-center justify-center shadow-lg hover:shadow-${social.color} hover:scale-110 transition duration-300 ${social.color}`}
-                  whileHover={{ scale: 1.2, rotate: 10 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <i className={`${social.icon} text-2xl`}></i>
-                </motion.a>
-              ))}
-            </div>
-          </div>
-        </div>
+           <div
+             className='px-5 py-2 border-[1px] border-zinc-400 rounded-full font-lighter text-sm uppercase tracking-tighter hover:bg-black hover:text-white transition-all duration-300 flex items-center gap-2 group cursor-pointer'
+           >
+             Leave a request
+             <div className='w-2 h-2 bg-black rounded-full group-hover:w-5 group-hover:h-5 group-hover:rotate-[50deg] transition-all duration-500 flex items-center justify-center'>
+               <FaArrowUpLong className='opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
+             </div>
+           </div>
+         </div>
+       </form>
+     </div>
 
-        {/* Bottom Section */}
-        <div className="mt-10 border-t border-zinc-700 pt-6 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-sm text-zinc-400">
-            &copy; 2025 Visalta. All Rights Reserved.
-          </p>
-          <div className="flex space-x-4 mt-4 md:mt-0">
-            <a
-              href="/privacy-policy"
-              className="text-zinc-400 hover:text-yellow-400 transition duration-300"
-            >
-              Privacy Policy
-            </a>
-            <a
-              href="/terms-of-service"
-              className="text-zinc-400 hover:text-yellow-400 transition duration-300"
-            >
-              Terms of Service
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* Responsive Media Queries */}
-      <style jsx>{`
-        @media (max-width: 768px) {
-          .grid-cols-3 {
-            grid-template-columns: 1fr;
-          }
-
-          .w-14 {
-            width: 48px;
-          }
-
-          .h-14 {
-            height: 48px;
-          }
-
-          .justify-start {
-            justify-content: center;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .flex-wrap {
-            flex-direction: column;
-            gap: 1rem;
-          }
-
-          .w-14 {
-            width: 42px;
-          }
-
-          .h-14 {
-            height: 42px;
-          }
-        }
-      `}</style>
-    </footer>
-  );
+     <div className="mt-10 text-center text-sm text-gray-500">
+       <div className="flex justify-between px-4 -mb-4">
+         <p>VISALTA, INC. © 2024</p>
+         <a href="#" className="hover:text-blue-500">TERMS AND CONDITIONS</a>
+         <a href="#" className="hover:text-blue-500">COOKIES POLICY</a>
+         <a href="#" className="hover:text-blue-500">WARRANTY AGREEMENT</a>
+       </div>
+     </div>
+   </footer>
+ );
 };
 
 export default Footer;
