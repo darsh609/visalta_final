@@ -343,10 +343,25 @@ exports.getAllLikedCourses = async (req, res) => {
         const userId = req.user.id;
  
         // Find user and populate liked courses
-        const user = await User.findById(userId).populate({
-            path: 'Likedcourses',
-            select: 'courseName instructor thumbnail price rating' 
-        });
+        const user = await User.findById(userId)
+    .populate({
+        path: 'Likedcourses',
+        select: 'courseName courseDescription instructor thumbnail price address contact tag createdAt studentsEnrolled',
+        populate: {
+            path: 'instructor',
+            
+             // Example: If 'instructor' is an ID you want to populate
+            select: 'firstName lastName email',
+            populate:{
+                path:'additionalDetails',
+                select:'hostel'
+            }
+        },
+    })
+    .populate({
+        path: 'additionalDetails'
+    });
+
  
         if (!user) {
             return res.status(404).json({ 

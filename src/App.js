@@ -23,6 +23,8 @@ import OpenRoute from "./Auth/OpenRoute";
 import UpdateSection from "./Updates/Update";
 import { getUserDetails } from "./services/operations/profileAPI"
 import { setUser } from "./slices/profileSlice";
+import Likecourse from "./Profile/Likecourse";
+import Mycourse from "./Profile/Mycourse";
 function App() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -53,8 +55,11 @@ function App() {
       <Route
           path="login"
           element={
+            <OpenRoute>
+  <Login />
+            </OpenRoute>
             
-              <Login />
+            
           
           }
         />
@@ -74,11 +79,15 @@ function App() {
             </OpenRoute>
           }
         /> */}
+        
         <Route
           path="signup"
           element={
+            <OpenRoute>
+   <Signup />
+            </OpenRoute>
             
-              <Signup />
+           
             
           }
         />
@@ -90,6 +99,8 @@ function App() {
         
           }
         />
+        <Route path="dashboard/my-profile/saved-items" element={<Likecourse/>}/>
+        <Route path="my-courses" element={<Mycourse/>}/>
         <Route path="update" element={<UpdateSection/>}/>
         <Route path="insight" element={<Insighthome/>}/>
         <Route path="/" element={<Home/>}/>

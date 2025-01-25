@@ -234,7 +234,7 @@ exports.getInstructorCourses = async (req, res) => {
   }
 
   // Delete the Course
-  exports.deleteCourse = async (req, res) => {
+exports.deleteCourse = async (req, res) => {
 	try {
 	  const { courseId } = req.body
   
