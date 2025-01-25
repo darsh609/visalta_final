@@ -63,7 +63,7 @@ export const Home = () => {
                             <img src={maskerImg} alt="" />
                         </motion.div>
                         )}
-                    <h1 className='flex items-center uppercase text-[9vw] h-full leading-[7vw] font-["Founders_Grotesk"] font-bold'>
+                    <h1 className='flex items-center uppercase text-[9vw] h-full leading-[7vw] font-founders font-bold'>
                         {item}
                     </h1>
                     </div>
