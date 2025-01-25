@@ -27,6 +27,7 @@ const UpdateSection = () => {
     try {
       const response = await axios.get(`${BASE_URL}/getupdate`);
       setUpdates(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error("Error fetching updates:", error);
     }
@@ -139,8 +140,8 @@ const UpdateSection = () => {
   return (
     <div className="bg-zinc-900 text-zinc-200 min-h-screen flex flex-col items-center px-4 py-12">
       <div className="w-full max-w-7xl">
-        <h1 className="text-4xl font-extrabold text-center mb-8 text-primary">
-          Updates
+        <h1 className="text-4xl font-semibold text-center mb-8 text-primary font-founders uppercase tracking-tight">
+        On-Campus Insights
         </h1>
 
         {/* Search Bar */}
@@ -168,20 +169,24 @@ const UpdateSection = () => {
                 const daysAgo = moment().diff(moment(update.createdAt), "days");
 
                 return (
-                  <SpotlightCard
+                  <div onClick={() => {
+                    if (active && update.link) window.open(update.link, "_blank");
+                  }}>
+                    <SpotlightCard
                     key={update._id}
                     className={`p-6 rounded-xl shadow-lg transform transition-all duration-300 ${
-                      active
-                        ? "bg-zinc-800 hover:shadow-green-500/50"
-                        : "bg-zinc-700 opacity-70  hover:shadow-red-500/50"
-                    }`}
+                      active&&update.link!=""
+                        ? "cursor-pointer"
+                        : "" 
+                        
+                    }       ${active?"bg-zinc-800 hover:shadow-green-500/50":"bg-zinc-700 opacity-70  hover:shadow-red-500/50 cursor-not-allowed"}`}
                     variants={cardVariants}
                     whileHover="hover"
                     onClick={() => {
                       if (active && update.link) window.open(update.link, "_blank");
                     }}
                   >
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center justify-between mb-4 " >
                       <div className="flex items-center gap-3">
                         <FaBell
                           className={`text-2xl ${
@@ -249,6 +254,8 @@ const UpdateSection = () => {
                       </div>
                     )}
                   </SpotlightCard>
+                  </div>
+                  
                 );
               })
             ) : (
