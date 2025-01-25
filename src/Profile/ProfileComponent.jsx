@@ -600,7 +600,7 @@ const ProfileComponent = () => {
                   <div className="flex justify-between items-center">
                     <div className="flex items-center space-x-3">
                       <Heart size={24} className="text-[#1db954]" />
-                      <span className="text-zinc-400">Favorites</span>
+                      <span className="text-zinc-400">Liked Items</span>
                     </div>
                     <span className="text-white text-xl font-semibold">28</span>
                   </div>
