@@ -53,8 +53,10 @@ function App() {
       <Route
           path="login"
           element={
-            
-              <Login />
+           <OpenRoute> 
+            <Login />
+            </OpenRoute>
+          
           
           }
         />
@@ -102,7 +104,6 @@ function App() {
         <Route path="/Buy" element={<BuyPage/>}/>
         <Route path="dashboard/my-profile" element={<ProfileComponent/>}/>
         <Route path="dashboard/my-profile/settings" element={<Settings/>}/>
-
       </Routes>
     </div>
   );
