@@ -56,11 +56,12 @@ function App() {
       <Route
           path="login"
           element={
+
             <OpenRoute>
   <Login />
             </OpenRoute>
             
-            
+ 
           
           }
         />
@@ -197,6 +198,9 @@ function App() {
         }
       />
     
+
+ 
+        
       </Routes>
     </div>
   );

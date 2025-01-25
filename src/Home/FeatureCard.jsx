@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Eatables_Card from "../assets/Eatables_Card.png";
 import Travel_Card from "../assets/Travel_Card.png";
 import { motion, useAnimation } from 'framer-motion';
-import Sellimg from "../assets/sellimg.png";
+import Buy_Card from "../assets/Buy_Card.png";
 import { Power4 } from 'gsap/all';
 
 
@@ -94,7 +94,7 @@ const FeatureCard = () => {
                     </h1>
 
                     <div className='card w-full h-full rounded-xl card overflow-hidden'>
-                        <img className='w-full h-full bg-cover' src={Sellimg} alt=""  />
+                        <img className='w-full h-full bg-cover' src={Buy_Card} alt=""  />
                     </div>
                 </motion.div>
 

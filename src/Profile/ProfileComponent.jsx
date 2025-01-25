@@ -329,10 +329,10 @@ const ProfileComponent = () => {
           onClick={() => navigate("saved-items")} 
           className="w-full p-4"
         >
-          <div className="flex justify-between items-center">
+          <div  className="flex justify-between items-center">
             <div className="flex items-center space-x-3">
               <Heart size={24} className="text-[#1db954]" />
-              <span className="text-zinc-400">Liked Items</span>
+              <span className="text-zinc-400">Saved Items</span>
             </div>
             <span className="text-white text-xl font-semibold">{likedCount}</span>
           </div>
