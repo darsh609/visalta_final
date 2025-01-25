@@ -1279,7 +1279,7 @@
 
 
 
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 
@@ -1289,43 +1289,67 @@ const UploadItemForm = () => {
     courseDescription: "",
     address: "",
     price: "",
-    tag: [], // Ensure this is an array
+    tag: [],
     contact: "",
     thumbnail: null,
   });
   const [tagInput, setTagInput] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
 
+  // Load saved form data from localStorage on mount
+  useEffect(() => {
+    const savedData = JSON.parse(localStorage.getItem("formData"));
+    if (savedData && new Date(savedData.expiry) > new Date()) {
+      setFormData(savedData.data);
+    }
+  }, []);
+
+  // Save form data to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem(
+      "formData",
+      JSON.stringify({
+        data: formData,
+        expiry: new Date().getTime() + 24 * 60 * 60 * 1000, // Expiry set for 24 hours
+      })
+    );
+  }, [formData]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-    validateForm({ ...formData, [name]: value });
+    const updatedData = { ...formData, [name]: value };
+    setFormData(updatedData);
+    validateForm(updatedData);
   };
 
   const handleFileChange = (e) => {
-    setFormData({ ...formData, thumbnail: e.target.files[0] });
-    validateForm({ ...formData, thumbnail: e.target.files[0] });
+    const updatedData = { ...formData, thumbnail: e.target.files[0] };
+    setFormData(updatedData);
+    validateForm(updatedData);
   };
 
   const handleAddTag = () => {
     if (tagInput.trim()) {
-      // Prevent duplicate tags
       const newTag = tagInput.trim();
       if (!formData.tag.includes(newTag)) {
-        setFormData(prev => ({
-          ...prev, 
-          tag: [...prev.tag, newTag]
-        }));
+        const updatedData = {
+          ...formData,
+          tag: [...formData.tag, newTag],
+        };
+        setFormData(updatedData);
+        validateForm(updatedData);
         setTagInput("");
       }
     }
   };
 
   const handleRemoveTag = (tagToRemove) => {
-    setFormData(prev => ({
-      ...prev, 
-      tag: prev.tag.filter(tag => tag !== tagToRemove)
-    }));
+    const updatedData = {
+      ...formData,
+      tag: formData.tag.filter((tag) => tag !== tagToRemove),
+    };
+    setFormData(updatedData);
+    validateForm(updatedData);
   };
 
   const validateForm = (data) => {
@@ -1336,54 +1360,64 @@ const UploadItemForm = () => {
       data.price &&
       data.contact &&
       data.thumbnail &&
-      data.tag.length > 0; // Ensure at least one tag
+      data.tag.length > 0;
     setIsFormValid(isValid);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { courseName, courseDescription, address, price, tag, contact, thumbnail } = formData;
-  
+
     const formDataToSend = new FormData();
     formDataToSend.append("courseName", courseName);
     formDataToSend.append("courseDescription", courseDescription);
     formDataToSend.append("address", address);
     formDataToSend.append("price", price);
     formDataToSend.append("contact", contact);
-  
-    // Correctly append tags to match backend schema
-    tag.forEach((t, index) => {
+
+    tag.forEach((t) => {
       formDataToSend.append("tag", t);
     });
-  
-    // Ensure thumbnail is added
+
     if (thumbnail) {
       formDataToSend.append("thumbnailImage", thumbnail);
     }
-  
+
     const token = JSON.parse(localStorage.getItem("token"));
-  
+
+    // Show loading toast
+    const loadingToastId = toast.loading("Submitting your course...");
+
     try {
       const response = await fetch(`http://localhost:4000/api/v1/course/createCourse`, {
-        method: 'POST',
+        method: "POST",
         body: formDataToSend,
         headers: {
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
-  
+
       if (!response.ok) {
         const errorText = await response.text();
-        console.error('Full error response:', errorText);
         throw new Error(errorText || "Failed to create course");
       }
-  
+
       const result = await response.json();
-      console.log("Success Response:", result);
-      toast.success("Course created successfully!");
+      toast.success("Course created successfully!", { id: loadingToastId });
+
+      // Clear form and localStorage after successful submission
+      setFormData({
+        courseName: "",
+        courseDescription: "",
+        address: "",
+        price: "",
+        tag: [],
+        contact: "",
+        thumbnail: null,
+      });
+      localStorage.removeItem("formData");
     } catch (error) {
-      console.error('Detailed error:', error);
-      toast.error(error.message);
+      toast.error(error.message, { id: loadingToastId });
     }
   };
 
@@ -1488,14 +1522,15 @@ const UploadItemForm = () => {
         />
 
         {isFormValid && (
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            type="submit"
-            className="w-full bg-green-500 text-white py-2 rounded mt-4"
-          >
-            Submit
-          </motion.button>
+           <motion.button
+           whileHover={{ scale: 1.05 }}
+           whileTap={{ scale: 0.95 }}
+           type="submit"
+           className="w-full bg-green-500 text-white py-2 rounded mt-4"
+           disabled={!isFormValid}
+         >
+           Submit
+         </motion.button>
         )}
       </motion.form>
     </div>
