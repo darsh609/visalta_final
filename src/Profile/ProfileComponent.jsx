@@ -656,7 +656,7 @@ const ProfileComponent = () => {
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          onClick={() => navigate("my-courses")} 
+          onClick={() => navigate("my-items")} 
           className="w-full p-4"
         >
           <div className="flex justify-between items-center">

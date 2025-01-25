@@ -25,6 +25,7 @@ import { getUserDetails } from "./services/operations/profileAPI"
 import { setUser } from "./slices/profileSlice";
 import Likecourse from "./Profile/Likecourse";
 import Mycourse from "./Profile/Mycourse";
+import PrivateRoute from "./Auth/PrivateRoute";
 function App() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -79,6 +80,17 @@ function App() {
             </OpenRoute>
           }
         /> */}
+
+
+<Route path="update" element={<UpdateSection/>}/>
+<Route path="insight" element={<Insighthome/>}/>
+       
+    
+        <Route path="/" element={
+          
+          <Home/>}/>
+
+<Route path="contact" element={<Contact/>}/>
         
         <Route
           path="signup"
@@ -94,26 +106,97 @@ function App() {
         <Route
           path="verify-email"
           element={
-    
-              <VerifyEmail />
+    <OpenRoute>
+<VerifyEmail />
+    </OpenRoute>
+              
         
           }
         />
-        <Route path="dashboard/my-profile/saved-items" element={<Likecourse/>}/>
-        <Route path="my-courses" element={<Mycourse/>}/>
-        <Route path="update" element={<UpdateSection/>}/>
-        <Route path="insight" element={<Insighthome/>}/>
-        <Route path="/" element={<Home/>}/>
-        <Route path="contact" element={<Contact/>}/>
-        <Route path="sell" element={<UploadItemForm/>}/>
-        <Route path="food" element={<Food/>}/>
-        <Route path="worship" element={<Worship/>}/>
-        <Route path="food/filters" element={<Foodfilter/>}/>
-        <Route path="Travel" element={<Travel/>}/>
-        <Route path="/Buy" element={<BuyPage/>}/>
-        <Route path="dashboard/my-profile" element={<ProfileComponent/>}/>
-        <Route path="dashboard/my-profile/settings" element={<Settings/>}/>
 
+<Route
+        path="my-profile/saved-items"
+        element={
+          <PrivateRoute>
+            <Likecourse />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="my-profile/my-items"
+        element={
+          <PrivateRoute>
+            <Mycourse />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="worship"
+        element={
+          <PrivateRoute>
+            <Worship />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="food/filters"
+        element={
+          <PrivateRoute>
+            <Foodfilter />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="Travel"
+        element={
+          <PrivateRoute>
+            <Travel />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="food"
+        element={
+          <PrivateRoute>
+            <Food />
+          </PrivateRoute>
+        }
+      />
+
+      {/* Additional Protected Routes */}
+      <Route
+        path="Buy"
+        element={
+          <PrivateRoute>
+            <BuyPage />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="sell"
+        element={
+          <PrivateRoute>
+            <UploadItemForm />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="my-profile"
+        element={
+          <PrivateRoute>
+            <ProfileComponent />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="my-profile/settings"
+        element={
+          <PrivateRoute>
+            <Settings />
+          </PrivateRoute>
+        }
+      />
+    
       </Routes>
     </div>
   );
