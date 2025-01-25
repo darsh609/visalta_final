@@ -204,9 +204,13 @@ export function resetPassword(password, confirmPassword, token, navigate) {
         password,
         confirmPassword,
         token,
+
+
       })
 
-      console.log("RESETPASSWORD RESPONSE............", response)
+      console.log("0---00-0-00>-------->>",response)
+
+      console.log("RESETPASSWORD RESPONSE............", password, confirmPassword, token, response) 
 
       if (!response.data.success) {
         throw new Error(response.data.message)

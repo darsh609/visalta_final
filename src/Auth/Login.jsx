@@ -2,38 +2,32 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import "./Auth.css"; // Add your CSS file for styling
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useDispatch } from "react-redux"
-import { Link, useNavigate } from "react-router-dom"
-import { login } from "../services/operations/authAPI"
-
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { login } from "../services/operations/authAPI";
 
 export const Login = () => {
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
-  const { email, password } = formData
+  const { email, password } = formData;
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [e.target.name]: e.target.value,
-    }))
+      [name]: value,
+    }));
   };
 
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     console.log("Login Data: ", formData);
-//   };
-
   const handleSubmit = (e) => {
-    e.preventDefault()
-    dispatch(login(email, password, navigate))
-  }
-  
+    e.preventDefault();
+    dispatch(login(email, password, navigate));
+  };
 
   return (
     <motion.div
@@ -157,9 +151,27 @@ export const Login = () => {
           Login
         </motion.button>
 
-        <p style={{ color: "#aaa", marginTop: "1rem" }}>
-          Don't have an account? <a href="/signup" style={{ color: "#5e60ce" }}>Sign Up</a>
-        </p>
+        <div style={{ marginTop: "1rem", color: "#aaa" }}>
+          <p>
+            Don't have an account?{" "}
+            <a href="/signup" style={{ color: "#5e60ce" }}>
+              Sign Up
+            </a>
+          </p>
+          <p>
+            <span
+              onClick={() => navigate("/forgot-password")}
+              style={{
+                cursor: "pointer",
+                color: "#5e60ce",
+                textDecoration: "underline",
+                fontWeight: "bold",
+              }}
+            >
+              Forgot Password?
+            </span>
+          </p>
+        </div>
       </motion.div>
     </motion.div>
   );
