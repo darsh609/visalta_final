@@ -13,8 +13,8 @@ const Marquee = () => {
              repeat: Infinity,
              ease: "linear",
            }}
-          className='text-[24vw] text-[#F6F5F4] leading-none font-["Founders_Grotesk"] font-semibold -mt-[5vw] -mb-[2vw] pr-20'>
-            We are Visalta
+          className='text-[24vw] text-[#F6F5F4] leading-none font-founders font-semibold -mt-[2vw] -mb-[2vw] pr-20'>
+            NIT-WARANGAL
           </motion.h1>
           <motion.h1 
            initial={{ translateX: 0 }}
@@ -24,8 +24,8 @@ const Marquee = () => {
              repeat: Infinity,
              ease: "linear",
            }}
-          className='text-[24vw] text-[#F6F5F4] leading-none font-["Founders_Grotesk"] font-semibold -mt-[5vw] -mb-[2vw] pr-20'>
-            We are Visalta
+          className='text-[24vw] text-[#F6F5F4] leading-none font-founders font-semibold -mt-[2vw] -mb-[2vw] pr-20'>
+            NIT-WARANGAL
           </motion.h1>
       </div>
     </div>
