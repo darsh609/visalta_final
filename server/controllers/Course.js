@@ -234,9 +234,10 @@ exports.getInstructorCourses = async (req, res) => {
   }
 
   // Delete the Course
-  exports.deleteCourse = async (req, res) => {
+exports.deleteCourse = async (req, res) => {
 	try {
 	  const { courseId } = req.body
+
   
 	  // Find the course
 	  const course = await Course.findById(courseId)
@@ -245,12 +246,17 @@ exports.getInstructorCourses = async (req, res) => {
 	  }
   
 	  // Unenroll students from the course
+
 	  const studentsEnrolled = course.studentsEnrolled
 	  for (const studentId of studentsEnrolled) {
 		await User.findByIdAndUpdate(studentId, {
 		  $pull: { courses: courseId },
 		})
 	  }
+
+	  await User.findByIdAndUpdate(course.instructor, {
+		$pull: { courses: courseId }, // Remove the course from the user's courses
+	  });
   
 	  // Delete sections and sub-sections
 	//   const courseSections = course.courseContent
