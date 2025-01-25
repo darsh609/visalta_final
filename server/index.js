@@ -52,6 +52,25 @@ app.use("/api/v1/admin", Admin);
 app.use("/api/v1/review", require("./routes/RatingAndReview"));
 
 
+
+
+
+
+
+
+const feedbackRoutes = require("./routes/Feedback");
+
+// const app = express();
+
+// mongoose.connect("mongodb://localhost:27017/feedbackDB", {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
+
+// app.use(express.json());
+app.use("/api/v1/feedback", feedbackRoutes);
+
+
 // app.use("/api/v1/user", require("./routes/User"));
 
 //def route
@@ -63,6 +82,12 @@ app.get("/", (req, res) => {
 	});
 });
 
+
+
+const requestRoutes = require("./routes/Request");
+
+
+app.use("/api/v1/requests", requestRoutes);
 app.listen(PORT, () => {
 	console.log(`App is running at ${PORT}`)
 })

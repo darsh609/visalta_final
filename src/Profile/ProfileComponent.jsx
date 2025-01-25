@@ -312,7 +312,7 @@
 
 
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef,useEffect } from 'react';
 import { Heart, Package, Camera, LogOut, Settings, Check } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -469,6 +469,48 @@ const ProfileComponent = () => {
     setIsLogoutModalOpen(false);
   };
 
+
+
+
+  const [likedCount, setLikedCount] = useState(0);
+  const [myCoursesCount, setMyCoursesCount] = useState(0);
+
+  useEffect(() => {
+    const fetchCounts = async () => {
+      try {
+        // Retrieve the Bearer token from localStorage
+        const token = JSON.parse(localStorage.getItem("token"));
+
+        // Fetch liked courses
+        const likedCoursesResponse = await fetch(`${process.env.REACT_APP_BASE_URL}/course/getalllike`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+        const likedCoursesData = await likedCoursesResponse.json();
+        setLikedCount(likedCoursesData?.totalLikedCourses || 0);
+
+        // Fetch my courses
+        const myCoursesResponse = await fetch(`${process.env.REACT_APP_BASE_URL}/course/mycourses`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+        console.log("----------------->",myCoursesResponse)
+        const myCoursesData = await myCoursesResponse.json();
+        setMyCoursesCount(myCoursesData?.data?.length || 0);
+      } catch (error) {
+        console.error("Error fetching course counts:", error);
+      }
+    };
+
+    fetchCounts();
+  }, []);
+
     return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 flex justify-center">
       <div className="w-full max-w-3xl px-4 py-8 flex flex-col">
@@ -591,38 +633,39 @@ const ProfileComponent = () => {
             </motion.h3>
             <div className="grid grid-cols-2 gap-4">
               {/* Favorites Card */}
-              <Card delay={0.4}>
-                <motion.button 
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full p-4"
-                >
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center space-x-3">
-                      <Heart size={24} className="text-[#1db954]" />
-                      <span className="text-zinc-400">Liked Items</span>
-                    </div>
-                    <span className="text-white text-xl font-semibold">28</span>
-                  </div>
-                </motion.button>
-              </Card>
+             {/* Favorites Card */}
+      <Card delay={0.4}>
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="w-full p-4"
+        >
+          <div className="flex justify-between items-center">
+            <div className="flex items-center space-x-3">
+              <Heart size={24} className="text-[#1db954]" />
+              <span className="text-zinc-400">Liked Items</span>
+            </div>
+            <span className="text-white text-xl font-semibold">{likedCount}</span>
+          </div>
+        </motion.button>
+      </Card>
 
-              {/* Products Card */}
-              <Card delay={0.5}>
-                <motion.button 
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full p-4"
-                >
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center space-x-3">
-                      <Package size={24} className="text-[#1db954]" />
-                      <span className="text-zinc-400">Products</span>
-                    </div>
-                    <span className="text-white text-xl font-semibold">12</span>
-                  </div>
-                </motion.button>
-              </Card>
+      {/* Products Card */}
+      <Card delay={0.5}>
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="w-full p-4"
+        >
+          <div className="flex justify-between items-center">
+            <div className="flex items-center space-x-3">
+              <Package size={24} className="text-[#1db954]" />
+              <span className="text-zinc-400">Products</span>
+            </div>
+            <span className="text-white text-xl font-semibold">{myCoursesCount}</span>
+          </div>
+        </motion.button>
+      </Card>
             </div>
           </div>
 
