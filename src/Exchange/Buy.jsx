@@ -9,39 +9,39 @@ import { toast } from 'react-hot-toast';
 
 import { useSelector } from 'react-redux';
 
-const CopyIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-  </svg>
-);
+// const CopyIcon = () => (
+//   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+//     <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+//     <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+//   </svg>
+// );
 
-const Mail = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-    <polyline points="22,6 12,13 2,6"></polyline>
-  </svg>
-);
+// const Mail = () => (
+//   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+//     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+//     <polyline points="22,6 12,13 2,6"></polyline>
+//   </svg>
+// );
 
-const WhatsApp = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12.036 5.339c-3.684 0-6.656 2.911-6.656 6.5 0 1.726.685 3.295 1.810 4.449l-1.190 3.562 3.737-1.157c1.137.748 2.498 1.184 3.957 1.184 3.684 0 6.656-2.911 6.656-6.5s-2.972-6.5-6.656-6.5zm3.498 9.087c-.175.495-.977.964-1.323 1.046-.697.132-1.226.067-2.654-.569-2.201-.888-3.569-3.084-3.679-3.233-.109-.149-.888-1.177-.849-2.234.039-1.056.617-1.567.838-1.793.222-.226.487-.282.65-.282s.325.006.468.018c.156.013.365-.059.572.434.214.502.708 1.735.772 1.862.064.127.106.275.021.434-.085.159-.127.259-.254.398-.127.139-.268.312-.382.417-.127.112-.26.235-.112.461.148.226.662.974 1.417 1.662.975.865 1.762 1.152 2.007 1.281.246.128.39.106.536-.064.145-.171.617-.721.781-.97s.324-.213.544-.127c.221.085 1.407.662 1.653.784.246.121.41.183.471.285.061.102.061.582-.114 1.077z"/>
-  </svg>
-);
+// const WhatsApp = () => (
+//   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+//     <path d="M12.036 5.339c-3.684 0-6.656 2.911-6.656 6.5 0 1.726.685 3.295 1.810 4.449l-1.190 3.562 3.737-1.157c1.137.748 2.498 1.184 3.957 1.184 3.684 0 6.656-2.911 6.656-6.5s-2.972-6.5-6.656-6.5zm3.498 9.087c-.175.495-.977.964-1.323 1.046-.697.132-1.226.067-2.654-.569-2.201-.888-3.569-3.084-3.679-3.233-.109-.149-.888-1.177-.849-2.234.039-1.056.617-1.567.838-1.793.222-.226.487-.282.65-.282s.325.006.468.018c.156.013.365-.059.572.434.214.502.708 1.735.772 1.862.064.127.106.275.021.434-.085.159-.127.259-.254.398-.127.139-.268.312-.382.417-.127.112-.26.235-.112.461.148.226.662.974 1.417 1.662.975.865 1.762 1.152 2.007 1.281.246.128.39.106.536-.064.145-.171.617-.721.781-.97s.324-.213.544-.127c.221.085 1.407.662 1.653.784.246.121.41.183.471.285.061.102.061.582-.114 1.077z"/>
+//   </svg>
+// );
 
-const Clock = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="12" cy="12" r="10"></circle>
-    <polyline points="12 6 12 12 16 14"></polyline>
-  </svg>
-);
+// const Clock = () => (
+//   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+//     <circle cx="12" cy="12" r="10"></circle>
+//     <polyline points="12 6 12 12 16 14"></polyline>
+//   </svg>
+// );
 
-const TagIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
-    <line x1="7" y1="7" x2="7.01" y2="7"></line>
-  </svg>
-);
+// const TagIcon = () => (
+//   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+//     <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+//     <line x1="7" y1="7" x2="7.01" y2="7"></line>
+//   </svg>
+// );
 
 const DeleteIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
