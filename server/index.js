@@ -88,6 +88,10 @@ const requestRoutes = require("./routes/Request");
 
 
 app.use("/api/v1/requests", requestRoutes);
+
+app.use("/api/v1/restraunts", require("./routes/Restraunts"));
+app.use("/api/v1/worship", require("./routes/Worship"));
+
 app.listen(PORT, () => {
 	console.log(`App is running at ${PORT}`)
 })

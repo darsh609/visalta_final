@@ -1,33 +1,33 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 import { FiUpload, FiMapPin } from "react-icons/fi";
+import { toast, Toaster } from "react-hot-toast";
 
 const TempleForm = () => {
   const [formData, setFormData] = useState({
-    GodName: '',
-    Timing: '',
-    Description: '',
+    GodName: "",
+    Timing: "",
+    Description: "",
     Img: null,
-    location: ''
+    location: "",
   });
   const [imagePreview, setImagePreview] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [message, setMessage] = useState({ type: '', content: '' });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        Img: file
+        Img: file,
       }));
 
       // Create preview URL
@@ -43,55 +43,63 @@ const TempleForm = () => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords;
-        window.open(`https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`, '_blank');
+        window.open(
+          `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`,
+          "_blank"
+        );
       });
     } else {
-      window.open('https://www.google.com/maps', '_blank');
+      window.open("https://www.google.com/maps", "_blank");
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setMessage({ type: '', content: '' });
+
+    // Show loading toast
+    const toastId = toast.loading("Adding temple...");
 
     try {
       // Create FormData object for multipart/form-data submission
       const submitData = new FormData();
-      submitData.append('GodName', formData.GodName);
-      submitData.append('Timing', formData.Timing);
-      submitData.append('Description', formData.Description);
-      submitData.append('location', formData.location);
+      submitData.append("name", formData.GodName);
+      submitData.append("timings", formData.Timing);
+      submitData.append("description", formData.Description);
+      submitData.append("location", formData.location);
       if (formData.Img) {
-        submitData.append('Img', formData.Img);
+        submitData.append("image", formData.Img);
       }
 
-      // Replace with your API endpoint
-      const response = await axios.post('/api/temples', submitData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+      // POST request to the backend
+      await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/worship/add`,
+        submitData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
-      });
+      );
 
-      setMessage({
-        type: 'success',
-        content: 'Temple added successfully!'
-      });
+      // Show success toast
+      toast.success("Temple added successfully!", { id: toastId });
 
-      // Clear form
+      // Clear the form
       setFormData({
-        GodName: '',
-        Timing: '',
-        Description: '',
+        GodName: "",
+        Timing: "",
+        Description: "",
         Img: null,
-        location: ''
+        location: "",
       });
       setImagePreview(null);
     } catch (error) {
-      setMessage({
-        type: 'error',
-        content: error.response?.data?.message || 'Error adding temple'
-      });
+      // Show error toast
+      toast.error(
+        error.response?.data?.message || "Error adding temple",
+        { id: toastId }
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -99,25 +107,21 @@ const TempleForm = () => {
 
   return (
     <div className="min-h-screen bg-zinc-900 text-white">
+
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-5xl font-bold text-center mb-8 text-white">
           Add Temple
-          <span className="block text-lg font-normal text-zinc-400 mt-2">Admin Panel</span>
+          <span className="block text-lg font-normal text-zinc-400 mt-2">
+            Admin Panel
+          </span>
         </h1>
 
         <form onSubmit={handleSubmit} className="max-w-2xl mx-auto space-y-6">
-          {/* Message Display */}
-          {message.content && (
-            <div className={`p-4 rounded-lg ${
-              message.type === 'success' ? 'bg-[#FF6B6B]/20' : 'bg-red-500/20'
-            }`}>
-              {message.content}
-            </div>
-          )}
-
           {/* Temple/God Name */}
           <div>
-            <label className="block text-sm font-medium mb-2">Temple/God Name</label>
+            <label className="block text-sm font-medium mb-2">
+              Temple/God Name
+            </label>
             <input
               type="text"
               name="GodName"
@@ -209,7 +213,9 @@ const TempleForm = () => {
                 ) : (
                   <div className="flex flex-col items-center">
                     <FiUpload className="w-8 h-8 mb-2" />
-                    <span className="text-sm text-zinc-400">Click to upload image</span>
+                    <span className="text-sm text-zinc-400">
+                      Click to upload image
+                    </span>
                   </div>
                 )}
               </label>
@@ -222,11 +228,11 @@ const TempleForm = () => {
             disabled={isSubmitting}
             className={`w-full px-4 py-3 rounded-lg font-medium transition-all duration-300 ${
               isSubmitting
-                ? 'bg-zinc-700 cursor-not-allowed'
-                : 'bg-[#FF6B6B] hover:bg-[#FF6B6B]/90'
+                ? "bg-zinc-700 cursor-not-allowed"
+                : "bg-[#FF6B6B] hover:bg-[#FF6B6B]/90"
             }`}
           >
-            {isSubmitting ? 'Adding Temple...' : 'Add Temple'}
+            {isSubmitting ? "Adding Temple..." : "Add Temple"}
           </button>
         </form>
       </div>
