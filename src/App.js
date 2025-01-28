@@ -25,7 +25,9 @@ import { getUserDetails } from "./services/operations/profileAPI"
 import { setUser } from "./slices/profileSlice";
 import Likecourse from "./Profile/Likecourse";
 import Mycourse from "./Profile/Mycourse";
+import UpdatePassword from "./Auth/UpdatePassword";
 import PrivateRoute from "./Auth/PrivateRoute";
+import ForgotPassword from "./Auth/Forgotpassword";
 function App() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -110,8 +112,17 @@ function App() {
     <OpenRoute>
 <VerifyEmail />
     </OpenRoute>
-              
-        
+            
+          }
+        />
+
+<Route
+          path="forgot-password"
+          element={
+    <OpenRoute>
+<ForgotPassword/>
+    </OpenRoute>
+            
           }
         />
 
@@ -163,6 +174,15 @@ function App() {
           </PrivateRoute>
         }
       />
+
+<Route
+          path="update-password/:id"
+          element={
+            <OpenRoute>
+              <UpdatePassword />
+            </OpenRoute>
+          }
+        />
 
       {/* Additional Protected Routes */}
       <Route
