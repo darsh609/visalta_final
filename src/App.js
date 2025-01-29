@@ -41,9 +41,7 @@ function App() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-
-  // useEffect(() => {
+// useEffect(() => {
   //   // Check for stored user data on app initialization
   //   const storedUser = localStorage.getItem("user")
   //   if (storedUser) {
