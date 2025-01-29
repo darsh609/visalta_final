@@ -8,11 +8,11 @@ const profileSchema = new mongoose.Schema({
 	dateOfBirth: {
 		type: String,
 	},
-	
-	about: {
-		type: String,
-		trim: true,
+	hostel:{
+		type:String
 	},
+	
+	
 
 	contactNumber: {
 		type: Number,

@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 import Eatables_Card from "../assets/Eatables_Card.png";
 import Travel_Card from "../assets/Travel_Card.png";
 import { motion, useAnimation } from 'framer-motion';
-import Sellimg from "../assets/sellimg.png";
+import Buy_Card from "../assets/Buy_Card.png";
 import { Power4 } from 'gsap/all';
-
+import { useNavigate } from 'react-router-dom';
 
 const FeatureCard = () => {
     
+    const navigate = useNavigate();
+        
        const cards = [useAnimation() , useAnimation(), useAnimation(), useAnimation()];
 
        const handleHover = (index)=>{
@@ -32,6 +34,7 @@ const FeatureCard = () => {
       <div className='px-20'>
       <div className="cards w-full flex gap-10 mt-10">
             <motion.div 
+            onClick={()=> navigate("/food")}
             onHoverStart = {()=> handleHover(0)} 
             onHoverEnd = {()=> handleHoverEnd(0)} 
             className="cardcontainer  relative w-1/2 h-[75vh]">
@@ -52,8 +55,8 @@ const FeatureCard = () => {
                     </div>
                 </motion.div>
 
-                <motion.div 
-
+                <motion.div
+                onClick={()=> navigate("/travel")} 
                 onHoverStart = {()=> handleHover(1)} 
                 onHoverEnd = {()=> handleHoverEnd(1)} 
 
@@ -78,6 +81,7 @@ const FeatureCard = () => {
  {/* BUY & SELL */}
             <div className="cards w-full flex gap-10 mt-10">
             <motion.div 
+            onClick={()=> navigate("/buy")}
             onHoverStart = {()=> handleHover(2)} 
             onHoverEnd = {()=> handleHoverEnd(2)} 
             className="cardcontainer  relative w-1/2 h-[75vh]">
@@ -94,12 +98,12 @@ const FeatureCard = () => {
                     </h1>
 
                     <div className='card w-full h-full rounded-xl card overflow-hidden'>
-                        <img className='w-full h-full bg-cover' src={Sellimg} alt=""  />
+                        <img className='w-full h-full bg-cover' src={Buy_Card} alt=""  />
                     </div>
                 </motion.div>
 
                 <motion.div 
-
+                onClick={()=> navigate("/sell")}
                 onHoverStart = {()=> handleHover(3)} 
                 onHoverEnd = {()=> handleHoverEnd(3)} 
 

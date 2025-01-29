@@ -53,6 +53,12 @@ const userSchema = new mongoose.Schema
 				ref: "Course",
 			},
 		],
+		Likedcourses: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "Course",
+			},
+		],
 		token: {
 			type: String,
 		},

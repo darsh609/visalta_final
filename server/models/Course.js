@@ -5,6 +5,10 @@ const mongoose = require("mongoose");
 const coursesSchema = new mongoose.Schema(
 	{
 	courseName: { type: String },
+	// contactNumber: {
+	// 	type: Number,
+	// 	trim: true,
+	// },
 
 
 	courseDescription: { type: String },
@@ -69,7 +73,7 @@ const coursesSchema = new mongoose.Schema(
 	// 	type: String,
 	// 	enum: ["Draft", "Published"],
 	// },
-}
+}, { timestamps: true }
 );
 
 // Export the Courses model
