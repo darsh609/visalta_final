@@ -16,7 +16,7 @@ const fileUpload = require("express-fileupload");
 const dotenv = require("dotenv");
 
 dotenv.config();
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 6000;
 
 //database connect
 database.connect();
@@ -88,6 +88,10 @@ const requestRoutes = require("./routes/Request");
 
 
 app.use("/api/v1/requests", requestRoutes);
+
+app.use("/api/v1/restraunts", require("./routes/Restraunts"));
+app.use("/api/v1/worship", require("./routes/Worship"));
+
 app.listen(PORT, () => {
 	console.log(`App is running at ${PORT}`)
 })

@@ -181,26 +181,26 @@ exports.Like = async (req, res) => {
             studentsEnrolled: userId
         });
 
-        if (existingEnrollment) {
-            // Unenroll the user (Dislike)
-            const updatedCourse = await Course.findOneAndUpdate(
-                { _id: courseId },
-                { $pull: { studentsEnrolled: userId } },
-                { new: true }
-            );
+        // if (existingEnrollment) {
+        //     // Unenroll the user (Dislike)
+        //     const updatedCourse = await Course.findOneAndUpdate(
+        //         { _id: courseId },
+        //         { $pull: { studentsEnrolled: userId } },
+        //         { new: true }
+        //     );
 
-            await User.findByIdAndUpdate(
-                userId,
-                { $pull: { Likedcourses: courseId } },
-                { new: true }
-            );
+        //     await User.findByIdAndUpdate(
+        //         userId,
+        //         { $pull: { Likedcourses: courseId } },
+        //         { new: true }
+        //     );
 
-            return res.status(200).json({
-                success: true,
-                message: "Successfully unenrolled from the course",
-                course: updatedCourse
-            });
-        }
+        //     return res.status(200).json({
+        //         success: true,
+        //         message: "Successfully unenrolled from the course",
+        //         course: updatedCourse
+        //     });
+        // }
 
         // Enroll the user (Like)
         const enrolledCourse = await Course.findOneAndUpdate(

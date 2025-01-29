@@ -28,6 +28,7 @@ import Mycourse from "./Profile/Mycourse";
 import UpdatePassword from "./Auth/UpdatePassword";
 import PrivateRoute from "./Auth/PrivateRoute";
 import ForgotPassword from "./Auth/Forgotpassword";
+import Rough from "./Rough";
 function App() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -217,6 +218,8 @@ function App() {
           </PrivateRoute>
         }
       />
+      <Route path="nav"
+      element={<Rough/>}/>
     
 
  

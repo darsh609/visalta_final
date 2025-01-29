@@ -27,8 +27,11 @@ const Mycourse = () => {
             },
           }
         );
+        console.log("Courses", response); 
 
-        setCourses(response.data.data || []); // Set courses from response
+        setCourses(response.data.data || []); 
+   // Set courses from response
+        // Set courses from response
       } catch (error) {
         console.error("Failed to fetch courses:", error);
         toast.error("Failed to load courses.", {

@@ -303,11 +303,14 @@ const Likecourse = () => {
   const [likedCourses, setLikedCourses] = useState([]);
   const [loading, setLoading] = useState(true);
 
-
   useEffect(() => {
     const fetchLikedCourses = async () => {
       try {
         const token = JSON.parse(localStorage.getItem("token"));
+        if (!token) {
+          throw new Error("No token found in local storage");
+        }
+
         const response = await axios.get(
           `${process.env.REACT_APP_BASE_URL}/course/getalllike`,
           {
@@ -317,11 +320,12 @@ const Likecourse = () => {
             },
           }
         );
-        console.log("----------------response-like------------------------->,",response)
-        setLikedCourses(response.data.likedCourses || []);
-        console.log("likedcourse-->",response.data.likedCourses)
+
+        console.log("API Response:", response); // Log the raw response
+        setLikedCourses(response.data.likedCourses);
+        console.log("likedCourses------------------------------>",likedCourses)
       } catch (error) {
-        console.error("Failed to fetch liked courses:", error);
+        console.error("Failed to fetch liked courses:", error.message);
       } finally {
         setLoading(false);
       }
@@ -329,6 +333,18 @@ const Likecourse = () => {
 
     fetchLikedCourses();
   }, []);
+
+  useEffect(() => {
+    console.log("Updated likedCourses:", likedCourses); // Logs whenever likedCourses changes
+  }, [likedCourses]);
+
+  // useEffect(() => {  
+  //   const savedCourses = JSON.parse(localStorage.getItem("savedCourses") || "[]");
+  //   setLikedCourses((prev) => prev.filter((course) => savedCourses.includes(course._id)));
+  //   console.log("likedcourse------------------------------>",likedCourses)  
+
+  //  }, [likedCourses]); 
+  
 
   const handleRemoveFromList = (courseId) => {
     setLikedCourses((prev) => prev.filter((course) => course._id !== courseId));
@@ -350,7 +366,7 @@ const Likecourse = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {loading ? (
           <p className="text-center text-gray-400">Loading liked courses...</p>
-        ) : likedCourses.length > 0 ? (
+        ) : likedCourses?.length > 0 ? (
           likedCourses?.map((course) => (
             <CourseCard
               key={course._id}
@@ -371,12 +387,12 @@ const CourseCard = ({ course,onRemove }) => {
   const [isSaved, setIsSaved] = useState(true); // Initially saved
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const savedCourses = JSON.parse(localStorage.getItem("savedCourses") || "[]");
-    if (!savedCourses.includes(course._id)) {
-      onRemove(); // Remove from UI if not saved
-    }
-  }, [course._id, onRemove]);
+  // useEffect(() => {
+  //   const savedCourses = JSON.parse(localStorage.getItem("savedCourses") || "[]");
+  //   if (!savedCourses.includes(course._id)) {
+  //     onRemove(); // Remove from UI if not saved
+  //   }
+  // }, [course._id, onRemove]);
 
   const handleDelete = async () => {
     try {

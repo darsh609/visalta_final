@@ -3,6 +3,7 @@ import { apiConnector } from "../services/apiConnector"
 import { contactusEndpoint } from "../services/apis"
 import countryCodes from "../datas/countrycode.json"
 import { useForm } from "react-hook-form"
+  import toast from "react-hot-toast";
 const ContactForm = () => {
   const [tiltStyle, setTiltStyle] = useState({ transform: 'perspective(1000px)' });
   
@@ -67,22 +68,37 @@ const ContactForm = () => {
     formState: { errors, isSubmitSuccessful },
   } = useForm()
 
+
+
   const submitContactForm = async (data) => {
-    console.log("Form Data - ", data)
+    console.log("Form Data - ", data);
+  
+    // Show loader toast
+    const loadingToastId = toast.loading("Sending your message...");
+  
     try {
-      setLoading(true)
+      setLoading(true);
       const res = await apiConnector(
         "POST",
         contactusEndpoint.CONTACT_US_API,
         data
-      )
-      // console.log("Email Res - ", res)
-      setLoading(false)
+      );
+  
+      // Display success toast and dismiss loader
+      toast.success("Message sent successfully! We will get back to you soon.", {
+        id: loadingToastId,
+      });
+      setLoading(false);
     } catch (error) {
-      console.log("ERROR MESSAGE - ", error.message)
-      setLoading(false)
+      console.log("ERROR MESSAGE - ", error.message);
+  
+      // Display error toast and dismiss loader
+      toast.error("Failed to send the message. Please try again later.", {
+        id: loadingToastId,
+      });
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     if (isSubmitSuccessful) {
