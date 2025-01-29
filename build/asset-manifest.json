@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/static/css/main.08e957b2.css",
+    "main.js": "/static/js/main.1f187637.js",
+    "static/media/Eatables_Card.png": "/static/media/Eatables_Card.539879d0db2119954ea9.png",
+    "static/media/masker.png": "/static/media/masker.a61e267056cf7deb07c8.png",
+    "static/media/Ashish.png": "/static/media/Ashish.095e2af3864c3910ab23.png",
+    "static/media/Vivek.png": "/static/media/Vivek.5d201a2141b40aba56f7.png",
+    "static/media/Darsh.png": "/static/media/Darsh.d1a5e01633266ef22a48.png",
+    "static/media/Livo.png": "/static/media/Livo.aebcc22129b1561f6185.png",
+    "static/media/Travel_Card.png": "/static/media/Travel_Card.abbda61f86d9cf7b95e9.png",
+    "static/media/sorry.png": "/static/media/sorry.fb29069a02b4a265c92f.png",
+    "static/media/Buy_Card.png": "/static/media/Buy_Card.2ceeced8822226c0695b.png",
+    "index.html": "/index.html",
+    "main.08e957b2.css.map": "/static/css/main.08e957b2.css.map",
+    "main.1f187637.js.map": "/static/js/main.1f187637.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.08e957b2.css",
+    "static/js/main.1f187637.js"
+  ]
+}
