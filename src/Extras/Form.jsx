@@ -349,7 +349,7 @@ const Form = () => {
         categories: formData.filters
       });
   
-      const response = await axios.post('http://localhost:4000/api/v1/restraunts/add', submitData, {
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/restraunts/add`, submitData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

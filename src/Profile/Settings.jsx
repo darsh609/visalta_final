@@ -131,6 +131,7 @@ const Settings = () => {
   const handleDeleteAccount = async () => {
     try {
       const token = JSON.parse(localStorage.getItem("token"));
+      console.log("-------------->",token)
       
       if (!token) {
         throw new Error("Authentication token not found");
