@@ -890,7 +890,7 @@ const FeedbackSlider = () => {
   // Fetch reviews from backend
   const fetchReviews = async () => {
     try {
-      const response = await fetch("http://localhost:4000/api/v1/review/");
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/review/`);
       const data = await response.json();
       if (data.success) {
         setFeedbacks(data.data);
@@ -912,7 +912,7 @@ const FeedbackSlider = () => {
       const token = JSON.parse(localStorage.getItem("token"));
       console.log(id)
       
-      const response = await fetch(`http://localhost:4000/api/v1/review/delete`, {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/review/delete`, {
         method: 'POST',
         headers: {
           
@@ -963,7 +963,7 @@ const FeedbackSlider = () => {
     if (userNames[userId]) return userNames[userId];
 
     try {
-      const response = await fetch("http://localhost:4000/api/v1/review/getUser", {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/review/getUser`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

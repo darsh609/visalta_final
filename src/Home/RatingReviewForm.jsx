@@ -82,7 +82,7 @@ const RatingReviewForm = () => {
       };
 
       const response = await axios.post(
-        'http://localhost:4000/api/v1/review/create',
+        `${process.env.REACT_APP_BASE_URL}/review/create`,
         data,
         config
       );
