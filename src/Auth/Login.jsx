@@ -5,6 +5,8 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "../services/operations/authAPI";
+import { FaArrowUpLong } from "react-icons/fa6";
+
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -30,7 +32,8 @@ export const Login = () => {
   };
 
   return (
-    <motion.div
+    <div>
+      <motion.div
       className="auth-page-container"
       style={{
         display: "flex",
@@ -174,6 +177,20 @@ export const Login = () => {
         </div>
       </motion.div>
     </motion.div>
+
+    <div className="start flex items-center gap-2" style={{ position: 'absolute', top: '20px', left: '20px' }}>
+                <div
+                    onClick={() => navigate("/")}
+                    className="px-5 py-2 border-[1px] text-white rounded-full font-lighter text-md uppercase tracking-tighter hover:bg-white hover:text-black transition-all duration-300 flex items-center gap-2 group cursor-pointer"
+                >
+                    Home
+                    <div className="w-2 h-2 bg-white rounded-full group-hover:w-5 group-hover:h-5 group-hover:rotate-[50deg] transition-all duration-500 flex items-center justify-center">
+                        <FaArrowUpLong className="opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    </div>
+                </div>
+            </div>
+    </div>
+    
   );
 };
 
