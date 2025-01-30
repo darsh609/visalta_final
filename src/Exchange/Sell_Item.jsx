@@ -267,8 +267,12 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 const UploadItemForm = () => {
+  const { token } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.profile);
+
   const [formData, setFormData] = useState({
     courseName: "",
     courseDescription: "",
@@ -281,6 +285,7 @@ const UploadItemForm = () => {
   const [tagInput, setTagInput] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
 
+  // Load saved form data from localStorage on mount
   useEffect(() => {
     const savedData = JSON.parse(localStorage.getItem("formData"));
     if (savedData && new Date(savedData.expiry) > new Date()) {
@@ -288,12 +293,13 @@ const UploadItemForm = () => {
     }
   }, []);
 
+  // Save form data to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem(
       "formData",
       JSON.stringify({
         data: formData,
-        expiry: new Date().getTime() + 24 * 60 * 60 * 1000,
+        expiry: new Date().getTime() + 24 * 60 * 60 * 1000, // Expiry set for 24 hours
       })
     );
   }, [formData]);
@@ -367,7 +373,9 @@ const UploadItemForm = () => {
     }
 
     const token = JSON.parse(localStorage.getItem("token"));
-    const loadingToastId = toast.loading("Submitting your course...");
+
+    // Show loading toast
+    const loadingToastId = toast.loading("Listing your Product..");
 
     try {
       const response = await fetch(`${process.env.REACT_APP_BASE_URL}/course/createCourse`, {
@@ -384,8 +392,9 @@ const UploadItemForm = () => {
       }
 
       const result = await response.json();
-      toast.success("Course created successfully!", { id: loadingToastId });
+      toast.success("Product Listed successfully!", { id: loadingToastId });
 
+      // Clear form and localStorage after successful submission
       setFormData({
         courseName: "",
         courseDescription: "",
@@ -415,11 +424,19 @@ const UploadItemForm = () => {
               <motion.h2 
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                className="text-3xl font-bold text-black mb-4"
+                className="text-3xl font-bold text-black mb-2"
               >
-                Create Course
+                Hi {user?.firstName}!
               </motion.h2>
-              <p className="text-gray-700">Fill in the details to create your new course. All fields are required.</p>
+              <motion.h3
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="text-2xl font-bold text-black mb-4"
+              >
+                List Your Product
+              </motion.h3>
+              <p className="text-gray-700 mb-4">Fill in the details to list your product for sale. All fields are required.</p>
+              <p className="italic text-gray-600">"Success in business is not just about the product you sell, but the story you tell and the value you create."</p>
             </div>
           </div>
 
@@ -430,7 +447,7 @@ const UploadItemForm = () => {
               className="grid grid-cols-2 gap-6"
             >
               <div className="col-span-2">
-                <label className="block text-black mb-2 font-medium">Course Name</label>
+                <label className="block text-black mb-2 font-medium">Product Name</label>
                 <input
                   type="text"
                   name="courseName"
@@ -441,7 +458,7 @@ const UploadItemForm = () => {
               </div>
 
               <div className="col-span-2">
-                <label className="block text-black mb-2 font-medium">Course Description</label>
+                <label className="block text-black mb-2 font-medium">Product Description</label>
                 <textarea
                   name="courseDescription"
                   value={formData.courseDescription}
@@ -451,7 +468,7 @@ const UploadItemForm = () => {
               </div>
 
               <div className="col-span-1">
-                <label className="block text-black mb-2 font-medium">Address</label>
+                <label className="block text-black mb-2 font-medium">Location</label>
                 <input
                   type="text"
                   name="address"
@@ -480,7 +497,7 @@ const UploadItemForm = () => {
                     value={tagInput}
                     onChange={(e) => setTagInput(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddTag())}
-                    className="flex-1 p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-black"
+                    className="flex-1 p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-black placeholder-gray-600"
                     placeholder="Add a tag"
                   />
                   <motion.button
@@ -532,9 +549,11 @@ const UploadItemForm = () => {
               </div>
 
               <div className="col-span-2">
-                <label className="block text-black mb-2 font-medium">Course Thumbnail</label>
+                <label className="block text-black mb-2 font-medium">Product Image</label>
                 <input
                   type="file"
+                  accept="image/*"
+                
                   onChange={handleFileChange}
                   className="w-full p-3 text-black file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-black hover:file:bg-gray-100"
                 />
@@ -552,7 +571,7 @@ const UploadItemForm = () => {
                       type="submit"
                       className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-black transition-colors"
                     >
-                      Submit Course
+                      List Product
                     </motion.button>
                   )}
                 </AnimatePresence>
