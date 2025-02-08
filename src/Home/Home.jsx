@@ -373,6 +373,35 @@ import Ballpit from '../blocks/Backgrounds/Ballpit/Ballpit';
 import Navbar from './Navbar';
 import { motion } from 'framer-motion';
 import TiltedCard from './TiltedCard';
+import InfiniteMenu from './Infinitemenu'
+
+const items = [
+  {
+    image: 'https://imgs.search.brave.com/qWLiGtYPIpP047O41-MVHFudMz5Q1FY4_jZvS_go3H4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy8x/LzE1L05pdHdfbWFp/bl9nYXRlLkpQRw',
+    link: 'https://google.com/',
+    title: 'Item 1',
+    description: 'This is pretty cool, right?'
+  },
+  {
+    image: 'https://picsum.photos/400/400?grayscale',
+    link: 'https://google.com/',
+    title: 'Item 2',
+    description: 'This is pretty cool, right?'
+  },
+  {
+    image: 'https://picsum.photos/500/500?grayscale',
+    link: 'https://google.com/',
+    title: 'Item 3',
+    description: 'This is pretty cool, right?'
+  },
+  {
+    image: 'https://picsum.photos/600/600?grayscale',
+    link: 'https://google.com/',
+    title: 'Item 4',
+    description: 'This is pretty cool, right?'
+  }
+];
+
 
 
 // Register ScrollTrigger
@@ -546,7 +575,7 @@ export const Home = () => {
           <FeatureCard />
         </div>
 
-          <div  className='relative'>
+          {/* <div  className='relative'>
           <TiltedCard
           imageSrc="https://i.scdn.co/image/ab67616d0000b273d9985092cd88bffd97653b58"
           altText="Kendrick Lamar - GNX Album Cover"
@@ -566,7 +595,11 @@ export const Home = () => {
             </p>
           }
         />
-          </div>
+          </div> */}
+          
+<div style={{ height: '1000px', position: 'relative' }}>
+  <InfiniteMenu items={items}/>
+</div>
 
           <div ref={feedbackSliderRef} className='relative'>
             <FeedbackSlider />
