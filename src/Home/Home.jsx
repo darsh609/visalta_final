@@ -1,5 +1,3 @@
-
-
 import React, { useRef, useEffect } from 'react';
 import { FaArrowUpLong } from "react-icons/fa6";
 import maskerImg from "../assets/masker.png";
@@ -15,8 +13,7 @@ import Footer from './Footer';
 import Ballpit from '../blocks/Backgrounds/Ballpit/Ballpit';
 import Navbar from './Navbar';
 import { motion } from 'framer-motion';
-import TiltedCard from './TiltedCard';
-import InfiniteMenu from './Infinitemenu'
+import InfiniteMenu from './Infinitemenu';
 
 const items = [
   {
@@ -45,24 +42,20 @@ const items = [
   }
 ];
 
-
-
-// Register ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
 
 export const Home = () => {
   const navigate = useNavigate();
   const gsapRef = useRef();
-  
-  // Container refs for parallax sections
   const containerRef = useRef(null);
   const marqueeRef = useRef(null);
   const featureCardRef = useRef(null);
   const feedbackSliderRef = useRef(null);
   const ratingFormRef = useRef(null);
   const ballpitRef = useRef(null);
+  const infiniteMenuRef = useRef(null);
+  const footerRef = useRef(null);
 
-  // Initial landing page animation
   useGSAP(() => {
     const tl = gsap.timeline();
     
@@ -87,72 +80,59 @@ export const Home = () => {
     });
   });
 
-  // Enhanced parallax effects setup
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Marquee parallax - increased movement range and faster response
-      gsap.fromTo(marqueeRef.current,
-        { y: 0 }, // Start from below
-        {
-          y: -300, // Move more dramatically upward
-          ease: "power1.out", // Changed ease for smoother motion
-          scrollTrigger: {
-            trigger: marqueeRef.current,
-            start: "top bottom", 
-            end: "bottom top",
-            scrub: 1, // Reduced scrub for more immediate response
-            markers: false
+      const createParallax = (ref, startY, endY, scrubAmount = 1) => {
+        gsap.fromTo(ref.current,
+          { y: startY },
+          {
+            y: endY,
+            ease: "power1.out",
+            scrollTrigger: {
+              trigger: ref.current,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: scrubAmount,
+              markers: false,
+            }
           }
-        }
-      );
+        );
+      };
 
-      // FeatureCard parallax - increased range
-      gsap.fromTo(featureCardRef.current,
-        { y: -200 }, // Start from below
-        {
-          y: -1050, // More dramatic upward movement
-          ease: "power1.out",
-          scrollTrigger: {
-            trigger: featureCardRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.5, // Slightly delayed response
-            markers: false
-          }
-        }
-      );
+      // Apply parallax with sequential timing
+      createParallax(marqueeRef, -100, -300, 1.5);
+      createParallax(featureCardRef, -340, -400, 1);
+      createParallax(infiniteMenuRef, -500, -390, 1.2);
+      createParallax(feedbackSliderRef, -400, -450, 1);
+      createParallax(ratingFormRef, -400, -200, 1);
+      createParallax(ballpitRef, -400, -150, 0.8);
+      createParallax(footerRef, -200, -150, 0.8);
 
-      // FeedbackSlider parallax - more dramatic movement
-      gsap.fromTo(feedbackSliderRef.current,
-        { y: 180 }, // Start from below
-        {
-          y: -180, // Equal movement in opposite direction
-          ease: "power1.out",
-          scrollTrigger: {
-            trigger: feedbackSliderRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.2, // Balanced response time
-            markers: false
-          }
-        }
-      );
+      // Fade animations
+      const sections = [
+        marqueeRef, 
+        featureCardRef, 
+        infiniteMenuRef, 
+        feedbackSliderRef, 
+        ratingFormRef, 
+        ballpitRef
+      ];
 
-      // RatingReviewForm parallax - enhanced movement
-      gsap.fromTo(ratingFormRef.current,
-        { y: 150 }, // Start from below
-        {
-          y: -150, // Balanced movement range
-          ease: "power1.out",
-          scrollTrigger: {
-            trigger: ratingFormRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1, // Quick response
-            markers: false
-          }
+      sections.forEach(ref => {
+        if (ref.current) {
+          gsap.from(ref.current, {
+            opacity: 0,
+            duration: 1,
+            scrollTrigger: {
+              trigger: ref.current,
+              start: "top center+=200",
+              end: "top center-=200",
+              scrub: false,
+              toggleActions: "play none none reverse"
+            }
+          });
         }
-      );
+      });
 
     }, containerRef);
 
@@ -163,7 +143,6 @@ export const Home = () => {
     <div ref={containerRef} className='relative w-full min-h-screen text-white bg-white overflow-x-hidden'>
       <Navbar/>
       
-      {/* Landing Page */}
       <div ref={gsapRef} className='LandingPage w-full h-screen bg-zinc-900 pt-1'>
         <div className='textstructure mt-40 px-20'>
           {["Navigating", "Student's", "life"].map((item, index) => (
@@ -203,70 +182,52 @@ export const Home = () => {
             </div>
           </div>
         </div>
-
-        
-
       </div>
 
-      {/* Parallax Sections */}
-
-        <div ref={marqueeRef} className='relative'>
+      <div className="sections-container relative" style={{ marginTop: '-1px' }}>
+        <div ref={marqueeRef} className='relative' style={{ marginBottom: '-1px' }}>
           <Marquee />
         </div>
 
-        <div ref={featureCardRef} className='relative'>
+        <div ref={featureCardRef} className='relative' style={{ marginBottom: '-1px' }}>
           <FeatureCard />
         </div>
-
-          {/* <div  className='relative'>
-          <TiltedCard
-          imageSrc="https://i.scdn.co/image/ab67616d0000b273d9985092cd88bffd97653b58"
-          altText="Kendrick Lamar - GNX Album Cover"
-          captionText="Kendrick Lamar - GNX"
-          containerHeight="300px"
-          containerWidth="300px"
-          imageHeight="300px"
-          imageWidth="300px"
-          rotateAmplitude={12}
-          scaleOnHover={1.2}
-          showMobileWarning={false}
-          showTooltip={true}
-          displayOverlayContent={true}
-          overlayContent={
-            <p className="tilted-card-demo-text">
-              Kendrick Lamar - GNX
-            </p>
-          }
-        />
-          </div> */}
           
-<div style={{ height: '1000px', position: 'relative' }}>
-  <InfiniteMenu items={items}/>
-</div>
+        <div ref={infiniteMenuRef} className='relative' style={{ 
+          height: '1000px',
+          marginBottom: '-1px'
+        }}>
+          <InfiniteMenu items={items} />
+        </div>
 
-          <div ref={feedbackSliderRef} className='relative'>
-            <FeedbackSlider />
-          </div>
+        <div ref={feedbackSliderRef} className='relative' style={{ marginBottom: '-1px' }}>
+          <FeedbackSlider />
+        </div>
 
-          <div ref={ratingFormRef} className='relative'>
-            <RatingReviewForm />
-          </div>
+        <div ref={ratingFormRef} className='relative' style={{ marginBottom: '-1px' }}>
+          <RatingReviewForm />
+        </div>
 
-          <div className='relative' style={{overflow: 'hidden', minHeight: '500px', maxHeight: '600px', width: '100%'}}>
-            <Ballpit
-              count={150}
-              gravity={1}
-              friction={0.8}
-              wallBounce={0.8}
-              followCursor={true}
-            />
-          </div>
-        
+        <div ref={ballpitRef} className='relative' style={{
+          overflow: 'hidden',
+          minHeight: '500px',
+          maxHeight: '600px',
+          width: '100%',
+          marginBottom: '-1px'
+        }}>
+          <Ballpit
+            count={150}
+            gravity={1}
+            friction={0.8}
+            wallBounce={0.8}
+            followCursor={true}
+          />
+        </div>
 
-      <Footer />
+        <div  ref={footerRef} className='relative' >
+        <Footer />
+        </div>
+      </div>
     </div>
   );
 };
-
-
-
