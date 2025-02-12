@@ -167,7 +167,7 @@ export const Home = () => {
         </div>
 
         <div className='border-t-2 border-zinc-800 mt-20 flex justify-between items-center py-5 px-20'>
-          {["forxxxxxxx","xxxxxxxx"].map((item, index) => (
+          {["",""].map((item, index) => (
             <p key={index} className='text-md font-light'>{item}</p>
           ))}
           <div className='start flex items-center gap-2'>
