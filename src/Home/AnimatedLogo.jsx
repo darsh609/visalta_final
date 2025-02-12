@@ -185,7 +185,7 @@ const AnimatedLogo = () => {
 
           {/* Text "isalta" */}
           <motion.div
-            className="absolute text-2xl font-bold text-white whitespace-nowrap top-[1vh] left-[4.5vw]"
+            className="absolute text-2xl font-bold text-white whitespace-nowrap top-3 left-16"
             initial={{ opacity: 0, y: 10 }}
             animate={{ 
               opacity: showLine ? 1 : 0,
