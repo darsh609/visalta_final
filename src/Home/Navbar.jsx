@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
+import AnimatedLogo from "./AnimatedLogo";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ function Navbar() {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
       >
-        xxxxxxxxx
+        <AnimatedLogo/>
       </motion.div>
 
       {/* Links for larger screens */}
