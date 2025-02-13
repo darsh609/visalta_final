@@ -112,8 +112,11 @@ import axios from "axios";
 import { FiMap, FiTrash2 } from "react-icons/fi";
 import TempleForm from "./TempleForm";
 import { toast, Toaster } from "react-hot-toast";
-
+import { useSelector } from "react-redux";
 const Worship = () => {
+  const { user } = useSelector((state) => state.profile);
+  console.log("---->",user)
+  const isAdmin = user?.accountType === "Admin";
   const [searchTerm, setSearchTerm] = useState("");
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [worshipData, setWorshipData] = useState([]);
@@ -170,10 +173,10 @@ const Worship = () => {
 
   return (
     <div className="min-h-screen bg-zinc-900 text-white">
-      <Toaster position="top-right" reverseOrder={false} />
+      {/* <Toaster position="top-right" reverseOrder={false} /> */}
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-5xl font-bold text-center mb-8 text-white">
-          Discover Temples
+          Discover Divine-Destinations
           <span className="block text-lg font-normal text-zinc-400 mt-2">
             Kazipet-Warangal
           </span>
@@ -210,9 +213,11 @@ const Worship = () => {
         </div>
 
         {/* Temple Form */}
-        <div>
-          <TempleForm />
-        </div>
+        {
+          isAdmin &&(<div>
+            <TempleForm />
+          </div>)
+}
 
         {/* Loading State */}
         {isLoading ? (
@@ -251,12 +256,15 @@ const Worship = () => {
                 </div>
 
                 {/* Delete Icon */}
-                <div
-                  className="absolute bottom-4 right-4 bg-red-500/80 p-2 rounded-full cursor-pointer shadow-lg hover:bg-red-600 transition-colors"
-                  onClick={() => setDeleteModal({ isOpen: true, id: temple._id })}
-                >
-                  <FiTrash2 className="w-5 h-5 text-white" />
-                </div>
+                {
+                  isAdmin &&(<div
+                    className="absolute bottom-4 right-4 bg-red-500/80 p-2 rounded-full cursor-pointer shadow-lg hover:bg-red-600 transition-colors"
+                    onClick={() => setDeleteModal({ isOpen: true, id: temple._id })}
+                  >
+                    <FiTrash2 className="w-5 h-5 text-white" />
+                  </div>)
+                }
+                
               </div>
             ))}
           </div>

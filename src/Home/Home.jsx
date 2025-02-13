@@ -223,7 +223,7 @@ export const Home = () => {
           ))}
         </div>
 
-        <div className='border-t-2 border-zinc-800  mb-72 flex justify-between items-center py-5 px-20'>
+        <div className='border-t-2 border-zinc-800  mb-96 flex justify-between items-center py-5 px-20'>
           {["",""].map((item, index) => (
             <p key={index} className='text-md font-light'>{item}</p>
           ))}

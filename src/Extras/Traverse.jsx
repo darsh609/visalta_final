@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+
+
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaClock, FaChurch, FaPlaneDeparture, FaGlobe } from "react-icons/fa";
 import Worship from "./worship";
@@ -11,7 +13,16 @@ const Traverse = () => {
     visible: { opacity: 1, y: 0 },
   };
 
-  const [activeTab, setActiveTab] = useState(0);
+  // Initialize activeTab from localStorage if available
+  const [activeTab, setActiveTab] = useState(() => {
+    const savedTab = localStorage.getItem("activeTab");
+    return savedTab !== null ? Number(savedTab) : 0;
+  });
+
+  // Update localStorage whenever activeTab changes
+  useEffect(() => {
+    localStorage.setItem("activeTab", activeTab);
+  }, [activeTab]);
 
   const tabs = [
     {
@@ -48,7 +59,7 @@ const Traverse = () => {
             <FaGlobe className="text-4xl md:text-6xl text-[#f26668] mb-2" />
           </motion.div>
           <motion.h1
-            whileHover={{ scale: 1.05}}
+            whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 300 }}
             className="text-4xl md:text-6xl font-bold text-center"
           >
