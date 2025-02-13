@@ -224,7 +224,7 @@ export const Home = () => {
           ))}
         </div>
 
-        <div className='border-t-2 border-zinc-800 mt-20 flex justify-between items-center py-5 px-20'>
+        <div className='border-t-2 border-zinc-800  mb-72 flex justify-between items-center py-5 px-20'>
           {["",""].map((item, index) => (
             <p key={index} className='text-md font-light'>{item}</p>
           ))}
@@ -242,7 +242,7 @@ export const Home = () => {
         </div>
       </div>
 
-      <div className="sections-container relative" style={{ marginTop: '-1px' }}>
+      <div className="sections-container mt-20 relative" style={{ marginTop: '-1px' }}>
         <div ref={marqueeRef} className='relative' style={{ marginBottom: '-1px' }}>
           <Marquee />
         </div>
