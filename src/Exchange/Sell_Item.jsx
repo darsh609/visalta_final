@@ -268,6 +268,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
+import Select from "react-select";
 
 const UploadItemForm = () => {
   const { token } = useSelector((state) => state.auth);
@@ -285,7 +286,47 @@ const UploadItemForm = () => {
   const [tagInput, setTagInput] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
 
+
+  // const hostelOptions = [
+  //   { label: "Azad Hall (Ist Block)", value: "Azad Hall" },
+  //   { label: "Bose Hall (2nd Block)", value: "Bose Hall" },
+  //   { label: "Ambedkar Hall (3rd Block)", value: "Ambedkar Hall" },
+  //   { label: "Babha Hall (4th Block)", value: "Babha Hall" },
+  //   { label: "Gandhi Hall (5th Block)", value: "Gandhi Hall" },
+  //   { label: "Gokhale Hall (5th Block)", value: "Gokhale Hall" },
+  //   { label: "Radhakrishnan Hall (6th Block)", value: "Radhakrishnan Hall" },
+  //   { label: "Raman Hall (7th Block)", value: "Raman Hall" },
+  //   { label: "Nehru Hall (8th Block)", value: "Nehru Hall" },
+  //   { label: "Patel Hall (9th Block)", value: "Patel Hall" },
+  //   { label: "Tagore Hall (10th Block)", value: "Tagore Hall" },
+  //   { label: "Viswesvraya Hall (11th Block)", value: "Viswesvraya Hall" },
+  //   { label: "Rajendra Prasad Hall (12th Block)", value: "Rajendra Prasad Hall" },
+  //   { label: "Vikram Sarabhai Hall (14th Block)", value: "Vikram Sarabhai Hall" },
+  //   { label: "1K Hall of Residence (1K)", value: "1K Hall" },
+  //   { label: "1.8K Ultra Mega Hostel (1.8K)", value: "1.8K Ultra Mega Hostel" },
+  //   { label: "International Students Hall (ISH)", value: "International Students Hall" },
+  //   { label: "Priyadarshini Hall", value: "Priyadarshini Hall" },
+  //   { label: "Sarojini Hall", value: "Sarojini Hall" },
+  //   { label: "NEW LADIES HOSTEL-A", value: "NEW LADIES HOSTEL-A" },
+  //   { label: "NEW LADIES HOSTEL-B", value: "NEW LADIES HOSTEL-B" },
+  //   { label: "NEW LADIES HOSTEL-C", value: "NEW LADIES HOSTEL-C" },
+  //   { label: "Nearby Kazipet", value: "Nearby Kazipet" },
+  //   { label: "Nearby Hanamkonda", value: "Nearby Hanamkonda" },
+  //   { label: "Other", value: "Other" }
+  // ];
+
   // Load saved form data from localStorage on mount
+ 
+const hostelOptions = [
+  "Azad Hall (Ist Block)", "Bose Hall (2nd Block)", "Ambedkar Hall (3rd Block)", "Babha Hall (4th Block)",
+  "Gandhi Hall (5th Block)", "Gokhale Hall (5th Block)", "Radhakrishnan Hall (6th Block)", "Raman Hall (7th Block)",
+  "Nehru Hall (8th Block)", "Patel Hall (9th Block)", "Tagore Hall (10th Block)", "Viswesvraya Hall (11th Block)",
+  "Rajendra Prasad Hall (12th Block)", "Vikram Sarabhai Hall (14th Block)", "1K Hall of Residence (1K)", "1.8K Ultra Mega Hostel (1.8K)",
+  "International Students Hall (ISH)", "Priyadarshini Hall", "Sarojini Hall", "NEW LADIES HOSTEL-A",
+  "NEW LADIES HOSTEL-B", "NEW LADIES HOSTEL-C", "Nearby Kazipet", "Nearby Hanamkonda", "Other"
+];
+ 
+ 
   useEffect(() => {
     const savedData = JSON.parse(localStorage.getItem("formData"));
     if (savedData && new Date(savedData.expiry) > new Date()) {
@@ -469,13 +510,46 @@ const UploadItemForm = () => {
 
               <div className="col-span-1">
                 <label className="block text-black mb-2 font-medium">Location</label>
-                <input
+                {/* <input
                   type="text"
                   name="address"
                   value={formData.address}
                   onChange={handleChange}
                   className="w-full p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-black"
-                />
+                /> */}
+                    {/* <Select
+      options={hostelOptions}
+      value={formData.address}
+      onChange={handleChange}
+      isSearchable={true}
+      placeholder="Select your address..."
+      className="w-full p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-black"
+      styles={{
+        control: (provided) => ({
+          ...provided,
+          backgroundColor: "transparent",
+          borderBottom: "2px solid black",
+          borderRadius: "8px",
+          padding: "5px"
+        }),
+        menu: (provided) => ({
+          ...provided,
+          backgroundColor: "#fff",
+          color: "black"
+        })
+      }}
+    /> */}
+<select
+        name="address"
+        value={formData.address}
+        onChange={handleChange}
+        className="w-full p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-black"
+      >
+        <option value="" disabled>Select your address...</option>
+        {hostelOptions.map((option, index) => (
+          <option key={index} value={option} className="text-black">{option}</option>
+        ))}
+      </select>
               </div>
 
               <div className="col-span-1">
@@ -538,7 +612,7 @@ const UploadItemForm = () => {
               </div>
 
               <div className="col-span-2">
-                <label className="block text-black mb-2 font-medium">Contact</label>
+                <label className="block text-black mb-2 font-medium">Contact Number</label>
                 <input
                   type="text"
                   name="contact"
