@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { FaArrowUpLong } from "react-icons/fa6";
 import maskerImg from "../assets/masker.png";
 import { useNavigate } from 'react-router-dom';
@@ -45,6 +45,7 @@ const items = [
 gsap.registerPlugin(ScrollTrigger);
 
 export const Home = () => {
+  const [lastScrollTop, setLastScrollTop] = useState(0);
   const navigate = useNavigate();
   const gsapRef = useRef();
   const containerRef = useRef(null);
@@ -55,6 +56,7 @@ export const Home = () => {
   const ballpitRef = useRef(null);
   const infiniteMenuRef = useRef(null);
   const footerRef = useRef(null);
+  const navbarRef = useRef(null);
 
   useGSAP(() => {
     const tl = gsap.timeline();
@@ -82,6 +84,47 @@ export const Home = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Navbar scroll animation
+      let lastScrollPosition = 0;
+      const handleScroll = () => {
+        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+        
+        if (currentScroll > lastScrollPosition) {
+          // Scrolling down
+          gsap.to('.Navbar', {
+            yPercent: -100,
+            duration: 0.3,
+            ease: 'power1.inOut'
+          });
+        } else {
+          // Scrolling up
+          gsap.to('.Navbar', {
+            yPercent: 0,
+            duration: 0.3,
+            ease: 'power1.inOut'
+          });
+
+          // Add blur and transparency when not at top
+          if (currentScroll > 50) {
+            gsap.to('.Navbar', {
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              backdropFilter: 'blur(10px)',
+              duration: 0.3
+            });
+          } else {
+            // Reset to original state when at top
+            gsap.to('.Navbar', {
+              backgroundColor: 'transparent',
+              backdropFilter: 'blur(0px)',
+              duration: 0.3
+            });
+          }
+        }
+        lastScrollPosition = currentScroll <= 0 ? 0 : currentScroll;
+      };
+
+      window.addEventListener('scroll', handleScroll);
+
       const createParallax = (ref, startY, endY, scrubAmount = 1) => {
         gsap.fromTo(ref.current,
           { y: startY },
@@ -134,6 +177,9 @@ export const Home = () => {
         }
       });
 
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
     }, containerRef);
 
     return () => ctx.revert();
@@ -141,40 +187,42 @@ export const Home = () => {
 
   return (
     <div ref={containerRef} className='relative w-full min-h-screen text-white bg-white overflow-x-hidden'>
-      <Navbar/>
+      <div ref={navbarRef}>
+        <Navbar/>
+      </div>
       
       <div ref={gsapRef} className='LandingPage w-full h-screen bg-zinc-900 pt-1'>
-      <div className='textstructure mt-40 px-20 py-12'>
-    {["Navigating", "Student's", "life"].map((item, index) => (
-      <div key={index} className='masker mb-[-0.5vh]'> {/* Added negative margin to bring lines closer */}
-        <div className='w-fit flex items-center overflow-hidden relative'>
-          {index === 1 && (
-            <motion.div 
-              initial={{width:0}} 
-              animate={{width:"10vw"}} // Reduced width further for better line fit
-              transition={{ease:[0.76, 0, 0.24, 1], duration:1}} 
-              className='image ml-[0.5vw] w-[8vw] rounded-xl h-[6.5vw] relative z-10 overflow-hidden self-center'
-              style={{
-                transform: 'perspective(1000px) rotateX(5deg)',
-                transformStyle: 'preserve-3d',
-                position: 'relative',
-                top: '-0.2vw'
-              }}
-            >
-              <img 
-                src={maskerImg} 
-                alt="" 
-                className="w-full h-full object-cover rounded-xl transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl"
-              />
-            </motion.div>
-          )}
-          <h1 className='flex items-center uppercase text-[7vw] leading-[6vw] font-founders font-bold tracking-tight z-0'> {/* Changed tracking-tighter to tracking-tight */}
-            {item}
-          </h1>
+        <div className='textstructure mt-40 px-20 py-12'>
+          {["Navigating", "Student's", "life"].map((item, index) => (
+            <div key={index} className='masker mb-[-0.5vh]'>
+              <div className='w-fit flex items-center overflow-hidden relative'>
+                {index === 1 && (
+                  <motion.div 
+                    initial={{width:0}} 
+                    animate={{width:"10vw"}}
+                    transition={{ease:[0.76, 0, 0.24, 1], duration:1}} 
+                    className='image ml-[0.5vw] w-[8vw] rounded-xl h-[6.5vw] relative z-10 overflow-hidden self-center'
+                    style={{
+                      transform: 'perspective(1000px) rotateX(5deg)',
+                      transformStyle: 'preserve-3d',
+                      position: 'relative',
+                      top: '-0.2vw'
+                    }}
+                  >
+                    <img 
+                      src={maskerImg} 
+                      alt="" 
+                      className="w-full h-full object-cover rounded-xl transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl"
+                    />
+                  </motion.div>
+                )}
+                <h1 className='flex items-center uppercase text-[7vw] leading-[6vw] font-founders font-bold tracking-tight z-0'>
+                  {item}
+                </h1>
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
-    ))}
-  </div>
 
         <div className='border-t-2 border-zinc-800 mt-20 flex justify-between items-center py-5 px-20'>
           {["",""].map((item, index) => (
@@ -234,8 +282,8 @@ export const Home = () => {
           />
         </div>
 
-        <div  ref={footerRef} className='relative' >
-        <Footer />
+        <div ref={footerRef} className='relative'>
+          <Footer />
         </div>
       </div>
     </div>
