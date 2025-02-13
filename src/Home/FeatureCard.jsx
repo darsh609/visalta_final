@@ -234,7 +234,7 @@ const FeatureCard = () => {
                         
                         <CardWrapper>
                             <motion.div
-                                onClick={() => navigate("/travel")}
+                                onClick={() => navigate("/expeditions")}
                                 onHoverStart={() => handleHover(1)}
                                 onHoverEnd={() => handleHoverEnd(1)}
                                 whileHover={{ scale: 1.05 }}

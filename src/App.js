@@ -28,6 +28,7 @@ import Mycourse from "./Profile/Mycourse";
 import UpdatePassword from "./Auth/UpdatePassword";
 import PrivateRoute from "./Auth/PrivateRoute";
 import ForgotPassword from "./Auth/Forgotpassword";
+import Traverse from "./Extras/Traverse";
 function App() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -157,10 +158,10 @@ function App() {
         }
       />
       <Route
-        path="Travel"
+        path="expeditions"
         element={
           <PrivateRoute>
-            <Travel />
+            <Traverse/>
           </PrivateRoute>
         }
       />

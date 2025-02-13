@@ -242,7 +242,7 @@ export const Home = () => {
         </div>
       </div>
 
-      <div className="sections-container mt-20 relative" style={{ marginTop: '-1px' }}>
+      <div className="sections-container  mt-80 relative" style={{ marginTop: '-1px' }}>
         <div ref={marqueeRef} className='relative' style={{ marginBottom: '-1px' }}>
           <Marquee />
         </div>
