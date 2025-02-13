@@ -240,31 +240,106 @@ exports.Like = async (req, res) => {
         const instructor = await User.findById(enrolledCourse.instructor);
         if (instructor) {
             const instructorMessage = `
-                <h1 style="font-size: 24px; color: #333;">New Enrollment in Your Course!</h1>
-                <p style="font-size: 18px; color: #555;">
-                    Hello ${instructor.firstName},
-                </p>
-                <p style="font-size: 18px; color: #555;">
-                    Your course <strong>${enrolledCourse.courseName}</strong> has a new enrollment!
-                </p>
-                <p style="font-size: 18px; color: #555;">
-                    <strong>Student Details:</strong><br>
-                    Name: ${enrolledStudent.firstName} ${enrolledStudent.lastName}<br>
-                    Email: <a href="mailto:${enrolledStudent.email}">${enrolledStudent.email}</a><br>
-                    Contact Number: ${detail.contactNumber || "Not Provided"}
-                </p>
-                <p style="font-size: 18px; color: #555;">
-                    If you wish to connect with the student, feel free to reach out to them via the provided contact details.
-                </p>
-                <p style="font-size: 18px; color: #555;">
-                    Best regards,<br>
-                    Your Platform Team
-                </p>
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="UTF-8">
+                <title>New Product Interest Alert</title>
+                <style>
+                    body {
+                        background-color: #1a1a1a;
+                        font-family: Arial, sans-serif;
+                        line-height: 1.6;
+                        color: #ffffff !important;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    
+                    .container {
+                        max-width: 600px;
+                        margin: 0 auto;
+                        padding: 40px 20px;
+                        background-color: #232323;
+                        border: 1px solid #333333;
+                    }
+                    
+                    .logo {
+                        max-width: 200px;
+                        margin-bottom: 30px;
+                        padding: 20px;
+                        background-color: #ffffff;
+                        border-radius: 10px;
+                    }
+                    
+                    .highlight {
+                        color: #4ade80;
+                        font-weight: bold;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <div style="text-align: center;">
+                        <img class="logo" src="https://i.postimg.cc/dQb3HqdF/Visalta.jpg" alt="Visalta Logo" />
+                    </div>
+            
+                    <div style="color: #ffffff; text-align: center; font-size: 28px; font-weight: bold; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; padding: 10px 0; background-color: #1c2a1f; border-bottom: 3px solid #4ade80;">
+                        New Product Interest Alert! 🎯
+                    </div>
+            
+                    <div style="padding: 20px;">
+                        <p style="font-size: 18px; color: #ffffff;">
+                            Hello ${instructor.firstName},
+                        </p>
+                        
+                        <p style="font-size: 18px; color: #ffffff;">
+                            Great news! A potential buyer has saved your product <span class="highlight">${enrolledCourse.courseName}</span> to their wishlist! 🌟
+                        </p>
+            
+                        <div style="background-color: #1c2a1f; padding: 25px; margin: 25px 0; border-left: 3px solid #4ade80; border-radius: 0 8px 8px 0;">
+                            <div style="color: #4ade80; font-weight: bold; margin-bottom: 15px;">Interested Buyer Details:</div>
+                            <div style="color: #ffffff; margin: 10px 0;">
+                                <strong style="color: #4ade80;">Name:</strong> ${enrolledStudent.firstName} ${enrolledStudent.lastName}
+                            </div>
+                            <div style="color: #ffffff; margin: 10px 0;">
+                                <strong style="color: #4ade80;">Email:</strong> <a href="mailto:${enrolledStudent.email}" style="color: #4ade80;">${enrolledStudent.email}</a>
+                            </div>
+                            <div style="color: #ffffff; margin: 10px 0;">
+                                <strong style="color: #4ade80;">Contact:</strong> ${detail.contactNumber || "Not Provided"}
+                            </div>
+                        </div>
+            
+                        <div style="background-color: #1c2a1f; padding: 20px; margin: 25px 0; text-align: center; border: 1px solid #4ade80; border-radius: 8px;">
+                            <p style="color: #ffffff; margin: 0;">
+                                📈 This interest indicates demand for your product!
+                            </p>
+                        </div>
+            
+                        <p style="font-size: 18px; color: #ffffff;">
+                            Consider reaching out to the potential buyer to:
+                        </p>
+                        <ul style="color: #ffffff;">
+                            <li>Share more details about your product</li>
+                            <li>Offer special first-time buyer incentives</li>
+                            <li>Answer any questions they might have</li>
+                        </ul>
+            
+                        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #333333; text-align: center; color: #ffffff;">
+                            <p>Keep building your success story with Visalta! 🚀</p>
+                            <p style="margin-top: 15px; font-size: 14px;">
+                                Best regards,<br>
+                                The Visalta Team
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </body>
+            </html>
             `;
-
+            
             await mailSender(
                 instructor.email,
-                `New Enrollment in Your Course: ${enrolledCourse.courseName}`,
+                `New Interest Alert: ${enrolledCourse.courseName}`,
                 instructorMessage
             );
         }
