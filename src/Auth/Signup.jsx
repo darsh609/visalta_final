@@ -88,16 +88,9 @@ const Signup = () => {
       onClick={() => navigate("/")}>
       <AnimatedLogo/>
       </div>
-    <motion.div
-    className=" flex justify-center items-center font-['Poppins']"
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ duration: 1 }}
-  >
+   
     {/* Floating particles effect */}
     <motion.div
-      className="absolute inset-0 pointer-events-none"
-
       className="auth-page-container relative flex justify-center items-center min-h-screen bg-gradient-to-br from-black via-gray-900 to-[#1db954] font-['Poppins'] p-4 overflow-y-auto"
 
       initial={{ opacity: 0 }}
@@ -346,7 +339,7 @@ const Signup = () => {
         animate={{ x: 0, opacity: 1 }}
         transition={{ delay: 1.2 }}
       >
-        <div
+        {/* <div
           onClick={() => navigate("/")}
           className="group px-5 py-2 border border-[#1db954]/30 text-white rounded-full hover:bg-[#1db954] hover:border-[#1db954] transition-all duration-300 flex items-center gap-2 cursor-pointer"
         >
@@ -354,7 +347,7 @@ const Signup = () => {
           <div className="w-2 h-2 bg-white rounded-full group-hover:w-5 group-hover:h-5 group-hover:rotate-[50deg] transition-all duration-500 flex items-center justify-center">
             <FaArrowUpLong className="opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </div>
-        </div>
+        </div> */}
       </motion.div>
     </motion.div>
 
@@ -366,7 +359,7 @@ const Signup = () => {
       transition={{ delay: 1.2 }}
     >
     </motion.div>
-  </motion.div>
+  
     </div>
 
 );

@@ -37,16 +37,10 @@ export const Login = () => {
       onClick={() => navigate("/")}>
       <AnimatedLogo/>
       </div>
-    <motion.div
-
-    className="flex justify-center items-center font-['Poppins'] p-4 overflow-y-auto"
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ duration: 1 }}
-  >
+   
     {/* Floating particles effect */}
     <motion.div
-      className="absolute inset-0 pointer-events-none"
+      
       className="auth-page-container relative flex justify-center items-center min-h-screen bg-gradient-to-br from-black via-gray-900 to-[#1db954] font-['Poppins'] p-4 overflow-y-auto"
 
       initial={{ opacity: 0 }}
@@ -189,7 +183,7 @@ export const Login = () => {
       </motion.div>
     </motion.div>
 
-  </motion.div>
+  
     </div>
   );
 };
