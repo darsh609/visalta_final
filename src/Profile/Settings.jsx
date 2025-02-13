@@ -443,7 +443,7 @@ const Settings = () => {
           {[
             { label: 'First Name', name: 'firstName' },
             { label: 'Last Name', name: 'lastName' },
-            { label: 'Hostel-Name', name: 'hostel' },
+            { label: 'Hostel-Name', name: 'hostel',type:'select',options:['Azad Hall (Ist Block)', 'Bose Hall (2nd Block)', 'Ambedkar Hall (3rd Block)', 'Babha Hall (4th Block)', 'Gandhi Hall (5th Block)', 'Gokhale Hall (5th Block)', 'Radhakrishnan Hall (6th Block)', 'Raman Hall (7th Block)', 'Nehru Hall (8th Block)', 'Patel Hall (9th Block)', 'Tagore Hall (10th Block)', 'Viswesvraya Hall (11th Block)', 'Rajendra Prasad Hall (12th Block)', 'Vikram Sarabhai Hall (14th Block)', '1K Hall of Residence (1K)', '1.8K Ultra Mega Hostel (1.8K)', 'International Students Hall (ISH)', 'Priyadarshini Hall', 'Sarojini Hall', 'NEW LADIES HOSTEL-A', 'NEW LADIES HOSTEL-B', 'NEW LADIES HOSTEL-C', 'Nearby Kazipet', 'Nearby Hanamkonda', 'Other']},
             { label: 'Date of Birth', name: 'dateOfBirth', type: 'date' },
             { label: 'Gender', name: 'gender', type: 'select', options: ['Male', 'Female', 'Other'] },
             { label: 'Contact Number', name: 'contactNumber', type: 'tel', colspan: true }
