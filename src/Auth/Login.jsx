@@ -33,7 +33,7 @@ export const Login = () => {
 
   return (
     <motion.div
-    className="auth-page-container relative flex justify-center items-center min-h-screen bg-gradient-to-br from-black via-gray-900 to-green-900 font-['Poppins'] p-4 overflow-y-auto"
+    className="auth-page-container relative flex justify-center items-center min-h-screen bg-gradient-to-br from-black via-gray-900 to-[#1db954] font-['Poppins'] p-4 overflow-y-auto"
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     transition={{ duration: 1 }}
@@ -48,7 +48,7 @@ export const Login = () => {
       {[...Array(20)].map((_, i) => (
         <motion.div
           key={i}
-          className="absolute w-1 h-1 bg-green-500 rounded-full"
+          className="absolute w-1 h-1 bg-[#1db954] rounded-full"
           initial={{
             x: Math.random() * window.innerWidth,
             y: Math.random() * window.innerHeight,
@@ -67,7 +67,7 @@ export const Login = () => {
     </motion.div>
 
     <motion.div
-      className="auth-form-container bg-black/80 p-8 rounded-lg shadow-2xl backdrop-blur-sm w-full max-w-md m-4 border border-green-500/20"
+      className="auth-form-container bg-black/80 p-8 rounded-lg shadow-2xl backdrop-blur-sm w-full max-w-md m-4 border border-[#1db954]/20"
       initial={{ y: -50, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ type: "spring", stiffness: 120 }}
@@ -78,10 +78,10 @@ export const Login = () => {
         transition={{ delay: 0.5 }}
         className="mb-6"
       >
-        <FaCompass className="text-green-400  text-6xl mx-auto mb-4 animate-spin-slow" />
+        <FaCompass className="text-[#1db954] text-6xl mx-auto mb-4 animate-spin-slow" />
         <h2 className="text-2xl font-bold text-white mb-2">Welcome Back to Visalta</h2>
         <motion.p
-          className="text-green-400 text-lg italic font-medium"
+          className="text-[#1db954] text-lg italic font-medium"
           animate={{ opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 2, repeat: Infinity }}
         >
@@ -96,7 +96,7 @@ export const Login = () => {
           animate={{ x: 0, opacity: 1 }}
           transition={{ delay: 0.6 }}
         >
-          <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-500" />
+          <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#1db954]" />
           <input
             type="email"
             name="email"
@@ -104,7 +104,7 @@ export const Login = () => {
             value={formData.email}
             onChange={handleChange}
             required
-            className="w-full px-10 py-3 bg-gray-900 text-white rounded-lg border border-green-500/30 focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all duration-300"
+            className="w-full px-10 py-3 bg-gray-900 text-white rounded-lg border border-[#1db954]/30 focus:border-[#1db954] focus:ring-2 focus:ring-[#1db954]/20 transition-all duration-300"
           />
         </motion.div>
 
@@ -114,7 +114,7 @@ export const Login = () => {
           animate={{ x: 0, opacity: 1 }}
           transition={{ delay: 0.7 }}
         >
-          <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-500" />
+          <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#1db954]" />
           <input
             type={showPassword ? "text" : "password"}
             name="password"
@@ -122,13 +122,13 @@ export const Login = () => {
             value={formData.password}
             onChange={handleChange}
             required
-            className="w-full px-10 py-3 bg-gray-900 text-white rounded-lg border border-green-500/30 focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all duration-300"
+            className="w-full px-10 py-3 bg-gray-900 text-white rounded-lg border border-[#1db954]/30 focus:border-[#1db954] focus:ring-2 focus:ring-[#1db954]/20 transition-all duration-300"
           />
           <motion.span
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-green-400 hover:text-green-300 transition-colors duration-300"
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-[#1db954] hover:text-[#1aaa4c] transition-colors duration-300"
           >
             {showPassword ? <FaEyeSlash /> : <FaEye />}
           </motion.span>
@@ -136,10 +136,10 @@ export const Login = () => {
 
         <motion.button
           type="submit"
-          whileHover={{ scale: 1.02, backgroundColor: '#22c55e' }}
+          whileHover={{ scale: 1.02, backgroundColor: '#1db954' }}
           whileTap={{ scale: 0.98 }}
           onClick={handleSubmit}
-          className="w-full py-3 bg-green-600 text-white font-bold rounded-lg shadow-lg shadow-green-500/20 hover:shadow-green-500/40 transition-all duration-300"
+          className="w-full py-3 bg-[#1db954] text-white font-bold rounded-lg shadow-lg shadow-[#1db954]/20 hover:shadow-[#1db954]/40 transition-all duration-300"
         >
           Login
         </motion.button>
@@ -153,38 +153,22 @@ export const Login = () => {
       >
         <p>
           Don't have an account?{" "}
-          <a href="/signup" className="text-green-400 hover:text-green-300 transition-colors duration-300">
+          <a href="/signup" className="text-[#1db954] hover:text-[#1aaa4c] transition-colors duration-300">
             Sign Up
           </a>
         </p>
         <p>
           <span
             onClick={() => navigate("/forgot-password")}
-            className="cursor-pointer text-green-400 hover:text-green-300 transition-colors duration-300 underline font-medium"
+            className="cursor-pointer text-[#1db954] hover:text-[#1aaa4c] transition-colors duration-300 underline font-medium"
           >
             Forgot Password?
           </span>
         </p>
       </motion.div>
     </motion.div>
-
-    <motion.div
-      className="absolute top-5 left-5"
-      initial={{ x: -50, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      transition={{ delay: 0.9 }}
-    >
-      <div
-        onClick={() => navigate("/")}
-        className="group px-5 py-2 border border-green-500/30 text-white rounded-full hover:bg-green-500 hover:border-green-500 transition-all duration-300 flex items-center gap-2 cursor-pointer"
-      >
-        Home
-        <div className="w-2 h-2 bg-white rounded-full group-hover:w-5 group-hover:h-5 group-hover:rotate-[50deg] transition-all duration-500 flex items-center justify-center">
-          <FaArrowUpLong className="opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        </div>
-      </div>
-    </motion.div>
   </motion.div>
+
     
   );
 };
