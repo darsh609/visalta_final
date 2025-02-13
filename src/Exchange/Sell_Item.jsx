@@ -268,7 +268,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
-import Select from "react-select";
+// import Select from "react-select";
 
 const UploadItemForm = () => {
   const { token } = useSelector((state) => state.auth);
