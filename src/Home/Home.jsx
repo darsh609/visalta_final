@@ -45,7 +45,6 @@ const items = [
 gsap.registerPlugin(ScrollTrigger);
 
 export const Home = () => {
-  const [lastScrollTop, setLastScrollTop] = useState(0);
   const navigate = useNavigate();
   const gsapRef = useRef();
   const containerRef = useRef(null);
