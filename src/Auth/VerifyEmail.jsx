@@ -7,6 +7,7 @@ import { RxCountdownTimer } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import { sendOtp, signUp } from "../services/operations/authAPI";
 import { useNavigate } from "react-router-dom";
+import { FaCompass, FaArrowLeft, FaRedoAlt } from 'react-icons/fa'
 
 function VerifyEmail() {
   const [otp, setOtp] = useState("");
@@ -29,72 +30,127 @@ function VerifyEmail() {
   };
 
   return (
-    <div className="bg-zinc-900 min-h-[calc(100vh-3.5rem)] grid place-items-center">
+    <motion.div
+      className="relative min-h-screen flex justify-center items-center bg-gradient-to-br from-black via-gray-900 to-green-900 font-['Poppins'] p-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+    >
+      {/* Floating particles */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.5 }}
+        transition={{ duration: 2 }}
+      >
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-green-500 rounded-full"
+            initial={{
+              x: Math.random() * window.innerWidth,
+              y: Math.random() * window.innerHeight,
+            }}
+            animate={{
+              y: [0, -20, 0],
+              opacity: [0.2, 1, 0.2],
+            }}
+            transition={{
+              duration: 2 + Math.random() * 2,
+              repeat: Infinity,
+              repeatType: "reverse",
+            }}
+          />
+        ))}
+      </motion.div>
+
       {loading ? (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="flex items-center justify-center"
-        >
-          <div className="spinner"></div>
-        </motion.div>
+        <div className="spinner" />
       ) : (
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -50 }}
-          className="max-w-[500px] bg-gradient-to-b from-zinc-800 to-zinc-900 rounded-xl p-6 lg:p-8 shadow-xl border border-zinc-700"
+          className="bg-black/80 p-8 md:p-12 rounded-lg shadow-2xl backdrop-blur-sm w-full max-w-xl mx-4 border border-green-500/20"
+          initial={{ y: -50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ type: "spring", stiffness: 120 }}
         >
-          <h1 className="text-green-400 font-bold text-[2rem] leading-[2.5rem] text-center">
-            Verify Email
-          </h1>
-          <p className="text-zinc-300 text-center mt-4 text-[1.125rem]">
-            Enter the verification code we’ve sent to your email.
-          </p>
-          <form onSubmit={handleVerifyAndSignup} className="mt-6">
-            <OtpInput
-              value={otp}
-              onChange={setOtp}
-              numInputs={6}
-              renderInput={(props) => (
-                <input
-                  {...props}
-                  placeholder="-"
-                  style={{
-                    boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
-                  }}
-                  className="w-[48px] lg:w-[60px] bg-zinc-800 border border-zinc-700 rounded-lg text-green-400 text-center text-lg focus:outline-green-500"
-                />
-              )}
-              containerStyle={{
-                justifyContent: "space-between",
-                gap: "0 8px",
-              }}
-            />
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.5 }}
+            className="mb-8 text-center"
+          >
+            <FaCompass className="text-6xl text-green-400 mx-auto mb-6 animate-spin-slow" />
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
+              Verify Your Email
+            </h2>
+            <motion.p
+              className="text-xl md:text-xl text-green-400 italic font-medium"
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              Enter the verification code we've sent to your email
+            </motion.p>
+          </motion.div>
+
+          <form onSubmit={handleVerifyAndSignup} className="space-y-8">
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.6 }}
+            >
+              <OtpInput
+                value={otp}
+                onChange={setOtp}
+                numInputs={6}
+                renderInput={(props) => (
+                  <input
+                    {...props}
+                    placeholder="-"
+                    className="w-[200px] h-[60px] md:w-[200px] md:h-[70px] text-xl bg-gray-900 border border-green-500/30 rounded-lg text-green-400 text-center focus:border-green-400 focus:ring-2 focus:ring-green-400/20 transition-all duration-300"
+                  />
+                )}
+                containerStyle={{
+                  justifyContent: "center",
+                  gap: "29px",
+                }}
+              />
+            </motion.div>
+
             <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
               type="submit"
-              className="w-full bg-green-500 text-zinc-900 py-3 rounded-lg mt-6 font-semibold shadow-lg hover:bg-green-400 transition-all duration-300"
+              whileHover={{ scale: 1.02, backgroundColor: '#22c55e' }}
+              whileTap={{ scale: 0.98 }}
+              className="w-full py-4 text-xl bg-green-600 text-white font-bold rounded-lg shadow-lg shadow-green-500/20 hover:shadow-green-500/40 transition-all duration-300"
             >
               Verify Email
             </motion.button>
           </form>
-          <div className="mt-6 flex items-center justify-between text-sm">
-            <Link to="/signup" className="text-zinc-300 flex items-center gap-x-2 hover:text-green-400 transition-all">
-              <BiArrowBack /> Back to Signup
-            </Link>
-            <button
-              className="text-green-400 flex items-center gap-x-2 hover:text-green-300 transition-all"
-              onClick={() => dispatch(sendOtp(signupData.email))}
+
+          <motion.div
+            className="mt-8 flex justify-between items-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.7 }}
+          >
+            <Link
+              to="/signup"
+              className="text-lg text-green-400 hover:text-green-300 transition-all duration-300 flex items-center gap-2"
             >
-              <RxCountdownTimer /> Resend
+              <FaArrowLeft />
+              Back to Signup
+            </Link>
+            
+            <button
+              onClick={() => dispatch(sendOtp(signupData.email))}
+              className="text-lg text-green-400 hover:text-green-300 transition-all duration-300 flex items-center gap-2"
+            >
+              <FaRedoAlt />
+              Resend Code
             </button>
-          </div>
+          </motion.div>
         </motion.div>
       )}
-    </div>
+    </motion.div>
   );
 }
 
