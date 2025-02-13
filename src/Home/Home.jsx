@@ -144,27 +144,37 @@ export const Home = () => {
       <Navbar/>
       
       <div ref={gsapRef} className='LandingPage w-full h-screen bg-zinc-900 pt-1'>
-        <div className='textstructure mt-40 px-20'>
-          {["Navigating", "Student's", "life"].map((item, index) => (
-            <div key={index} className='masker'>
-              <div className='w-fit flex items-end overflow-hidden'>
-                {index === 1 && (
-                  <motion.div 
-                    initial={{width:0}} 
-                    animate={{width:"9vw"}} 
-                    transition={{ease:[0.76, 0, 0.24, 1], duration:1}} 
-                    className='image mr-[1vw] w-[8vw] rounded-md h-[5.7vw] relative -top-[0.1vw] mt-3'
-                  >
-                    <img src={maskerImg} alt="" />
-                  </motion.div>
-                )}
-                <h1 className='flex items-center uppercase text-[9vw] h-full leading-[7vw] font-founders font-bold'>
-                  {item}
-                </h1>
-              </div>
-            </div>
-          ))}
+      <div className='textstructure mt-40 px-20 py-12'>
+    {["Navigating", "Student's", "life"].map((item, index) => (
+      <div key={index} className='masker mb-[-0.5vh]'> {/* Added negative margin to bring lines closer */}
+        <div className='w-fit flex items-center overflow-hidden relative'>
+          {index === 1 && (
+            <motion.div 
+              initial={{width:0}} 
+              animate={{width:"10vw"}} // Reduced width further for better line fit
+              transition={{ease:[0.76, 0, 0.24, 1], duration:1}} 
+              className='image ml-[0.5vw] w-[8vw] rounded-xl h-[6.5vw] relative z-10 overflow-hidden self-center'
+              style={{
+                transform: 'perspective(1000px) rotateX(5deg)',
+                transformStyle: 'preserve-3d',
+                position: 'relative',
+                top: '-0.2vw'
+              }}
+            >
+              <img 
+                src={maskerImg} 
+                alt="" 
+                className="w-full h-full object-cover rounded-xl transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl"
+              />
+            </motion.div>
+          )}
+          <h1 className='flex items-center uppercase text-[7vw] leading-[6vw] font-founders font-bold tracking-tight z-0'> {/* Changed tracking-tighter to tracking-tight */}
+            {item}
+          </h1>
         </div>
+      </div>
+    ))}
+  </div>
 
         <div className='border-t-2 border-zinc-800 mt-20 flex justify-between items-center py-5 px-20'>
           {["",""].map((item, index) => (
