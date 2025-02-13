@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "../services/operations/authAPI";
 import { FaArrowUpLong } from "react-icons/fa6";
+import AnimatedLogo from "../Home/AnimatedLogo";
 
 
 export const Login = () => {
@@ -32,8 +33,13 @@ export const Login = () => {
   };
 
   return (
+    <div className="auth-page-container relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-[#1db954]">
+      <div className="flex items-end py-11 px-8"
+      onClick={() => navigate("/")}>
+      <AnimatedLogo/>
+      </div>
     <motion.div
-    className="auth-page-container relative flex justify-center items-center min-h-screen bg-gradient-to-br from-black via-gray-900 to-[#1db954] font-['Poppins'] p-4 overflow-y-auto"
+    className="flex justify-center items-center font-['Poppins'] p-4 overflow-y-auto"
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     transition={{ duration: 1 }}
@@ -168,6 +174,8 @@ export const Login = () => {
       </motion.div>
     </motion.div>
   </motion.div>
+    </div>
+
 
     
   );

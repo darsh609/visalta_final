@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useDispatch, useSelector } from "react-redux";
 import { updateDisplayPicture } from "../services/operations/SettingsAPI";
 import { logout } from "../services/operations/authAPI"
+import AnimatedLogo from "../Home/AnimatedLogo";
 
 // Card component remains same
 const Card = ({ children, className = '', delay = 0 }) => (
@@ -201,6 +202,12 @@ const ProfileComponent = () => {
 
     return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 flex justify-center">
+      <div className="absolute top-6 left-6 py-4">
+      <div className="flex items-end"
+      onClick={() => navigate("/")}>
+      <AnimatedLogo/>
+      </div>
+      </div>
       <div className="w-full max-w-3xl px-4 py-8 flex flex-col">
         <motion.h1 
           initial={{ opacity: 0, y: -20 }}
