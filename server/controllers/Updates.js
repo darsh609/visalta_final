@@ -26,7 +26,7 @@ exports.createUpdate = async (req, res) => {
     const users = await User.find({}, "email firstName");
     
     // Email content
-    const emailSubject = "🚀 New Update on Our Platform!";
+    const emailSubject = "🚀 Important Alert: New Timely Alert and Posts (TAPs) Update!";
     
     for (const user of users) {
       const emailBody = `
@@ -34,7 +34,7 @@ exports.createUpdate = async (req, res) => {
       <html>
       <head>
           <meta charset="UTF-8">
-          <title>New Update Notification</title>
+          <title>New TAPs Update</title>
           <style>
               body {
                   background-color: #1a1a1a;
@@ -81,7 +81,7 @@ exports.createUpdate = async (req, res) => {
               </div>
       
               <div style="color: #ffffff; text-align: center; font-size: 28px; font-weight: bold; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; padding: 10px 0; background-color: #1c2a1f; border-bottom: 3px solid #4ade80;">
-                  New Update Available! 🚀
+                  Important Alert: Timely Alert and Posts (TAPs) Update! 🚀
               </div>
       
               <div style="padding: 20px;">
@@ -90,22 +90,24 @@ exports.createUpdate = async (req, res) => {
                   </p>
                   
                   <p style="font-size: 18px; color: #ffffff;">
-                      We have a new update on our platform: <span class="highlight">${title}</span>
+                      A new TAPs (Timely Alerts and Posts) update has been added:
                   </p>
-                  
-                  <p style="font-size: 18px; color: #ffffff;">
-                      ${description}
-                  </p>
+                  <ul style="color: #ffffff; font-size: 16px;">
+                      <li><strong>Title:</strong> ${title}</li>
+                      <li><strong>Description:</strong> ${description}</li>
+                      <li><strong>Date:</strong> ${date}</li>
+                      <li><strong>Link:</strong> <a href="${link}" style="color: #4ade80;">Click here to view</a></li>
+                  </ul>
                   
                   <div style="text-align: center;">
-                      <a class="button" href="${link}" target="_blank">Check it Out</a>
+                      <a class="button" href="https://visalta-final-qg3f.vercel.app/update" target="_blank">Visit Our Website</a>
                   </div>
       
                   <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #333333; text-align: center; color: #ffffff;">
                       <p>Stay tuned for more updates!</p>
                       <p style="margin-top: 15px; font-size: 14px;">
                           Best regards,<br>
-                          The Team
+                          The Visalta Team
                       </p>
                   </div>
               </div>
