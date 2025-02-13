@@ -51,8 +51,8 @@ const Admin = require("./routes/Admin");
 app.use("/api/v1/admin", Admin);
 app.use("/api/v1/review", require("./routes/RatingAndReview"));
 
-
-
+app.use("/api/v1/weekend", require("./routes/Weekend"));
+app.use("/api/v1/oneday", require("./routes/Oneday"));
 
 
 

@@ -1,22 +1,19 @@
-
-import React, { useState } from "react";
+import React, { useState,useSelector } from "react";
 import axios from "axios";
 import { FiUpload, FiMapPin } from "react-icons/fi";
 import { toast, Toaster } from "react-hot-toast";
-import { useSelector } from "react-redux";
 
-const TravelForm = () => {
+const OnedayForm = () => {
   const [formData, setFormData] = useState({
     PlaceName: "",
     Timing: "",
-    Ticket: "",
     location: "",
     Img: null,
   });
   const [imagePreview, setImagePreview] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Handle text inputs
+  // Handle text input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -57,24 +54,21 @@ const TravelForm = () => {
     }
   };
 
-  // Handle form submission using the weekend add route
+  // Handle form submission using the oneday add route
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      // Prepare the form data to match your Weekend model:
-      // - placeName, timing, ticket, location, and image (uploaded file)
       const submitData = new FormData();
       submitData.append("placeName", formData.PlaceName);
       submitData.append("timing", formData.Timing);
-      submitData.append("ticket", formData.Ticket);
       submitData.append("location", formData.location);
       if (formData.Img) {
         submitData.append("image", formData.Img);
       }
 
       await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/weekend/add`,
+        `${process.env.REACT_APP_BASE_URL}/oneday/add`,
         submitData,
         {
           headers: {
@@ -88,7 +82,6 @@ const TravelForm = () => {
       setFormData({
         PlaceName: "",
         Timing: "",
-        Ticket: "",
         location: "",
         Img: null,
       });
@@ -101,16 +94,15 @@ const TravelForm = () => {
       setIsSubmitting(false);
     }
   };
-  const { user } = useSelector((state) => state.profile);
-  console.log("---->",user)
-  const isAdmin = user?.accountType === "Admin";
+
+
 
   return (
     <div className="min-h-screen bg-zinc-900 text-white">
-      {/* <Toaster  reverseOrder={false} /> */}
+      {/* <Toaster position="top-right" reverseOrder={false} /> */}
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-5xl font-bold text-center mb-8 text-white">
-          Add Place
+          Add Oneday Place
           <span className="block text-lg font-normal text-zinc-400 mt-2">
             Admin Panel
           </span>
@@ -145,23 +137,7 @@ const TravelForm = () => {
               name="Timing"
               value={formData.Timing}
               onChange={handleInputChange}
-              placeholder="e.g., 9:00 AM - 6:00 PM"
-              className="w-full px-4 py-3 rounded-lg bg-zinc-800/50 text-white border border-zinc-700 focus:outline-none focus:border-[#FF6B6B] backdrop-blur-sm"
-              required
-            />
-          </div>
-
-          {/* Ticket Price */}
-          <div>
-            <label className="block text-sm font-medium mb-2">
-              Ticket Price
-            </label>
-            <input
-              type="text"
-              name="Ticket"
-              value={formData.Ticket}
-              onChange={handleInputChange}
-              placeholder="e.g., Rs400/- per Adult + GST"
+              placeholder="e.g., 6AM-8PM"
               className="w-full px-4 py-3 rounded-lg bg-zinc-800/50 text-white border border-zinc-700 focus:outline-none focus:border-[#FF6B6B] backdrop-blur-sm"
               required
             />
@@ -204,11 +180,11 @@ const TravelForm = () => {
                 accept="image/*"
                 onChange={handleImageChange}
                 className="hidden"
-                id="image-upload"
+                id="oneday-image-upload"
                 required={!formData.Img}
               />
               <label
-                htmlFor="image-upload"
+                htmlFor="oneday-image-upload"
                 className="cursor-pointer flex flex-col items-center"
               >
                 {imagePreview ? (
@@ -219,12 +195,12 @@ const TravelForm = () => {
                       className="w-full h-48 object-cover rounded-lg"
                     />
                     <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 hover:opacity-100 transition-opacity rounded-lg">
-                      <FiUpload className="w-8 h-8" />
+                      <FiUpload className="w-8 h-8 text-white" />
                     </div>
                   </div>
                 ) : (
                   <div className="flex flex-col items-center">
-                    <FiUpload className="w-8 h-8 mb-2" />
+                    <FiUpload className="w-8 h-8 mb-2 text-zinc-300" />
                     <span className="text-sm text-zinc-400">
                       Click to upload image
                     </span>
@@ -252,4 +228,4 @@ const TravelForm = () => {
   );
 };
 
-export default TravelForm;
+export default OnedayForm;
