@@ -36,7 +36,7 @@ function Navbar() {
           className="text-lg capitalize font-light cursor-pointer hover:text-green-400 transition"
           whileHover={{ scale: 1.1 }}
         >
-          Updates
+          TAPs
         </motion.div>
         <motion.div
           onClick={() => navigate("contact")}
@@ -100,7 +100,7 @@ function Navbar() {
             }}
             className="text-lg capitalize font-light cursor-pointer hover:text-green-400 transition"
           >
-            Updates
+            TAPS
           </div>
           <div
             onClick={() => {

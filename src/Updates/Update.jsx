@@ -140,8 +140,8 @@ const UpdateSection = () => {
   return (
     <div className="bg-zinc-900 text-zinc-200 min-h-screen flex flex-col items-center px-4 py-12">
       <div className="w-full max-w-7xl">
-        <h1 className="text-4xl font-semibold text-center mb-8 text-primary font-founders uppercase tracking-tight">
-        On-Campus Insights
+        <h1 className="text-4xl font-bold text-center mb-8 text-primary font-founders uppercase tracking-tight">
+        Timely Alerts And Posts 🚀
         </h1>
 
         {/* Search Bar */}
