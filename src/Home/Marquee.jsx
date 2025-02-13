@@ -13,7 +13,7 @@ const Marquee = () => {
              repeat: Infinity,
              ease: "linear",
            }}
-          className='text-[24vw] text-[#F6F5F4] leading-none font-founders font-bold -mt-[2vw] -mb-[2vw] pr-20 tracking-tighter'>
+          className='text-[24vw] text-[#F6F5F4] leading-none font-founders font-semibold -mt-[2vw] -mb-[2vw] pr-20 tracking-tighter'>
             NIT-WARANGAL
           </motion.h1>
           <motion.h1 
