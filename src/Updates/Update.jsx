@@ -5,7 +5,7 @@ import { FaCalendarAlt, FaUser, FaBell, FaTrashAlt } from "react-icons/fa";
 import moment from "moment";
 import sorry from "../assets/sorry.png";
 import SpotlightCard from "./SpotlightCard";
-
+import { useSelector } from "react-redux";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL + "/updates";
 
@@ -20,7 +20,9 @@ const UpdateSection = () => {
   });
   const [searchQuery, setSearchQuery] = useState("");
 
-  const isAdmin = true; // Hardcoded for now
+  const { user } = useSelector((state) => state.profile);
+  console.log("---->",user)
+  const isAdmin = user?.accountType === "Admin"; // Hardcoded for now
 
   // Fetch updates from the backend
   const fetchUpdates = async () => {
@@ -136,7 +138,6 @@ const UpdateSection = () => {
       }
     }
   };
-
   return (
     <div className="bg-zinc-900 text-zinc-200 min-h-screen flex flex-col items-center px-4 py-12">
       <div className="w-full max-w-7xl">
