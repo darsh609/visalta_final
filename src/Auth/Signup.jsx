@@ -13,17 +13,13 @@ import {
 } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-<<<<<<< Updated upstream
+
 import AnimatedLogo from "../Home/AnimatedLogo";
 
 import { sendOtp } from "../services/operations/authAPI"
 import { setSignupData } from "../slices/authSlice"
 import { ACCOUNT_TYPE } from "../utils/constants"
-=======
-import { sendOtp } from "../services/operations/authAPI";
-import { setSignupData } from "../slices/authSlice";
-import { ACCOUNT_TYPE } from "../utils/constants";
->>>>>>> Stashed changes
+
 import { FaArrowUpLong } from "react-icons/fa6";
 
 const Signup = () => {
@@ -93,7 +89,6 @@ const Signup = () => {
       <AnimatedLogo/>
       </div>
     <motion.div
-<<<<<<< Updated upstream
     className=" flex justify-center items-center font-['Poppins']"
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
@@ -102,9 +97,9 @@ const Signup = () => {
     {/* Floating particles effect */}
     <motion.div
       className="absolute inset-0 pointer-events-none"
-=======
+
       className="auth-page-container relative flex justify-center items-center min-h-screen bg-gradient-to-br from-black via-gray-900 to-[#1db954] font-['Poppins'] p-4 overflow-y-auto"
->>>>>>> Stashed changes
+
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
@@ -362,7 +357,7 @@ const Signup = () => {
         </div>
       </motion.div>
     </motion.div>
-<<<<<<< Updated upstream
+
 
     <motion.div
       className="absolute top-5 left-5"
@@ -377,9 +372,8 @@ const Signup = () => {
 );
 }
 
-=======
-  );
-};
->>>>>>> Stashed changes
+
+  
+
 
 export default Signup;
