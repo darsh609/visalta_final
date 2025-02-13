@@ -35,48 +35,67 @@ exports.resetPasswordToken = async (req, res) => {
 			`<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Password Reset</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Reset</title>
 </head>
-<body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4;">
-  <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#f4f4f4" style="padding: 20px 0;">
-    <tr>
-      <td align="center">
-        <table width="600" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff" style="border-radius: 8px; overflow: hidden; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);">
-          <tr>
-            <td style="background-color: #5e60ce; color: #ffffff; padding: 20px; text-align: center; font-size: 24px; font-weight: bold;">
-              Password Reset Request
+<body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #1a1a1a;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#1a1a1a" style="padding: 20px 0;">
+        <tr>
+            <td align="center">
+                <table width="600" border="0" cellspacing="0" cellpadding="0" bgcolor="#232323" style="border-radius: 8px; overflow: hidden; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); border: 1px solid #333333;">
+                    <tr>
+                        <td align="center" style="padding: 20px;">
+                            <img src="https://i.postimg.cc/dQb3HqdF/Visalta.jpg" alt="Visalta Logo" style="max-width: 200px; padding: 20px; background-color: #ffffff; border-radius: 10px;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #1c2a1f; color: #ffffff; padding: 20px; text-align: center; font-size: 28px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; border-bottom: 3px solid #4ade80;">
+                            Password Reset Request
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 30px; color: #ffffff; line-height: 1.6; font-size: 16px;">
+                            <p style="margin: 0; margin-bottom: 16px; color: #ffffff !important;">Hello ${user.firstName},</p>
+                            <p style="margin: 0; margin-bottom: 16px; color: #ffffff !important;">We received a request to reset your password. Please click the button below to proceed:</p>
+                            <p style="text-align: center; margin: 24px 0;">
+                                <a href="${url}" style="background-color: #4ade80; color: #000000; text-decoration: none; padding: 15px 30px; border-radius: 5px; font-size: 16px; font-weight: bold; display: inline-block;">
+                                    Reset Your Password
+                                </a>
+                            </p>
+                            <div style="background-color: #1c2a1f; padding: 20px; margin: 25px 0; text-align: left; border-left: 3px solid #4ade80; border-radius: 0 8px 8px 0;">
+                                <strong style="color: #4ade80;">IMPORTANT</strong>
+                                <p style="margin: 10px 0; color: #ffffff !important;">If the button above doesn't work, copy and paste this link:</p>
+                                <p style="word-break: break-all; background-color: #2a3b2f; padding: 10px; border-radius: 4px; color: #4ade80; font-size: 14px; margin: 0;">
+                                    ${url}
+                                </p>
+                            </div>
+                            <div style="background-color: #1c2a1f; padding: 20px; margin: 25px 0; text-align: left; border-left: 3px solid #4ade80; border-radius: 0 8px 8px 0;">
+                                <strong style="color: #4ade80;">SECURITY NOTICE</strong>
+                                <ul style="color: #ffffff !important; margin: 10px 0;">
+                                   
+                                    <li style="margin: 8px 0;">If you didn't request this reset, please contact us immediately</li>
+                                    <li style="margin: 8px 0;">Never share this link with anyone</li>
+									 <li style="margin: 8px 0;">This link will expire in 30 minutes</li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #1c2a1f; padding: 20px; color: #ffffff; text-align: center; font-size: 14px; border-top: 1px solid #333333;">
+                            <p style="margin: 0; color: #ffffff !important;">Need assistance? Contact us at<br>
+                            <a href="mailto:teamvisalta@gmail.com" style="color: #4ade80; text-decoration: underline;">teamvisalta@gmail.com</a></p>
+                            <p style="margin: 0; margin-top: 15px; font-size: 12px; color: #ffffff !important;">
+                                Thank you,<br>The Visalta Team
+                            </p>
+                        </td>
+                    </tr>
+                </table>
             </td>
-          </tr>
-          <tr>
-            <td style="padding: 20px; color: #333333; line-height: 1.6; font-size: 16px;">
-              <p style="margin: 0; margin-bottom: 16px;">Hello ${user.firstName}</strong>,</p>
-              <p style="margin: 0; margin-bottom: 16px;">We received a request to reset your password. Please click the button below to proceed:</p>
-              <p style="text-align: center; margin: 24px 0;">
-                <a href="${url}" style="background-color: #5e60ce; color: #ffffff; text-decoration: none; padding: 12px 20px; border-radius: 4px; font-size: 16px; font-weight: bold; display: inline-block;">
-                  Reset Your Password
-                </a>
-              </p>
-              <p style="margin: 0; margin-bottom: 16px;">If the button above does not work, you can copy and paste the following link into your browser:</p>
-              <p style="word-break: break-all; background-color: #f4f4f4; padding: 10px; border-radius: 4px; color: #5e60ce; font-size: 14px; text-align: center;">
-                ${url}
-              </p>
-              <p style="margin: 0; margin-top: 16px;">This link will expire in 30 minutes. If you did not request this password reset, please ignore this email.</p>
-            </td>
-          </tr>
-          <tr>
-            <td style="background-color: #f4f4f4; padding: 20px; color: #666666; text-align: center; font-size: 14px;">
-              <p style="margin: 0;">Thank you,<br>The Visalta Team</p>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
+        </tr>
+    </table>
 </body>
 </html>
-
 `
 		);
 
