@@ -155,7 +155,7 @@ const otpTemplate = (otp) => {
 	<body>
 		<div class="container">
 			<a href="">
-				<img class="logo" src="https://i.postimg.cc/dQb3HqdF/Visalta.jpg" alt="Visalta-nitw-high-resolution-logo" border="0" />
+				<img class="logo" src="https://i.postimg.cc/25V8F6Nh/Visalta.jpg" alt="Visalta-nitw-high-resolution-logo" border="0" />
 			</a>
 			<div class="message">Welcome to Visalta</div>
 			<div class="body">
