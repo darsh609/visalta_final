@@ -1,8 +1,15 @@
-// import React, { useState,useEffect } from "react";
-// import { motion } from "framer-motion";
+
+
+// import React, { useState, useEffect } from "react";
+// import { motion, AnimatePresence } from "framer-motion";
 // import toast from "react-hot-toast";
+// import { useSelector } from "react-redux";
+// // import Select from "react-select";
 
 // const UploadItemForm = () => {
+//   const { token } = useSelector((state) => state.auth);
+//   const { user } = useSelector((state) => state.profile);
+
 //   const [formData, setFormData] = useState({
 //     courseName: "",
 //     courseDescription: "",
@@ -15,7 +22,47 @@
 //   const [tagInput, setTagInput] = useState("");
 //   const [isFormValid, setIsFormValid] = useState(false);
 
+
+//   // const hostelOptions = [
+//   //   { label: "Azad Hall (Ist Block)", value: "Azad Hall" },
+//   //   { label: "Bose Hall (2nd Block)", value: "Bose Hall" },
+//   //   { label: "Ambedkar Hall (3rd Block)", value: "Ambedkar Hall" },
+//   //   { label: "Babha Hall (4th Block)", value: "Babha Hall" },
+//   //   { label: "Gandhi Hall (5th Block)", value: "Gandhi Hall" },
+//   //   { label: "Gokhale Hall (5th Block)", value: "Gokhale Hall" },
+//   //   { label: "Radhakrishnan Hall (6th Block)", value: "Radhakrishnan Hall" },
+//   //   { label: "Raman Hall (7th Block)", value: "Raman Hall" },
+//   //   { label: "Nehru Hall (8th Block)", value: "Nehru Hall" },
+//   //   { label: "Patel Hall (9th Block)", value: "Patel Hall" },
+//   //   { label: "Tagore Hall (10th Block)", value: "Tagore Hall" },
+//   //   { label: "Viswesvraya Hall (11th Block)", value: "Viswesvraya Hall" },
+//   //   { label: "Rajendra Prasad Hall (12th Block)", value: "Rajendra Prasad Hall" },
+//   //   { label: "Vikram Sarabhai Hall (14th Block)", value: "Vikram Sarabhai Hall" },
+//   //   { label: "1K Hall of Residence (1K)", value: "1K Hall" },
+//   //   { label: "1.8K Ultra Mega Hostel (1.8K)", value: "1.8K Ultra Mega Hostel" },
+//   //   { label: "International Students Hall (ISH)", value: "International Students Hall" },
+//   //   { label: "Priyadarshini Hall", value: "Priyadarshini Hall" },
+//   //   { label: "Sarojini Hall", value: "Sarojini Hall" },
+//   //   { label: "NEW LADIES HOSTEL-A", value: "NEW LADIES HOSTEL-A" },
+//   //   { label: "NEW LADIES HOSTEL-B", value: "NEW LADIES HOSTEL-B" },
+//   //   { label: "NEW LADIES HOSTEL-C", value: "NEW LADIES HOSTEL-C" },
+//   //   { label: "Nearby Kazipet", value: "Nearby Kazipet" },
+//   //   { label: "Nearby Hanamkonda", value: "Nearby Hanamkonda" },
+//   //   { label: "Other", value: "Other" }
+//   // ];
+
 //   // Load saved form data from localStorage on mount
+ 
+// const hostelOptions = [
+//   "Azad Hall (Ist Block)", "Bose Hall (2nd Block)", "Ambedkar Hall (3rd Block)", "Babha Hall (4th Block)",
+//   "Gandhi Hall (5th Block)", "Gokhale Hall (5th Block)", "Radhakrishnan Hall (6th Block)", "Raman Hall (7th Block)",
+//   "Nehru Hall (8th Block)", "Patel Hall (9th Block)", "Tagore Hall (10th Block)", "Viswesvraya Hall (11th Block)",
+//   "Rajendra Prasad Hall (12th Block)", "Vikram Sarabhai Hall (14th Block)", "1K Hall of Residence (1K)", "1.8K Ultra Mega Hostel (1.8K)",
+//   "International Students Hall (ISH)", "Priyadarshini Hall", "Sarojini Hall", "NEW LADIES HOSTEL-A",
+//   "NEW LADIES HOSTEL-B", "NEW LADIES HOSTEL-C", "Nearby Kazipet", "Nearby Hanamkonda", "Other"
+// ];
+ 
+ 
 //   useEffect(() => {
 //     const savedData = JSON.parse(localStorage.getItem("formData"));
 //     if (savedData && new Date(savedData.expiry) > new Date()) {
@@ -105,10 +152,10 @@
 //     const token = JSON.parse(localStorage.getItem("token"));
 
 //     // Show loading toast
-//     const loadingToastId = toast.loading("Submitting your course...");
+//     const loadingToastId = toast.loading("Listing your Product..");
 
 //     try {
-//       const response = await fetch(`http://localhost:4000/api/v1/course/createCourse`, {
+//       const response = await fetch(`${process.env.REACT_APP_BASE_URL}/course/createCourse`, {
 //         method: "POST",
 //         body: formDataToSend,
 //         headers: {
@@ -122,7 +169,7 @@
 //       }
 
 //       const result = await response.json();
-//       toast.success("Course created successfully!", { id: loadingToastId });
+//       toast.success("Product Listed successfully!", { id: loadingToastId });
 
 //       // Clear form and localStorage after successful submission
 //       setFormData({
@@ -141,129 +188,183 @@
 //   };
 
 //   return (
-//     <div className="min-h-screen bg-zinc-900 flex items-center justify-center p-4">
-//       <motion.form
-//         onSubmit={handleSubmit}
-//         initial={{ opacity: 0, y: 50 }}
-//         animate={{ opacity: 1, y: 0 }}
-//         transition={{ duration: 0.5 }}
-//         className="bg-zinc-800 p-6 rounded-lg shadow-lg w-full max-w-lg"
-//       >
-//         <h2 className="text-2xl font-bold text-white mb-4">Create Course</h2>
-
-//         {/* Previous input fields remain the same */}
-//         <input
-//           type="text"
-//           name="courseName"
-//           placeholder="Course Name"
-//           value={formData.courseName}
-//           onChange={handleChange}
-//           className="w-full p-2 mb-4 rounded bg-zinc-700 text-white"
-//         />
-
-//         <textarea
-//           name="courseDescription"
-//           placeholder="Course Description"
-//           value={formData.courseDescription}
-//           onChange={handleChange}
-//           className="w-full p-2 mb-4 rounded bg-zinc-700 text-white"
-//         ></textarea>
-
-//         <input
-//           type="text"
-//           name="address"
-//           placeholder="Address"
-//           value={formData.address}
-//           onChange={handleChange}
-//           className="w-full p-2 mb-4 rounded bg-zinc-700 text-white"
-//         />
-
-//         <input
-//           type="number"
-//           name="price"
-//           placeholder="Price"
-//           value={formData.price}
-//           onChange={handleChange}
-//           className="w-full p-2 mb-4 rounded bg-zinc-700 text-white"
-//         />
-
-//         {/* Updated Tags Section */}
-//         <div className="flex items-center mb-4">
-//           <input
-//             type="text"
-//             placeholder="Add a tag"
-//             value={tagInput}
-//             onChange={(e) => setTagInput(e.target.value)}
-//             onKeyPress={(e) => e.key === 'Enter' && handleAddTag()}
-//             className="w-full p-2 rounded bg-zinc-700 text-white"
-//           />
-//           <button
-//             type="button"
-//             onClick={handleAddTag}
-//             className="ml-2 bg-blue-500 text-white px-4 py-2 rounded"
-//           >
-//             Add
-//           </button>
-//         </div>
-
-//         {/* Tags Display with Remove Functionality */}
-//         <div className="mb-4 flex flex-wrap gap-2">
-//           {formData.tag.map((t, index) => (
-//             <span
-//               key={index}
-//               className="inline-flex items-center bg-zinc-600 text-white px-2 py-1 rounded"
+//     <div className="min-h-screen bg-zinc-900 flex items-center justify-center p-6">
+//     <motion.div
+//       initial={{ opacity: 0, y: 20 }}
+//       animate={{ opacity: 1, y: 0 }}
+//       className="w-full max-w-7xl bg-[#8ba498] rounded-xl shadow-lg overflow-hidden"
+//     >
+//       <div className="flex flex-col md:flex-row">
+//         {/* Left Section - Form Title and Description */}
+//         <div className="w-full md:w-1/3 bg-[#eaeaea] p-4 md:p-8 flex flex-col justify-between">
+//           <div>
+//             <motion.h2 
+//               initial={{ opacity: 0, x: -20 }}
+//               animate={{ opacity: 1, x: 0 }}
+//               className="text-xl md:text-2xl lg:text-3xl font-bold text-black mb-2"
 //             >
-//               {t}
-//               <button
-//                 type="button"
-//                 onClick={() => handleRemoveTag(t)}
-//                 className="ml-2 text-red-300 hover:text-red-500"
-//               >
-//                 ×
-//               </button>
-//             </span>
-//           ))}
+//               Hi {user?.firstName}!
+//             </motion.h2>
+//             <motion.h3
+//               initial={{ opacity: 0, x: -20 }}
+//               animate={{ opacity: 1, x: 0 }}
+//               className="text-lg md:text-xl lg:text-2xl font-bold text-black mb-4"
+//             >
+//               List Your Product
+//             </motion.h3>
+//             <p className="text-sm md:text-base text-gray-700 mb-4">Fill in the details to list your product for sale. All fields are required.</p>
+//             <p className="text-xs md:text-sm italic text-gray-600">"Empowering students to buy, sell, and connect as they build a vibrant campus community."</p>
+//           </div>
 //         </div>
 
-//         <input
-//           type="text"
-//           name="contact"
-//           placeholder="Contact"
-//           value={formData.contact}
-//           onChange={handleChange}
-//           className="w-full p-2 mb-4 rounded bg-zinc-700 text-white"
-//         />
+//         {/* Right Section - Form Fields */}
+//         <div className="w-full md:w-2/3 p-4 md:p-8">
+//           <motion.form 
+//             onSubmit={handleSubmit}
+//             className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6"
+//           >
+//             <div className="col-span-2">
+//               <label className="block text-sm md:text-base text-black mb-2 font-medium">Product Name</label>
+//               <input
+//                 type="text"
+//                 name="courseName"
+//                 value={formData.courseName}
+//                 onChange={handleChange}
+//                 className="w-full p-2 md:p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-sm md:text-base text-black"
+//               />
+//             </div>
 
-//         <input
-//           type="file"
-//           onChange={handleFileChange}
-//           className="w-full p-2 mb-4 rounded bg-zinc-700 text-white"
-//         />
+//             <div className="col-span-2">
+//               <label className="block text-sm md:text-base text-black mb-2 font-medium">Product Description</label>
+//               <textarea
+//                 name="courseDescription"
+//                 value={formData.courseDescription}
+//                 onChange={handleChange}
+//                 className="w-full p-2 md:p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none resize-none h-24 md:h-32 text-sm md:text-base text-black"
+//               />
+//             </div>
 
-//         {isFormValid && (
-//            <motion.button
-//            whileHover={{ scale: 1.05 }}
-//            whileTap={{ scale: 0.95 }}
-//            type="submit"
-//            className="w-full bg-green-500 text-white py-2 rounded mt-4"
-//            disabled={!isFormValid}
-//          >
-//            Submit
-//          </motion.button>
-//         )}
-//       </motion.form>
-//     </div>
+//             <div className="col-span-2 md:col-span-1">
+//               <label className="block text-sm md:text-base text-black mb-2 font-medium">Location</label>
+//               <select
+//                 name="address"
+//                 value={formData.address}
+//                 onChange={handleChange}
+//                 className="w-full p-2 md:p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-sm md:text-base text-black"
+//               >
+//                 <option value="" disabled>Select your address...</option>
+//                 {hostelOptions.map((option, index) => (
+//                   <option key={index} value={option} className="text-black">{option}</option>
+//                 ))}
+//               </select>
+//             </div>
+
+//             <div className="col-span-2 md:col-span-1">
+//               <label className="block text-sm md:text-base text-black mb-2 font-medium">Price</label>
+//               <input
+//                 type="number"
+//                 name="price"
+//                 value={formData.price}
+//                 onChange={handleChange}
+//                 className="w-full p-2 md:p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-sm md:text-base text-black"
+//               />
+//             </div>
+
+//             <div className="col-span-2">
+//               <label className="block text-sm md:text-base text-black mb-2 font-medium">Tags</label>
+//               <div className="flex gap-2 mb-2">
+//                 <input
+//                   type="text"
+//                   value={tagInput}
+//                   onChange={(e) => setTagInput(e.target.value)}
+//                   onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddTag())}
+//                   className="flex-1 p-2 md:p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-sm md:text-base text-black placeholder-gray-600"
+//                   placeholder="Add a tag"
+//                 />
+//                 <motion.button
+//                   type="button"
+//                   onClick={handleAddTag}
+//                   whileHover={{ scale: 1.02 }}
+//                   whileTap={{ scale: 0.98 }}
+//                   className="px-4 md:px-6 py-2 md:py-3 bg-black text-white rounded-full transition-colors text-sm md:text-base"
+//                 >
+//                   Add
+//                 </motion.button>
+//               </div>
+
+//               <motion.div layout className="flex flex-wrap gap-2">
+//                 <AnimatePresence>
+//                   {formData.tag.map((t) => (
+//                     <motion.span
+//                       key={t}
+//                       initial={{ opacity: 0, scale: 0.8 }}
+//                       animate={{ opacity: 1, scale: 1 }}
+//                       exit={{ opacity: 0, scale: 0.8 }}
+//                       className="inline-flex items-center bg-blue-50 text-blue-600 px-2 md:px-3 py-1 rounded-full text-xs md:text-sm"
+//                     >
+//                       {t}
+//                       <motion.button
+//                         type="button"
+//                         onClick={() => handleRemoveTag(t)}
+//                         whileHover={{ scale: 1.1 }}
+//                         whileTap={{ scale: 0.9 }}
+//                         className="ml-2 text-blue-400 hover:text-red-500"
+//                       >
+//                         ×
+//                       </motion.button>
+//                     </motion.span>
+//                   ))}
+//                 </AnimatePresence>
+//               </motion.div>
+//             </div>
+
+//             <div className="col-span-2">
+//               <label className="block text-sm md:text-base text-black mb-2 font-medium">Contact Number</label>
+//               <input
+//                 type="text"
+//                 name="contact"
+//                 value={formData.contact}
+//                 onChange={handleChange}
+//                 className="w-full p-2 md:p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-sm md:text-base text-black"
+//               />
+//             </div>
+
+//             <div className="col-span-2">
+//               <label className="block text-sm md:text-base text-black mb-2 font-medium">Product Image</label>
+//               <input
+//                 type="file"
+//                 accept="image/*"
+//                 onChange={handleFileChange}
+//                 className="w-full p-2 md:p-3 text-sm md:text-base text-black file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-black hover:file:bg-gray-100"
+//               />
+//             </div>
+
+//             <div className="col-span-2">
+//               <AnimatePresence>
+//                 {isFormValid && (
+//                   <motion.button
+//                     initial={{ opacity: 0, y: 10 }}
+//                     animate={{ opacity: 1, y: 0 }}
+//                     exit={{ opacity: 0, y: 10 }}
+//                     whileHover={{ scale: 1.02 }}
+//                     whileTap={{ scale: 0.98 }}
+//                     type="submit"
+//                     className="w-full bg-black text-white py-2 md:py-3 rounded-lg font-semibold hover:bg-black transition-colors text-sm md:text-base"
+//                   >
+//                     List Product
+//                   </motion.button>
+//                 )}
+//               </AnimatePresence>
+//             </div>
+//           </motion.form>
+//         </div>
+//       </div>
+//     </motion.div>
+//   </div>
 //   );
 // };
 
 // export default UploadItemForm;
-
-
-
-
-
-
-
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import toast from "react-hot-toast";
@@ -280,53 +381,22 @@ const UploadItemForm = () => {
     address: "",
     price: "",
     tag: [],
-    contact: "",
+    contact: "+91", // Default value for contact input
     thumbnail: null,
   });
   const [tagInput, setTagInput] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
 
-
-  // const hostelOptions = [
-  //   { label: "Azad Hall (Ist Block)", value: "Azad Hall" },
-  //   { label: "Bose Hall (2nd Block)", value: "Bose Hall" },
-  //   { label: "Ambedkar Hall (3rd Block)", value: "Ambedkar Hall" },
-  //   { label: "Babha Hall (4th Block)", value: "Babha Hall" },
-  //   { label: "Gandhi Hall (5th Block)", value: "Gandhi Hall" },
-  //   { label: "Gokhale Hall (5th Block)", value: "Gokhale Hall" },
-  //   { label: "Radhakrishnan Hall (6th Block)", value: "Radhakrishnan Hall" },
-  //   { label: "Raman Hall (7th Block)", value: "Raman Hall" },
-  //   { label: "Nehru Hall (8th Block)", value: "Nehru Hall" },
-  //   { label: "Patel Hall (9th Block)", value: "Patel Hall" },
-  //   { label: "Tagore Hall (10th Block)", value: "Tagore Hall" },
-  //   { label: "Viswesvraya Hall (11th Block)", value: "Viswesvraya Hall" },
-  //   { label: "Rajendra Prasad Hall (12th Block)", value: "Rajendra Prasad Hall" },
-  //   { label: "Vikram Sarabhai Hall (14th Block)", value: "Vikram Sarabhai Hall" },
-  //   { label: "1K Hall of Residence (1K)", value: "1K Hall" },
-  //   { label: "1.8K Ultra Mega Hostel (1.8K)", value: "1.8K Ultra Mega Hostel" },
-  //   { label: "International Students Hall (ISH)", value: "International Students Hall" },
-  //   { label: "Priyadarshini Hall", value: "Priyadarshini Hall" },
-  //   { label: "Sarojini Hall", value: "Sarojini Hall" },
-  //   { label: "NEW LADIES HOSTEL-A", value: "NEW LADIES HOSTEL-A" },
-  //   { label: "NEW LADIES HOSTEL-B", value: "NEW LADIES HOSTEL-B" },
-  //   { label: "NEW LADIES HOSTEL-C", value: "NEW LADIES HOSTEL-C" },
-  //   { label: "Nearby Kazipet", value: "Nearby Kazipet" },
-  //   { label: "Nearby Hanamkonda", value: "Nearby Hanamkonda" },
-  //   { label: "Other", value: "Other" }
-  // ];
-
+  const hostelOptions = [
+    "Azad Hall (Ist Block)", "Bose Hall (2nd Block)", "Ambedkar Hall (3rd Block)", "Babha Hall (4th Block)",
+    "Gandhi Hall (5th Block)", "Gokhale Hall (5th Block)", "Radhakrishnan Hall (6th Block)", "Raman Hall (7th Block)",
+    "Nehru Hall (8th Block)", "Patel Hall (9th Block)", "Tagore Hall (10th Block)", "Viswesvraya Hall (11th Block)",
+    "Rajendra Prasad Hall (12th Block)", "Vikram Sarabhai Hall (14th Block)", "1K Hall of Residence (1K)", "1.8K Ultra Mega Hostel (1.8K)",
+    "International Students Hall (ISH)", "Priyadarshini Hall", "Sarojini Hall", "NEW LADIES HOSTEL-A",
+    "NEW LADIES HOSTEL-B", "NEW LADIES HOSTEL-C", "Nearby Kazipet", "Nearby Hanamkonda", "Other"
+  ];
+ 
   // Load saved form data from localStorage on mount
- 
-const hostelOptions = [
-  "Azad Hall (Ist Block)", "Bose Hall (2nd Block)", "Ambedkar Hall (3rd Block)", "Babha Hall (4th Block)",
-  "Gandhi Hall (5th Block)", "Gokhale Hall (5th Block)", "Radhakrishnan Hall (6th Block)", "Raman Hall (7th Block)",
-  "Nehru Hall (8th Block)", "Patel Hall (9th Block)", "Tagore Hall (10th Block)", "Viswesvraya Hall (11th Block)",
-  "Rajendra Prasad Hall (12th Block)", "Vikram Sarabhai Hall (14th Block)", "1K Hall of Residence (1K)", "1.8K Ultra Mega Hostel (1.8K)",
-  "International Students Hall (ISH)", "Priyadarshini Hall", "Sarojini Hall", "NEW LADIES HOSTEL-A",
-  "NEW LADIES HOSTEL-B", "NEW LADIES HOSTEL-C", "Nearby Kazipet", "Nearby Hanamkonda", "Other"
-];
- 
- 
   useEffect(() => {
     const savedData = JSON.parse(localStorage.getItem("formData"));
     if (savedData && new Date(savedData.expiry) > new Date()) {
@@ -442,7 +512,7 @@ const hostelOptions = [
         address: "",
         price: "",
         tag: [],
-        contact: "",
+        contact: "+91", // Reset with default country code
         thumbnail: null,
       });
       localStorage.removeItem("formData");
@@ -453,178 +523,183 @@ const hostelOptions = [
 
   return (
     <div className="min-h-screen bg-zinc-900 flex items-center justify-center p-6">
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="w-full max-w-7xl bg-[#8ba498] rounded-xl shadow-lg overflow-hidden"
-    >
-      <div className="flex flex-col md:flex-row">
-        {/* Left Section - Form Title and Description */}
-        <div className="w-full md:w-1/3 bg-[#eaeaea] p-4 md:p-8 flex flex-col justify-between">
-          <div>
-            <motion.h2 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="text-xl md:text-2xl lg:text-3xl font-bold text-black mb-2"
-            >
-              Hi {user?.firstName}!
-            </motion.h2>
-            <motion.h3
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="text-lg md:text-xl lg:text-2xl font-bold text-black mb-4"
-            >
-              List Your Product
-            </motion.h3>
-            <p className="text-sm md:text-base text-gray-700 mb-4">Fill in the details to list your product for sale. All fields are required.</p>
-            <p className="text-xs md:text-sm italic text-gray-600">"Empowering students to buy, sell, and connect as they build a vibrant campus community."</p>
-          </div>
-        </div>
-
-        {/* Right Section - Form Fields */}
-        <div className="w-full md:w-2/3 p-4 md:p-8">
-          <motion.form 
-            onSubmit={handleSubmit}
-            className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6"
-          >
-            <div className="col-span-2">
-              <label className="block text-sm md:text-base text-black mb-2 font-medium">Product Name</label>
-              <input
-                type="text"
-                name="courseName"
-                value={formData.courseName}
-                onChange={handleChange}
-                className="w-full p-2 md:p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-sm md:text-base text-black"
-              />
-            </div>
-
-            <div className="col-span-2">
-              <label className="block text-sm md:text-base text-black mb-2 font-medium">Product Description</label>
-              <textarea
-                name="courseDescription"
-                value={formData.courseDescription}
-                onChange={handleChange}
-                className="w-full p-2 md:p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none resize-none h-24 md:h-32 text-sm md:text-base text-black"
-              />
-            </div>
-
-            <div className="col-span-2 md:col-span-1">
-              <label className="block text-sm md:text-base text-black mb-2 font-medium">Location</label>
-              <select
-                name="address"
-                value={formData.address}
-                onChange={handleChange}
-                className="w-full p-2 md:p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-sm md:text-base text-black"
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="w-full max-w-7xl bg-[#8ba498] rounded-xl shadow-lg overflow-hidden"
+      >
+        <div className="flex flex-col md:flex-row">
+          {/* Left Section - Form Title and Description */}
+          <div className="w-full md:w-1/3 bg-[#eaeaea] p-4 md:p-8 flex flex-col justify-between">
+            <div>
+              <motion.h2 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="text-xl md:text-2xl lg:text-3xl font-bold text-black mb-2"
               >
-                <option value="" disabled>Select your address...</option>
-                {hostelOptions.map((option, index) => (
-                  <option key={index} value={option} className="text-black">{option}</option>
-                ))}
-              </select>
+                Hi {user?.firstName}!
+              </motion.h2>
+              <motion.h3
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="text-lg md:text-xl lg:text-2xl font-bold text-black mb-4"
+              >
+                List Your Product
+              </motion.h3>
+              <p className="text-sm md:text-base text-gray-700 mb-4">
+                Fill in the details to list your product for sale. All fields are required.
+              </p>
+              <p className="text-xs md:text-sm italic text-gray-600">
+                "Empowering students to buy, sell, and connect as they build a vibrant campus community."
+              </p>
             </div>
+          </div>
 
-            <div className="col-span-2 md:col-span-1">
-              <label className="block text-sm md:text-base text-black mb-2 font-medium">Price</label>
-              <input
-                type="number"
-                name="price"
-                value={formData.price}
-                onChange={handleChange}
-                className="w-full p-2 md:p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-sm md:text-base text-black"
-              />
-            </div>
-
-            <div className="col-span-2">
-              <label className="block text-sm md:text-base text-black mb-2 font-medium">Tags</label>
-              <div className="flex gap-2 mb-2">
+          {/* Right Section - Form Fields */}
+          <div className="w-full md:w-2/3 p-4 md:p-8">
+            <motion.form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+              <div className="col-span-2">
+                <label className="block text-sm md:text-base text-black mb-2 font-medium">Product Name</label>
                 <input
                   type="text"
-                  value={tagInput}
-                  onChange={(e) => setTagInput(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddTag())}
-                  className="flex-1 p-2 md:p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-sm md:text-base text-black placeholder-gray-600"
-                  placeholder="Add a tag"
+                  name="courseName"
+                  value={formData.courseName}
+                  onChange={handleChange}
+                  className="w-full p-2 md:p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-sm md:text-base text-black"
                 />
-                <motion.button
-                  type="button"
-                  onClick={handleAddTag}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="px-4 md:px-6 py-2 md:py-3 bg-black text-white rounded-full transition-colors text-sm md:text-base"
-                >
-                  Add
-                </motion.button>
               </div>
 
-              <motion.div layout className="flex flex-wrap gap-2">
-                <AnimatePresence>
-                  {formData.tag.map((t) => (
-                    <motion.span
-                      key={t}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.8 }}
-                      className="inline-flex items-center bg-blue-50 text-blue-600 px-2 md:px-3 py-1 rounded-full text-xs md:text-sm"
-                    >
-                      {t}
-                      <motion.button
-                        type="button"
-                        onClick={() => handleRemoveTag(t)}
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        className="ml-2 text-blue-400 hover:text-red-500"
-                      >
-                        ×
-                      </motion.button>
-                    </motion.span>
+              <div className="col-span-2">
+                <label className="block text-sm md:text-base text-black mb-2 font-medium">Product Description</label>
+                <textarea
+                  name="courseDescription"
+                  value={formData.courseDescription}
+                  onChange={handleChange}
+                  className="w-full p-2 md:p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none resize-none h-24 md:h-32 text-sm md:text-base text-black"
+                />
+              </div>
+
+              <div className="col-span-2 md:col-span-1">
+                <label className="block text-sm md:text-base text-black mb-2 font-medium">Location</label>
+                <select
+                  name="address"
+                  value={formData.address}
+                  onChange={handleChange}
+                  className="w-full p-2 md:p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-sm md:text-base text-black"
+                >
+                  <option value="" disabled>
+                    Select your address...
+                  </option>
+                  {hostelOptions.map((option, index) => (
+                    <option key={index} value={option} className="text-black">
+                      {option}
+                    </option>
                   ))}
-                </AnimatePresence>
-              </motion.div>
-            </div>
+                </select>
+              </div>
 
-            <div className="col-span-2">
-              <label className="block text-sm md:text-base text-black mb-2 font-medium">Contact Number</label>
-              <input
-                type="text"
-                name="contact"
-                value={formData.contact}
-                onChange={handleChange}
-                className="w-full p-2 md:p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-sm md:text-base text-black"
-              />
-            </div>
+              <div className="col-span-2 md:col-span-1">
+                <label className="block text-sm md:text-base text-black mb-2 font-medium">Price</label>
+                <input
+                  type="number"
+                  name="price"
+                  value={formData.price}
+                  onChange={handleChange}
+                  className="w-full p-2 md:p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-sm md:text-base text-black"
+                />
+              </div>
 
-            <div className="col-span-2">
-              <label className="block text-sm md:text-base text-black mb-2 font-medium">Product Image</label>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="w-full p-2 md:p-3 text-sm md:text-base text-black file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-black hover:file:bg-gray-100"
-              />
-            </div>
-
-            <div className="col-span-2">
-              <AnimatePresence>
-                {isFormValid && (
+              <div className="col-span-2">
+                <label className="block text-sm md:text-base text-black mb-2 font-medium">Tags</label>
+                <div className="flex gap-2 mb-2">
+                  <input
+                    type="text"
+                    value={tagInput}
+                    onChange={(e) => setTagInput(e.target.value)}
+                    onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), handleAddTag())}
+                    className="flex-1 p-2 md:p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-sm md:text-base text-black placeholder-gray-600"
+                    placeholder="Add a tag"
+                  />
                   <motion.button
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
+                    type="button"
+                    onClick={handleAddTag}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    type="submit"
-                    className="w-full bg-black text-white py-2 md:py-3 rounded-lg font-semibold hover:bg-black transition-colors text-sm md:text-base"
+                    className="px-4 md:px-6 py-2 md:py-3 bg-black text-white rounded-full transition-colors text-sm md:text-base"
                   >
-                    List Product
+                    Add
                   </motion.button>
-                )}
-              </AnimatePresence>
-            </div>
-          </motion.form>
+                </div>
+
+                <motion.div layout className="flex flex-wrap gap-2">
+                  <AnimatePresence>
+                    {formData.tag.map((t) => (
+                      <motion.span
+                        key={t}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        className="inline-flex items-center bg-blue-50 text-blue-600 px-2 md:px-3 py-1 rounded-full text-xs md:text-sm"
+                      >
+                        {t}
+                        <motion.button
+                          type="button"
+                          onClick={() => handleRemoveTag(t)}
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
+                          className="ml-2 text-blue-400 hover:text-red-500"
+                        >
+                          ×
+                        </motion.button>
+                      </motion.span>
+                    ))}
+                  </AnimatePresence>
+                </motion.div>
+              </div>
+
+              <div className="col-span-2">
+                <label className="block text-sm md:text-base text-black mb-2 font-medium">Contact Number</label>
+                <input
+                  type="text"
+                  name="contact"
+                  value={formData.contact}
+                  onChange={handleChange}
+                  className="w-full p-2 md:p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-sm md:text-base text-black"
+                />
+              </div>
+
+              <div className="col-span-2">
+                <label className="block text-sm md:text-base text-black mb-2 font-medium">Product Image</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  className="w-full p-2 md:p-3 text-sm md:text-base text-black file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-black hover:file:bg-gray-100"
+                />
+              </div>
+
+              <div className="col-span-2">
+                <AnimatePresence>
+                  {isFormValid && (
+                    <motion.button
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      type="submit"
+                      className="w-full bg-black text-white py-2 md:py-3 rounded-lg font-semibold hover:bg-black transition-colors text-sm md:text-base"
+                    >
+                      List Product
+                    </motion.button>
+                  )}
+                </AnimatePresence>
+              </div>
+            </motion.form>
+          </div>
         </div>
-      </div>
-    </motion.div>
-  </div>
+      </motion.div>
+    </div>
   );
 };
 

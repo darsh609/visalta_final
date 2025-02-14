@@ -83,7 +83,7 @@ const CourseCard = ({ course, searchTerm, onDelete,deleteCourse,setShowModal, se
   };
 
   const openWhatsApp = () => {
-    window.open(`https://wa.me/${course.contact}`, '_blank');
+    window.open(`https://wa.me/${course.contact}?text=Hello%20there!%20I%20am%20interested%20in%20your%20service`, '_blank');
   };
 
   const openEmail = () => {
