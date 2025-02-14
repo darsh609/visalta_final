@@ -31,13 +31,13 @@ function VerifyEmail() {
 
   return (
     <motion.div
-    className="relative min-h-screen flex justify-center items-center bg-gradient-to-br from-black via-gray-900 to-[#1db954] font-['Poppins'] p-4"
+    className="relative min-h-screen flex justify-center items-center bg-zinc-900 font-['Poppins'] p-4"
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     transition={{ duration: 1 }}
   >
     {/* Floating particles */}
-    <motion.div
+    {/* <motion.div
       className="absolute inset-0 pointer-events-none"
       initial={{ opacity: 0 }}
       animate={{ opacity: 0.5 }}
@@ -62,13 +62,13 @@ function VerifyEmail() {
           }}
         />
       ))}
-    </motion.div>
+    </motion.div> */}
 
     {loading ? (
       <div className="spinner" />
     ) : (
       <motion.div
-        className="bg-black/80 p-8 md:p-12 rounded-lg shadow-2xl backdrop-blur-sm w-full max-w-xl mx-4 border border-[#1db954]/20"
+        className="bg-gray-100 p-8 md:p-12 rounded-lg shadow-2xl backdrop-blur-sm w-full max-w-xl mx-4 border border-[#1db954]/20"
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: 'spring', stiffness: 120 }}
@@ -80,7 +80,7 @@ function VerifyEmail() {
           className="mb-8 text-center"
         >
           <FaCompass className="text-6xl text-[#1db954] mx-auto mb-6 animate-spin-slow" />
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-black mb-4">
             Verify Your Email
           </h2>
           <motion.p
@@ -107,7 +107,7 @@ function VerifyEmail() {
                   {...props}
                   placeholder="-"
                   // Increase OTP input size + responsive
-                  className="w-[50px] h-[50px] md:w-[60px] md:h-[60px] text-2xl bg-gray-900 border border-[#1db954]/30 rounded-lg text-[#1db954] text-center focus:border-[#1db954] focus:ring-2 focus:ring-[#1db954]/20 transition-all duration-300"
+                  className="w-[50px] h-[50px] md:w-[60px] md:h-[60px] text-2xl bg-zinc-800 border border-[#1db954]/30 rounded-lg text-white text-center focus:border-[#1db954] focus:ring-2 focus:ring-[#1db954]/20 transition-all duration-300"
                 />
               )}
               containerStyle={{
@@ -121,7 +121,7 @@ function VerifyEmail() {
             type="submit"
             whileHover={{ scale: 1.02, backgroundColor: '#1db954' }}
             whileTap={{ scale: 0.98 }}
-            className="w-full py-4 text-xl bg-[#1db954] text-white font-bold rounded-lg shadow-lg shadow-[#1db954]/20 hover:shadow-[#1db954]/40 transition-all duration-300"
+            className="w-full py-4 text-xl bg-[#1db954] text-white font-bold rounded-lg shadow-lg shadow-[#1db954]/20 transition-all duration-300"
           >
             Verify Email
           </motion.button>
