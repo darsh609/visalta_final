@@ -82,22 +82,24 @@ const Signup = () => {
   };
   
   return (
-    <div className="auth-page-container relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-[#1db954]">
+    <div className="auth-page-container relative min-h-screen bg-zinc-900">
 
-    <div className="flex items-end py-11 px-8"
-      onClick={() => navigate("/")}>
-      <AnimatedLogo/>
-      </div>
+  
    
     {/* Floating particles effect */}
     <motion.div
-      className="auth-page-container relative flex justify-center items-center min-h-screen bg-gradient-to-br from-black via-gray-900 to-[#1db954] font-['Poppins'] p-4 overflow-y-auto"
+      className="auth-page-container backdrop-blur-lg relative font-['Poppins']"
 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
-      {/* Floating particles effect */}
+      <div className="absolute flex py-11 px-8"
+      onClick={() => navigate("/")}>
+      <AnimatedLogo/>
+      </div>
+      <div className="flex items-center justify-center min-h-screen py-10">
+              {/* Floating particles effect */}
       <motion.div
         className="absolute inset-0 pointer-events-none"
         initial={{ opacity: 0 }}
@@ -126,7 +128,7 @@ const Signup = () => {
       </motion.div>
 
       <motion.div
-        className="auth-form-container bg-black/80 p-8 md:p-10 rounded-lg shadow-2xl backdrop-blur-sm w-full max-w-md m-4 border border-[#1db954]/20"
+        className="auth-form-container bg-gray-100 p-8 md:p-10 rounded-lg shadow-2xl backdrop-blur-sm w-full max-w-md m-4 border border-[#1db954]/20"
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 120 }}
@@ -138,7 +140,7 @@ const Signup = () => {
           className="mb-6"
         >
           <FaCompass className="text-[#1db954] text-6xl mx-auto mb-4 animate-spin-slow" />
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
+          <h2 className="text-2xl md:text-3xl font-bold text-black mb-2">
             Join the Visalta Community
           </h2>
           <motion.p
@@ -166,7 +168,7 @@ const Signup = () => {
               value={formData.firstName}
               onChange={handleChange}
               required
-              className="w-full px-8 py-2 text-sm md:px-10 md:py-3 md:text-base bg-gray-900 text-white rounded-lg border border-[#1db954]/30 focus:border-[#1db954] focus:ring-2 focus:ring-[#1db954]/20 transition-all duration-300"
+              className="w-full px-8 py-2 text-sm md:px-10 md:py-3 md:text-base bg-zinc-800 text-white rounded-lg border border-[#1db954]/30 focus:border-[#1db954] focus:ring-2 focus:ring-[#1db954]/20 transition-all duration-300"
             />
           </motion.div>
 
@@ -185,7 +187,7 @@ const Signup = () => {
               value={formData.lastName}
               onChange={handleChange}
               required
-              className="w-full px-8 py-2 text-sm md:px-10 md:py-3 md:text-base bg-gray-900 text-white rounded-lg border border-[#1db954]/30 focus:border-[#1db954] focus:ring-2 focus:ring-[#1db954]/20 transition-all duration-300"
+              className="w-full px-8 py-2 text-sm md:px-10 md:py-3 md:text-base bg-zinc-800 text-white rounded-lg border border-[#1db954]/30 focus:border-[#1db954] focus:ring-2 focus:ring-[#1db954]/20 transition-all duration-300"
             />
           </motion.div>
 
@@ -200,8 +202,8 @@ const Signup = () => {
               onClick={() => handleAccountTypeChange("Admin")}
               className={`flex-1 p-3 md:p-4 rounded-lg cursor-pointer transition-all duration-300 flex flex-col items-center ${
                 formData.accountType === "Admin"
-                  ? "bg-[#1db954] shadow-lg shadow-[#1db954]/20"
-                  : "bg-gray-800 hover:bg-gray-700"
+                  ? "bg-[#1db954] shadow-md shadow-zinc-800"
+                  : "bg-gray-100 hover:bg-gray-100"
               }`}
             >
               <FaUserShield className="text-2xl mb-2" />
@@ -211,8 +213,8 @@ const Signup = () => {
               onClick={() => handleAccountTypeChange("Student")}
               className={`flex-1 p-3 md:p-4 rounded-lg cursor-pointer transition-all duration-300 flex flex-col items-center ${
                 formData.accountType === "Student"
-                  ? "bg-[#1db954] shadow-lg shadow-[#1db954]/20"
-                  : "bg-gray-800 hover:bg-gray-700"
+                  ? "bg-[#1db954] shadow-md shadow-zinc-800"
+                  : "bg-gray-100 hover:bg-gray-100"
               }`}
             >
               <FaGraduationCap className="text-2xl mb-2" />
@@ -235,7 +237,7 @@ const Signup = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full px-8 py-2 text-sm md:px-10 md:py-3 md:text-base bg-gray-900 text-white rounded-lg border border-[#1db954]/30 focus:border-[#1db954] focus:ring-2 focus:ring-[#1db954]/20 transition-all duration-300"
+              className="w-full px-8 py-2 text-sm md:px-10 md:py-3 md:text-base bg-zinc-800 text-white rounded-lg border border-[#1db954]/30 focus:border-[#1db954] focus:ring-2 focus:ring-[#1db954]/20 transition-all duration-300"
             />
           </motion.div>
 
@@ -254,13 +256,13 @@ const Signup = () => {
               value={formData.password}
               onChange={handleChange}
               required
-              className="w-full px-8 py-2 text-sm md:px-10 md:py-3 md:text-base bg-gray-900 text-white rounded-lg border border-[#1db954]/30 focus:border-[#1db954] focus:ring-2 focus:ring-[#1db954]/20 transition-all duration-300"
+              className="w-full px-8 py-2 text-sm md:px-10 md:py-3 md:text-base bg-zinc-800 text-white rounded-lg border border-[#1db954]/30 focus:border-[#1db954] focus:ring-2 focus:ring-[#1db954]/20 transition-all duration-300"
             />
             <motion.span
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-[#1db954] hover:text-[#1db954]/80 transition-colors duration-300"
+              className="absolute right-3 top-1/3 cursor-pointer text-[#1db954] hover:text-[#1db954]/80 transition-colors duration-300"
             >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </motion.span>
@@ -281,13 +283,13 @@ const Signup = () => {
               value={formData.confirmPassword}
               onChange={handleChange}
               required
-              className="w-full px-8 py-2 text-sm md:px-10 md:py-3 md:text-base bg-gray-900 text-white rounded-lg border border-[#1db954]/30 focus:border-[#1db954] focus:ring-2 focus:ring-[#1db954]/20 transition-all duration-300"
+              className="w-full px-8 py-2 text-sm md:px-10 md:py-3 md:text-base bg-zinc-800 text-white rounded-lg border border-[#1db954]/30 focus:border-[#1db954] focus:ring-2 focus:ring-[#1db954]/20 transition-all duration-300"
             />
             <motion.span
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-[#1db954] hover:text-[#1db954]/80 transition-colors duration-300"
+              className="absolute right-3 top-1/3 cursor-pointer text-[#1db954] hover:text-[#1db954]/80 transition-colors duration-300"
             >
               {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
             </motion.span>
@@ -349,6 +351,7 @@ const Signup = () => {
           </div>
         </div> */}
       </motion.div>
+      </div>
     </motion.div>
 
 
