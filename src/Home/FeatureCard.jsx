@@ -191,7 +191,7 @@ const FeatureCard = () => {
                         
                         <CardWrapper>
                             <motion.div
-                                onClick={() => navigate("/food")}
+                                onClick={() => navigate("/dine")}
                                 onHoverStart={() => handleHover(0)}
                                 onHoverEnd={() => handleHoverEnd(0)}
                                 whileHover={{ scale: 1.05 }}
@@ -200,7 +200,7 @@ const FeatureCard = () => {
                                 style={{ position: 'relative', zIndex: 1 }}>
                                 <div className='absolute inset-0 flex items-center justify-center z-[1000] pointer-events-none'>
                                     <h1 className='flex overflow-hidden text-[#F9F7E7] font-["Founders_Grotesk_Condensed"] font-bold text-8xl leading-none tracking-tight uppercase'>
-                                        {"Grub".split('').map((item, index) => (
+                                        {"Dine".split('').map((item, index) => (
                                             <motion.span
                                                 key={index}
                                                 initial={{ y: "100%" }}

@@ -166,7 +166,7 @@ function App() {
         }
       />
       <Route
-        path="food"
+        path="dine"
         element={
           <PrivateRoute>
             <Food />
