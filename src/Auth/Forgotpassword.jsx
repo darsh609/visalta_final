@@ -18,13 +18,13 @@ function ForgotPassword() {
 
   return (
     <motion.div
-      className="auth-page-container relative flex justify-center items-center min-h-screen bg-gradient-to-br from-black via-gray-900 to-[#1db954] font-['Poppins'] p-4 overflow-y-auto"
+      className="auth-page-container relative flex justify-center items-center min-h-screen bg-zinc-900 font-['Poppins'] p-4 overflow-y-auto"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
       {/* Floating particles */}
-      <motion.div
+      {/* <motion.div
         className="absolute inset-0 pointer-events-none"
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.5 }}
@@ -49,13 +49,13 @@ function ForgotPassword() {
             }}
           />
         ))}
-      </motion.div>
+      </motion.div> */}
 
       {loading ? (
         <div className="spinner" />
       ) : (
         <motion.div
-          className="bg-black/80 p-6 md:p-8 rounded-lg shadow-2xl backdrop-blur-sm w-full max-w-xl mx-4 border border-[#1db954]/20"
+          className="bg-gray-100 p-6 md:p-8 rounded-lg shadow-2xl backdrop-blur-sm w-full max-w-xl mx-4 border border-[#1db954]/20"
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ type: "spring", stiffness: 120 }}
@@ -67,7 +67,7 @@ function ForgotPassword() {
             className="mb-6 text-center"
           >
             <FaCompass className="text-6xl text-[#1db954] mx-auto mb-4 animate-spin-slow" />
-            <h2 className="text-xl md:text-2xl font-bold text-white mb-2">
+            <h2 className="text-xl md:text-2xl font-bold text-black mb-2">
               {!emailSent ? "Reset Your Password" : "Check Your Email"}
             </h2>
             <motion.p
@@ -96,7 +96,7 @@ function ForgotPassword() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
-                  className="w-full px-10 py-3 text-sm md:px-12 md:py-3 md:text-base bg-gray-900 text-white rounded-lg border border-[#1db954]/30 focus:border-[#1db954] focus:ring-2 focus:ring-[#1db954]/20 transition-all duration-300"
+                  className="w-full px-10 py-3 text-sm md:px-12 md:py-3 md:text-base bg-zinc-800 text-white rounded-lg border border-[#1db954]/30 focus:border-[#1db954] focus:ring-2 focus:ring-[#1db954]/20 transition-all duration-300"
                 />
               </motion.div>
             )}
@@ -105,7 +105,7 @@ function ForgotPassword() {
               type="submit"
               whileHover={{ scale: 1.02, backgroundColor: "#1db954" }}
               whileTap={{ scale: 0.98 }}
-              className="w-full py-3 md:py-4 text-sm md:text-base bg-[#1db954] text-white font-bold rounded-lg shadow-lg shadow-[#1db954]/20 hover:shadow-[#1db954]/40 transition-all duration-300"
+              className="w-full py-3 md:py-4 text-sm md:text-base bg-[#1db954] text-white font-bold rounded-lg shadow-lg shadow-[#1db954]/20 transition-all duration-300"
             >
               {!emailSent ? "Submit" : "Resend Email"}
             </motion.button>

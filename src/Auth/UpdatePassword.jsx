@@ -38,7 +38,7 @@ function UpdatePassword() {
 
   return (
     <motion.div
-      className="relative flex justify-center items-center min-h-screen bg-gradient-to-br from-black via-gray-900 to-[#1db954] font-['Poppins'] p-4 overflow-y-auto"
+      className="relative flex justify-center items-center min-h-screen bg-zinc-900 font-['Poppins'] p-4 overflow-y-auto"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
@@ -75,7 +75,7 @@ function UpdatePassword() {
         <div className="spinner" />
       ) : (
         <motion.div
-          className="bg-black/80 p-6 md:p-10 rounded-lg shadow-2xl backdrop-blur-sm w-full max-w-md m-4 border border-[#1db954]/20 text-center"
+          className="bg-gray-100 p-6 md:p-10 rounded-lg shadow-2xl backdrop-blur-sm w-full max-w-md m-4 border border-[#1db954]/20 text-center"
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ type: "spring", stiffness: 120 }}
@@ -88,7 +88,7 @@ function UpdatePassword() {
             className="mb-6"
           >
             <FaCompass className="text-[#1db954] text-6xl mx-auto mb-4 animate-spin-slow" />
-            <h2 className="text-xl md:text-2xl font-bold text-white mb-2">
+            <h2 className="text-xl md:text-2xl font-bold text-black mb-2">
               Choose New Password
             </h2>
             <motion.p
@@ -104,10 +104,10 @@ function UpdatePassword() {
           <form onSubmit={handleOnSubmit} className="space-y-4 text-left">
             {/* New Password */}
             <div>
-              <label className="block mb-1 text-white font-medium text-xs md:text-sm">
+              <label className="block mb-1 text-black font-medium text-xs md:text-sm">
                 New Password <sup className="text-red-500">*</sup>
               </label>
-              <div className="relative flex items-center bg-gray-800 rounded-md px-3 py-2 md:px-4 md:py-3">
+              <div className="relative flex items-center bg-zinc-800 rounded-md px-3 py-2 md:px-4 md:py-3">
                 <input
                   required
                   type={showPassword ? "text" : "password"}
@@ -128,10 +128,10 @@ function UpdatePassword() {
 
             {/* Confirm Password */}
             <div>
-              <label className="block mb-1 text-white font-medium text-xs md:text-sm">
+              <label className="block mb-1 text-black font-medium text-xs md:text-sm">
                 Confirm New Password <sup className="text-red-500">*</sup>
               </label>
-              <div className="relative flex items-center bg-gray-800 rounded-md px-3 py-2 md:px-4 md:py-3">
+              <div className="relative flex items-center bg-zinc-800 rounded-md px-3 py-2 md:px-4 md:py-3">
                 <input
                   required
                   type={showConfirmPassword ? "text" : "password"}
@@ -159,7 +159,7 @@ function UpdatePassword() {
               type="submit"
               whileHover={{ scale: 1.02, backgroundColor: "#1db954" }}
               whileTap={{ scale: 0.98 }}
-              className="w-full py-2 mt-4 bg-[#1db954] text-white font-bold rounded-md shadow-md shadow-[#1db954]/20 hover:shadow-[#1db954]/40 transition-all duration-300 text-xs md:text-sm"
+              className="w-full py-2 mt-4 bg-[#1db954] text-white font-bold rounded-md shadow-md shadow-[#1db954]/20 transition-all duration-300 text-xs md:text-sm"
             >
               Reset Password
             </motion.button>
