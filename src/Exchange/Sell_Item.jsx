@@ -453,208 +453,178 @@ const hostelOptions = [
 
   return (
     <div className="min-h-screen bg-zinc-900 flex items-center justify-center p-6">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-7xl bg-[#8ba498] rounded-xl shadow-lg overflow-hidden"
-      >
-        <div className="flex">
-          {/* Left Section - Form Title and Description */}
-          <div className="w-1/3 bg-[#eaeaea] p-8 flex flex-col justify-between">
-            <div>
-              <motion.h2 
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="text-3xl font-bold text-black mb-2"
-              >
-                Hi {user?.firstName}!
-              </motion.h2>
-              <motion.h3
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="text-2xl font-bold text-black mb-4"
-              >
-                List Your Product
-              </motion.h3>
-              <p className="text-gray-700 mb-4">Fill in the details to list your product for sale. All fields are required.</p>
-              <p className="italic text-gray-600">"Success in business is not just about the product you sell, but the story you tell and the value you create."</p>
-            </div>
-          </div>
-
-          {/* Right Section - Form Fields */}
-          <div className="w-2/3 p-8">
-            <motion.form 
-              onSubmit={handleSubmit}
-              className="grid grid-cols-2 gap-6"
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="w-full max-w-7xl bg-[#8ba498] rounded-xl shadow-lg overflow-hidden"
+    >
+      <div className="flex flex-col md:flex-row">
+        {/* Left Section - Form Title and Description */}
+        <div className="w-full md:w-1/3 bg-[#eaeaea] p-4 md:p-8 flex flex-col justify-between">
+          <div>
+            <motion.h2 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="text-xl md:text-2xl lg:text-3xl font-bold text-black mb-2"
             >
-              <div className="col-span-2">
-                <label className="block text-black mb-2 font-medium">Product Name</label>
-                <input
-                  type="text"
-                  name="courseName"
-                  value={formData.courseName}
-                  onChange={handleChange}
-                  className="w-full p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-black"
-                />
-              </div>
-
-              <div className="col-span-2">
-                <label className="block text-black mb-2 font-medium">Product Description</label>
-                <textarea
-                  name="courseDescription"
-                  value={formData.courseDescription}
-                  onChange={handleChange}
-                  className="w-full p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none resize-none h-32 text-black"
-                />
-              </div>
-
-              <div className="col-span-1">
-                <label className="block text-black mb-2 font-medium">Location</label>
-                {/* <input
-                  type="text"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleChange}
-                  className="w-full p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-black"
-                /> */}
-                    {/* <Select
-      options={hostelOptions}
-      value={formData.address}
-      onChange={handleChange}
-      isSearchable={true}
-      placeholder="Select your address..."
-      className="w-full p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-black"
-      styles={{
-        control: (provided) => ({
-          ...provided,
-          backgroundColor: "transparent",
-          borderBottom: "2px solid black",
-          borderRadius: "8px",
-          padding: "5px"
-        }),
-        menu: (provided) => ({
-          ...provided,
-          backgroundColor: "#fff",
-          color: "black"
-        })
-      }}
-    /> */}
-<select
-        name="address"
-        value={formData.address}
-        onChange={handleChange}
-        className="w-full p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-black"
-      >
-        <option value="" disabled>Select your address...</option>
-        {hostelOptions.map((option, index) => (
-          <option key={index} value={option} className="text-black">{option}</option>
-        ))}
-      </select>
-              </div>
-
-              <div className="col-span-1">
-                <label className="block text-black mb-2 font-medium">Price</label>
-                <input
-                  type="number"
-                  name="price"
-                  value={formData.price}
-                  onChange={handleChange}
-                  className="w-full p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-black"
-                />
-              </div>
-
-              <div className="col-span-2">
-                <label className="block text-black mb-2 font-medium">Tags</label>
-                <div className="flex gap-2 mb-2">
-                  <input
-                    type="text"
-                    value={tagInput}
-                    onChange={(e) => setTagInput(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddTag())}
-                    className="flex-1 p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-black placeholder-gray-600"
-                    placeholder="Add a tag"
-                  />
-                  <motion.button
-                    type="button"
-                    onClick={handleAddTag}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="px-6 py-3 bg-black text-white rounded-full transition-colors"
-                  >
-                    Add
-                  </motion.button>
-                </div>
-
-                <motion.div layout className="flex flex-wrap gap-2">
-                  <AnimatePresence>
-                    {formData.tag.map((t) => (
-                      <motion.span
-                        key={t}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.8 }}
-                        className="inline-flex items-center bg-blue-50 text-blue-600 px-3 py-1 rounded-full"
-                      >
-                        {t}
-                        <motion.button
-                          type="button"
-                          onClick={() => handleRemoveTag(t)}
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                          className="ml-2 text-blue-400 hover:text-red-500"
-                        >
-                          ×
-                        </motion.button>
-                      </motion.span>
-                    ))}
-                  </AnimatePresence>
-                </motion.div>
-              </div>
-
-              <div className="col-span-2">
-                <label className="block text-black mb-2 font-medium">Contact Number</label>
-                <input
-                  type="text"
-                  name="contact"
-                  value={formData.contact}
-                  onChange={handleChange}
-                  className="w-full p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-black"
-                />
-              </div>
-
-              <div className="col-span-2">
-                <label className="block text-black mb-2 font-medium">Product Image</label>
-                <input
-                  type="file"
-                  accept="image/*"
-                
-                  onChange={handleFileChange}
-                  className="w-full p-3 text-black file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-black hover:file:bg-gray-100"
-                />
-              </div>
-
-              <div className="col-span-2">
-                <AnimatePresence>
-                  {isFormValid && (
-                    <motion.button
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      type="submit"
-                      className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-black transition-colors"
-                    >
-                      List Product
-                    </motion.button>
-                  )}
-                </AnimatePresence>
-              </div>
-            </motion.form>
+              Hi {user?.firstName}!
+            </motion.h2>
+            <motion.h3
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="text-lg md:text-xl lg:text-2xl font-bold text-black mb-4"
+            >
+              List Your Product
+            </motion.h3>
+            <p className="text-sm md:text-base text-gray-700 mb-4">Fill in the details to list your product for sale. All fields are required.</p>
+            <p className="text-xs md:text-sm italic text-gray-600">"Empowering students to buy, sell, and connect as they build a vibrant campus community."</p>
           </div>
         </div>
-      </motion.div>
-    </div>
+
+        {/* Right Section - Form Fields */}
+        <div className="w-full md:w-2/3 p-4 md:p-8">
+          <motion.form 
+            onSubmit={handleSubmit}
+            className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6"
+          >
+            <div className="col-span-2">
+              <label className="block text-sm md:text-base text-black mb-2 font-medium">Product Name</label>
+              <input
+                type="text"
+                name="courseName"
+                value={formData.courseName}
+                onChange={handleChange}
+                className="w-full p-2 md:p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-sm md:text-base text-black"
+              />
+            </div>
+
+            <div className="col-span-2">
+              <label className="block text-sm md:text-base text-black mb-2 font-medium">Product Description</label>
+              <textarea
+                name="courseDescription"
+                value={formData.courseDescription}
+                onChange={handleChange}
+                className="w-full p-2 md:p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none resize-none h-24 md:h-32 text-sm md:text-base text-black"
+              />
+            </div>
+
+            <div className="col-span-2 md:col-span-1">
+              <label className="block text-sm md:text-base text-black mb-2 font-medium">Location</label>
+              <select
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                className="w-full p-2 md:p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-sm md:text-base text-black"
+              >
+                <option value="" disabled>Select your address...</option>
+                {hostelOptions.map((option, index) => (
+                  <option key={index} value={option} className="text-black">{option}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="col-span-2 md:col-span-1">
+              <label className="block text-sm md:text-base text-black mb-2 font-medium">Price</label>
+              <input
+                type="number"
+                name="price"
+                value={formData.price}
+                onChange={handleChange}
+                className="w-full p-2 md:p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-sm md:text-base text-black"
+              />
+            </div>
+
+            <div className="col-span-2">
+              <label className="block text-sm md:text-base text-black mb-2 font-medium">Tags</label>
+              <div className="flex gap-2 mb-2">
+                <input
+                  type="text"
+                  value={tagInput}
+                  onChange={(e) => setTagInput(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddTag())}
+                  className="flex-1 p-2 md:p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-sm md:text-base text-black placeholder-gray-600"
+                  placeholder="Add a tag"
+                />
+                <motion.button
+                  type="button"
+                  onClick={handleAddTag}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="px-4 md:px-6 py-2 md:py-3 bg-black text-white rounded-full transition-colors text-sm md:text-base"
+                >
+                  Add
+                </motion.button>
+              </div>
+
+              <motion.div layout className="flex flex-wrap gap-2">
+                <AnimatePresence>
+                  {formData.tag.map((t) => (
+                    <motion.span
+                      key={t}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.8 }}
+                      className="inline-flex items-center bg-blue-50 text-blue-600 px-2 md:px-3 py-1 rounded-full text-xs md:text-sm"
+                    >
+                      {t}
+                      <motion.button
+                        type="button"
+                        onClick={() => handleRemoveTag(t)}
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        className="ml-2 text-blue-400 hover:text-red-500"
+                      >
+                        ×
+                      </motion.button>
+                    </motion.span>
+                  ))}
+                </AnimatePresence>
+              </motion.div>
+            </div>
+
+            <div className="col-span-2">
+              <label className="block text-sm md:text-base text-black mb-2 font-medium">Contact Number</label>
+              <input
+                type="text"
+                name="contact"
+                value={formData.contact}
+                onChange={handleChange}
+                className="w-full p-2 md:p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-sm md:text-base text-black"
+              />
+            </div>
+
+            <div className="col-span-2">
+              <label className="block text-sm md:text-base text-black mb-2 font-medium">Product Image</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="w-full p-2 md:p-3 text-sm md:text-base text-black file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-black hover:file:bg-gray-100"
+              />
+            </div>
+
+            <div className="col-span-2">
+              <AnimatePresence>
+                {isFormValid && (
+                  <motion.button
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    type="submit"
+                    className="w-full bg-black text-white py-2 md:py-3 rounded-lg font-semibold hover:bg-black transition-colors text-sm md:text-base"
+                  >
+                    List Product
+                  </motion.button>
+                )}
+              </AnimatePresence>
+            </div>
+          </motion.form>
+        </div>
+      </div>
+    </motion.div>
+  </div>
   );
 };
 
