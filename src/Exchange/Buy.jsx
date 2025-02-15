@@ -2180,11 +2180,22 @@ const BuyPage = () => {
   };
 
   const handleSort = () => {
-    const sorted = [...filteredCourses].sort((a, b) => 
-      sortOrder === 'asc' ? a.price - b.price : b.price - a.price
-    );
-    setFilteredCourses(sorted);
-    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    if(sortOrder==='asc'){
+      const sorted = [...filteredCourses].sort((a, b) => 
+      a.price - b.price
+      );
+      setFilteredCourses(sorted);
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+
+    }
+    else{
+
+      setFilteredCourses(courses)
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+
+    }
+  
+   
   };
 
   const handleFilterChange = (type) => {
@@ -2229,7 +2240,7 @@ const BuyPage = () => {
             onClick={handleSort}
             className="bg-blue-600 hover:bg-blue-700 transition"
           >
-            Sort by Price {sortOrder === 'asc' ? '↑' : '↓'}
+           {sortOrder === 'asc' ? 'Sort by Price' : 'Undo Sort by Price'}
           </Button>
           {userHostel && (
             <Button 
