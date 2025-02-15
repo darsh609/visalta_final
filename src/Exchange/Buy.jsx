@@ -1596,6 +1596,10 @@ import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import { toast } from 'react-hot-toast';
 import emailjs from 'emailjs-com'
 import { useSelector } from 'react-redux';
+import { IoCopyOutline } from "react-icons/io5";
+import { MdMailOutline } from "react-icons/md";
+import { motion } from 'framer-motion';
+import { FiFilter, FiMap, FiTrash2 } from "react-icons/fi";
 
 const DeleteIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -1662,7 +1666,7 @@ const CourseCard = ({ course, searchTerm, onDelete, deleteCourse, setShowModal, 
     course.studentsEnrolled?.includes(user?._id)
   );
   const [isLoading, setIsLoading] = useState(false);
-  const [showMoreInfo, setShowMoreInfo] = useState(false);
+  const [showMoreInfo, setShowMoreInfo] = useState(true);
 
    // Function to truncate description by words
    const truncateByWords = (text, limit = 12) => {
@@ -1936,165 +1940,212 @@ const CourseCard = ({ course, searchTerm, onDelete, deleteCourse, setShowModal, 
   };
 
   return (
-    <div className="bg-green-50 rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl relative">
+    <motion.div 
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.4 }}
+    className="bg-zinc-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 relative"
+  >
     {/* Title */}
-    <div className="p-4 border-b border-green-100">
-      <h3 className="text-lg font-semibold text-black">
+    <motion.div 
+      className="p-4"
+    >
+      <h3 className="px-3 text-2xl font-bold text-white font-poppins">
         {highlightText(course.courseName, searchTerm)}
       </h3>
-    </div>
+    </motion.div>
 
-    {/* Image Container with fixed aspect ratio */}
-    <div className="relative aspect-square">
+    {/* Image Container */}
+    <motion.div 
+      className="relative aspect-video"
+      whileHover={{ scale: 1.02 }}
+      transition={{ duration: 0.3 }}
+    >
       <img 
         src={course.thumbnail} 
         alt={course.courseName}
         className="w-full h-full object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-    </div>
+      <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/80 to-transparent"></div>
+    </motion.div>
 
     {/* Content Section */}
-    <div className="p-4 space-y-3">
+    <div className="p-5 space-y-2">
       {/* Description */}
-      <div>
-        <span className="text-black font-medium">Description: </span>
-        <span className="text-black">
+      <div className="font-poppins">
+        <span className="text-white font-semibold">Description: </span>
+        <span className="text-white">
           {isDescriptionExpanded ? course.courseDescription : 
            `${course.courseDescription.slice(0, 10)}${course.courseDescription.length > 10 ? '...' : ''}`}
           {course.courseDescription.length > 10 && (
-            <button 
+            <motion.button 
               onClick={() => setIsDescriptionExpanded(!isDescriptionExpanded)}
-              className="ml-2 text-green-700 hover:text-green-800"
+              className="ml-2 text-[#49DE80] font-semibold"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
               {isDescriptionExpanded ? 'Show less' : 'Read more'}
-            </button>
+            </motion.button>
           )}
         </span>
       </div>
 
       {/* Price */}
-      <div>
-        <span className="text-black font-medium">Price: </span>
-        <span className="text-black">₹{highlightText(course.price.toLocaleString(), searchTerm)}</span>
+      <div className="font-poppins">
+        <span className="text-white font-semibold">Price: </span>
+        <span className="text-[#49DE80] font-bold text-lg">
+          ₹{highlightText(course.price.toLocaleString(), searchTerm)}
+        </span>
       </div>
 
-      {/* More Information Button */}
-      <button
-        onClick={() => setShowMoreInfo(!showMoreInfo)}
-        className="w-full mt-4 px-4 py-2 bg-green-100 text-black rounded-md hover:bg-green-200 transition-colors"
-      >
-        {showMoreInfo ? 'Less Information' : 'More Information'}
-      </button>
+      <div className="text-sm text-gray-500 font-poppins">
+        {calculateTimeDifference(course.createdAt)}
+      </div>
 
       {/* Expandable content */}
       {showMoreInfo && (
-        <div className="space-y-3 pt-4 border-t border-green-100">
+        <motion.div 
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          exit={{ opacity: 0, height: 0 }}
+          className="pt-4 border-t border-[#49DE80] space-y-4"
+        >
+          {/* Tags */}
           <div className="flex flex-wrap gap-2">
             {course.tag?.map((tag, index) => (
-              <span key={index} className="px-2 py-1 text-xs rounded-full bg-green-100 text-green-700">
+              <motion.span 
+                key={index}
+                whileHover={{ scale: 1.05 }}
+                className="px-3 py-1 text-sm rounded-full bg-[#49DE80]/10 text-[#49DE80] font-poppins font-medium"
+              >
                 {tag}
-              </span>
+              </motion.span>
             ))}
           </div>
 
-          <div>
-            <span className="text-black font-medium">Instructor: </span>
-            <span className="text-black">
-              {highlightText(`${course.instructor.firstName} ${course.instructor.lastName}`, searchTerm)}
-            </span>
-          </div>
-
-          <div>
-            <span className="text-black font-medium">Address: </span>
-            <span className="text-black">{highlightText(course.address, searchTerm)}</span>
-          </div>
-
-          <div>
-            <span className="text-black font-medium">Number of likes: </span>
-            <span className="text-black">{course.studentsEnrolled.length}</span>
-          </div>
-
-          <div className="flex items-center space-x-6 mt-4">
-            <div className="space-y-2">
-              <button 
-                onClick={(e)=>{
-                  e.stopPropagation();
-                  openWhatsApp(e);
-                }}
-                className="w-10 h-10 flex items-center justify-center rounded-full bg-green-100 text-green-700 hover:bg-green-200 transition-colors"
+          {/* Main content area */}
+          <div className="flex justify-between items-start gap-6">
+            {/* Information */}
+            <div className="space-y-3 flex-1 font-poppins">
+              <motion.div 
+                whileHover={{ x: 5 }}
+                className="text-white font-semibold"
               >
-                <FaWhatsapp size={20} />
-              </button>
-              <button 
-                onClick={() => handleCopyToClipboard(course.contact)}
-                className="w-8 h-8 mx-auto flex items-center justify-center rounded-full bg-green-50 text-black hover:bg-green-100 transition-colors"
-              >
-                <FaCopy size={14} />
-              </button>
+                {highlightText(`${course.instructor.firstName} ${course.instructor.lastName}`, searchTerm)}
+              </motion.div>
+
+              <div className="text-white">
+                {highlightText(course.address, searchTerm)}
+              </div>
+
+              <div>
+                <span className="text-white font-semibold">Likes: </span>
+                <span className="text-[#49DE80] font-bold">{course.studentsEnrolled.length}</span>
+              </div>
             </div>
 
-            <div className="space-y-2">
-              <button 
-                onClick={openEmailModal}
-                className="w-10 h-10 flex items-center justify-center rounded-full bg-green-100 text-green-700 hover:bg-green-200 transition-colors"
+            {/* Action Buttons */}
+            <div className="flex flex-col items-end space-y-">
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => handleCopyToClipboard(course.contact)} 
+                className="bg-zinc-800 text-center w-40 rounded-xl h-12 relative text-white font-poppins font-semibold group"
               >
-                <FaEnvelope size={20} />
-              </button>
-              <button 
+                <motion.div 
+                  className="bg-[#49DE80] rounded-xl h-8 w-1/5 flex items-center justify-center absolute left-1 top-1 group-hover:w-[124px] z-10 transition-all duration-300"
+                  transition={{ duration: 0.3 }}
+                >
+                  <IoCopyOutline className="text-white" />
+                </motion.div>
+                <p className="translate-x-1">WhatsApp</p>
+              </motion.button>
+
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={() => handleCopyToClipboard(course.instructor.email)}
-                className="w-8 h-8 mx-auto flex items-center justify-center rounded-full bg-green-50 text-black hover:bg-green-100 transition-colors"
+                className="bg-zinc-800 text-center w-32 rounded-xl h-12 relative text-white font-poppins font-semibold group"
               >
-                <FaCopy size={14} />
-              </button>
+                <motion.div 
+                  className="bg-[#49DE80] rounded-xl h-8 w-1/4 flex items-center justify-center absolute left-1 top-1 group-hover:w-[94px] z-10 transition-all duration-300"
+                  transition={{ duration: 0.3 }}
+                >
+                  <IoCopyOutline className="text-white" />
+                </motion.div>
+                <p className="translate-x-1">Email</p>
+              </motion.button>
             </div>
-
-
           </div>
-        </div>
+        </motion.div>
       )}
     </div>
 
     {/* Admin Delete Button */}
     {user?.accountType === 'Admin' && (
-      <button
+      <motion.button
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
         onClick={() => {
           setShowModal(true);
           setCourseToDelete(course);
         }}
-        className="absolute bottom-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-red-100 text-red-600 hover:bg-red-200 transition-colors"
+        className="absolute bottom-4 right-4 flex items-center justify-center  text-red-500 hover:text-red-400 transition-colors"
       >
-        <DeleteIcon />
-      </button>
+        <FiTrash2 className="w-5 h-5" />
+      </motion.button>
     )}
 
-    {/* Save/Bookmark Button */}
-    <button 
-      onClick={handleSaveToggle}
-      disabled={isLoading}
-      className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-white/80 text-black hover:text-green-700 transition-colors"
-    >
-      {isLoading ? (
-        <div className="animate-spin">
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-          </svg>
-        </div>
-      ) : isSaved ? (
-        <FaBookmark className="text-green-700" size={20} />
-      ) : (
-        <FaRegBookmark size={20} />
-      )}
-    </button>
+    {/* Top right corner buttons */}
+    <div className="absolute flex items-center gap-2 top-4 right-4">
+      <motion.button   
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}            
+        onClick={(e) => {
+          e.stopPropagation();
+          openWhatsApp(e);
+        }}
+        className="w-10 h-10 flex items-center justify-center rounded-xl text-white hover:text-[#49DE80]"
+      >
+        <FaWhatsapp size={25} />
+      </motion.button>
 
-    <EmailConfirmationModal
+      <motion.button 
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        onClick={openEmailModal}
+        className="w-10 h-10 flex items-center justify-center rounded-xl text-white hover:text-[#49DE80]"
+      >
+        <MdMailOutline size={25} />
+      </motion.button>
+
+      <motion.button 
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        onClick={handleSaveToggle}
+        disabled={isLoading}
+        className="w-10 h-10 flex items-center justify-center rounded-xl text-white hover:text-[#49DE80]"
+      >
+        {isLoading ? (
+          <div className="animate-spin">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          </div>
+        ) : isSaved ? (
+          <FaBookmark className="text-[#49DE80]" size={20} />
+        ) : (
+          <FaRegBookmark size={20} />
+        )}
+      </motion.button>
+      <EmailConfirmationModal
         show={showEmailModal}
         onCancel={() => setShowEmailModal(false)}
         onConfirm={handleConfirmEmail}
       />
-  </div>
-  );
+    </div>
+  </motion.div> );
 };
 
 const BuyPage = () => {
@@ -2227,7 +2278,13 @@ const BuyPage = () => {
   };
 
   return (
-    <div className="container max-w-full p-9 bg-[#262629] min-h-full text-white">
+    <div className="container max-w-full p-12 bg-zinc-900 min-h-full ">
+      <h1 className="text-5xl font-bold text-center mb-8 text-white">
+      Instant Connections for Every Find
+          <span className="block text-lg font-normal text-zinc-400 mt-2">From textbooks to gadgets, search with ease and reach out to sellers in just a click.
+          </span>
+        </h1>
+
       <div className="flex flex-col md:flex-row mb-6 space-y-4 md:space-y-0 md:space-x-4">
         <Input 
           placeholder="Search courses..." 
@@ -2238,8 +2295,9 @@ const BuyPage = () => {
         <div className="flex space-x-4">
           <Button 
             onClick={handleSort}
-            className="bg-blue-600 hover:bg-blue-700 transition"
+            className="bg-blue-600 hover:bg-blue-700 transition flex gap-2"
           >
+            <FiFilter className="w-5 h-5"/>
            {sortOrder === 'asc' ? 'Sort by Price' : 'Undo Sort by Price'}
           </Button>
           {userHostel && (
@@ -2270,7 +2328,7 @@ const BuyPage = () => {
           No courses found
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {filteredCourses.map(course => (
             <CourseCard 
               key={course._id}
@@ -2287,14 +2345,14 @@ const BuyPage = () => {
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg text-black w-80">
-            <h2 className="text-lg font-semibold mb-4">Confirm Delete</h2>
-            <p className="mb-6">
+            <h2 className="text-lg font-semibold mb-4 font-poppins">Confirm Delete</h2>
+            <p className="mb-6 font-poppins">
               Are you sure you want to delete the course <strong>{courseToDelete?.courseName}</strong>?
             </p>
-            <div className="flex justify-end space-x-4">
+            <div className="flex justify-end space-x-4 font-poppins">
               <button
                 onClick={() => setShowModal(false)}
-                className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+                className="px-4 py-2 bg-[#49DE80] rounded hover:bg-[#3fc26f]"
               >
                 Cancel
               </button>
