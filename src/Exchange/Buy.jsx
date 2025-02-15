@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaWhatsapp, FaEnvelope, FaCopy } from 'react-icons/fa';
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
-
+import emailjs from 'emailjs-com';
 import { toast } from 'react-hot-toast';
 
 import { useSelector } from 'react-redux';
@@ -67,13 +67,55 @@ const CardContent = ({ children, className }) => (
   </div>
 );
 
+// EmailConfirmationModal.jsx
+
+
+const EmailConfirmationModal = ({ show, onCancel, onConfirm }) => {
+  if (!show) return null;
+
+  return (
+    <div className="fixed inset-0 flex items-center justify-center z-50">
+      {/* Modal Overlay */}
+      <div className="absolute inset-0 bg-black opacity-50 backdrop-blur-sm"></div>
+      {/* Modal Content */}
+      <div className="bg-zinc-900 text-white p-6 rounded shadow-lg z-10 max-w-xs w-full">
+        <h3 className="text-xl font-semibold text-center mb-4">Confirm Inquiry</h3>
+        <p className="text-center mb-6">
+          Are you sure you want to send your inquiry for additional details to the product owner?
+        </p>
+        <div className="flex justify-around">
+          <button
+            onClick={onCancel}
+            className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={onConfirm}
+            className="px-4 py-2 bg-green-700 hover:bg-green-600 rounded"
+          >
+            Yes, Send Inquiry
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 
 
-const CourseCard = ({ course, searchTerm, onDelete,deleteCourse,setShowModal, setCourseToDelete }) => {
-  // const { user } = useSelector((state) => state.profile);
+
+
+const CourseCard = ({ course, searchTerm, onDelete,deleteCourse,setShowModal, setCourseToDelete,
   
-  // const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+ }) => {
+  // const { user } = useSelector((state) => state.profile);
+  const { user } = useSelector((state) => state.profile);
+  console.log("user",user)
+  const [showEmailModal, setShowEmailModal] = useState(false);
+
+
+
   // const [isSaved, setIsSaved] = useState(course.isSaved || false);
   // const [isLoading, setIsLoading] = useState(false);
   const handleCopyToClipboard = (text) => {
@@ -82,15 +124,202 @@ const CourseCard = ({ course, searchTerm, onDelete,deleteCourse,setShowModal, se
       .catch(() => toast.error('Failed to copy'));
   };
 
-  const openWhatsApp = () => {
-    window.open(`https://wa.me/${course.contact}`, '_blank');
+  
+const openWhatsApp = (e) => {
+  // Prevent the click from triggering any parent onClick handlers
+  e.stopPropagation();
+
+  // Construct the message with user and product details.
+  const message = `Hello! 🙋‍♂️
+
+I'm ${user.firstName} from ${user.additionalDetails.hostel}. I discovered your listing on Visalta and I'm very interested in your product.
+
+Product Details:
+• Name: ${course.courseName}
+• Price: ₹${course.price.toLocaleString()}
+
+I have a few questions:
+1. Is the product still available?
+2. Can you share details about its condition and functionality?
+3. Is there any possibility of a discount?
+
+Looking forward to your reply.
+
+Best regards,
+${user.firstName}`;
+  // URL-encode the message so that spaces and special characters are properly formatted.
+  const encodedMessage = encodeURIComponent(message);
+
+  // Build the WhatsApp URL (make sure course.contact is in international format without '+' or '00')
+  const whatsappUrl = `https://wa.me/${course.contact}?text=${encodedMessage}`;
+
+  // Open WhatsApp in a new tab/window.
+  window.open(whatsappUrl, '_blank');
+};
+
+const htmlMessage = `
+  <div style="background-color: #1a1a1a; color: #fff; font-family: Arial, sans-serif; padding: 20px;">
+    <div style="text-align: center; margin-bottom: 20px;">
+      <img src="https://i.postimg.cc/25V8F6Nh/Visalta.jpg" alt="Visalta Logo" style="max-width: 150px;">
+    </div>
+    <h2 style="color: #a8d5ba;">Hello!</h2>
+    <p>
+      I'm <strong>${user.firstName}</strong> from <strong>${user.additionalDetails.hostel}</strong>. I discovered your listing on <strong>Visalta</strong> and I'm very interested in your second-hand product.
+    </p>
+    <h3 style="color: #a8d5ba;">Product Details:</h3>
+    <p>
+      <strong>Name:</strong> ${course.courseName}<br>
+      <strong>Price:</strong> ₹${course.price.toLocaleString()}
+    </p>
+    <div style="text-align: center; margin: 20px 0;">
+      <img src="${course.thumbnail}" alt="${course.courseName}" style="max-width: 300px; border: 2px solid #a8d5ba; border-radius: 8px;">
+    </div>
+    <p><strong>Contact Number:</strong> ${user.additionalDetails.contactNumber}</p>
+     <p><strong>Contact Email:</strong> ${user.email}</p>
+    <p>I have a few questions:</p>
+    <ol>
+      <li>Is the product still available?</li>
+      <li>Can you share details about its condition and functionality?</li>
+      <li>Is there any possibility of a discount?</li>
+    </ol>
+    <p>Looking forward to your reply.</p>
+    <p>Best regards,<br><strong>${user.firstName}</strong></p>
+    <p style="font-style: italic; margin-top: 20px;">This email was sent by the VISALTA team.</p>
+  </div>
+`;
+  const subject = `Inquiry: Request for More Details about ${course.courseName} from Visalta`;
+
+
+
+// const sendEmail = () => {
+//   // Build the template parameters matching your EmailJS template
+//   const templateParams = {
+//     subject, // This will fill in the {{subject}} placeholder in your EmailJS template
+//     from_name: user.firstName,
+//     from_hostel: user.additionalDetails.hostel,
+//     product_name: course.courseName,
+//     product_price: `₹${course.price.toLocaleString()}`,
+//     to_name: course.instructor.firstName,
+//     message: htmlMessage, // Sending the HTML email body
+//     to_email: course.instructor.email
+//   };
+
+//   // Replace with your actual EmailJS IDs
+//   const serviceID = 'service_s7b9s1v';
+//   const templateID = 'template_fkv8gud';
+//   const userID = 'NnYBFTHd9piExxQjw';
+
+//   toast.promise(
+//     emailjs.send(serviceID, templateID, templateParams, userID),
+//     {
+//       pending: 'Sending email...',
+//       success: 'Email sent successfully!',
+//       error: 'Failed to send email.'
+//     }
+//   )
+//   .then(() => {
+//     setShowEmailModal(false);
+//   })
+//   .catch((err) => {
+//     console.error('Email send error: ', err);
+//   });
+// };
+
+
+const sendEmail = () => {
+  // Build the template parameters for the product owner's email
+  const templateParams = {
+    subject, // Fills in the {{subject}} placeholder
+    from_name: user.firstName,
+    from_hostel: user.additionalDetails.hostel,
+    product_name: course.courseName,
+    product_price: `₹${course.price.toLocaleString()}`,
+    to_name: course.instructor.firstName,
+    message: htmlMessage, // The HTML email body for the owner
+    to_email: course.instructor.email
   };
 
-  const openEmail = () => {
-    window.open(`mailto:${course.instructor.email}`);
+  // Replace with your actual EmailJS IDs
+  const serviceID = 'service_s7b9s1v';
+  const templateID = 'template_fkv8gud';
+  const userID = 'NnYBFTHd9piExxQjw';
+
+  // Build a response email for the user that is a copy of the owner's email
+  // with an additional header informing them that their inquiry has been forwarded.
+  const ssubject = "Inquiry Received – Seller Will Contact You Shortly!";
+
+const responseHtmlMessage = `
+  <div style="background-color: #1a1a1a; color: #fff; font-family: Arial, sans-serif; padding: 20px;">
+    <div style="text-align: center; margin-bottom: 20px;">
+    
+    </div>
+    <h2 style="color: #a8d5ba;">Inquiry Confirmed!</h2>
+    <p>
+      Hi ${user.firstName},<br><br>
+      We’ve successfully forwarded your inquiry regarding <strong>${course.courseName}</strong> to the seller.
+      Expect to hear from them soon – they will be in touch with you directly.
+    </p>
+    <p>
+      Below is a copy of the message we sent for your reference:
+    </p>
+    <hr style="border: 1px solid #a8d5ba; margin: 20px 0;">
+    ${htmlMessage}
+    <p style="margin-top: 20px; font-style: italic;">
+      Thank you for choosing Visalta -Navigating Student's Life!
+    </p>
+  </div>
+`;
+
+
+  // Define the template parameters for the response email to the user
+  const responseTemplateParams = {
+    subject: `${ssubject}`,
+    from_name: 'VISALTA Team',
+    to_name: user.firstName,
+    message: responseHtmlMessage, // This is the modified copy including the header
+    to_email: user.email
   };
 
+  // Assume the response email uses a second template ID from EmailJS:
+  
 
+  // Send the inquiry email to the product owner first
+  toast.promise(
+    emailjs.send(serviceID, templateID, templateParams, userID),
+    {
+      pending: 'Sending inquiry...',
+      success: 'Inquiry sent successfully!',
+      error: 'Failed to send inquiry.'
+    }
+  )
+  .then(() => {
+    // After successful sending, send the confirmation email to the user
+    emailjs.send(serviceID, templateID, responseTemplateParams, userID)
+      .then((response) => {
+        console.log('Response email sent!', response.status, response.text);
+        setShowEmailModal(false);
+      })
+      .catch((err) => {
+        console.error('Error sending response email: ', err);
+        setShowEmailModal(false);
+      });
+  })
+  .catch((err) => {
+    console.error('Error sending inquiry email: ', err);
+  });
+};
+
+const openEmailModal = (e) => {
+  e.stopPropagation();
+  setShowEmailModal(true);
+};
+
+// Handler when user confirms sending the email
+const handleConfirmEmail = (e) => {
+  e.stopPropagation();
+  sendEmail();
+  setShowEmailModal(false);
+};
   const calculateTimeDifference = (createdAt) => {
     const now = new Date();
     const created = new Date(createdAt);
@@ -163,9 +392,10 @@ const CourseCard = ({ course, searchTerm, onDelete,deleteCourse,setShowModal, se
     // setIsSaved(savedCourses.includes(course._id));
 
     console.log("course._id",course.studentsEnrolled)
+    console.log("user",user)
   }, [course._id]);
 
-  const { user } = useSelector((state) => state.profile);
+  
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
   const [isSaved, setIsSaved] = useState(
     course.studentsEnrolled?.includes(user?._id)
@@ -214,190 +444,161 @@ const CourseCard = ({ course, searchTerm, onDelete,deleteCourse,setShowModal, se
 
   return (
     <div 
-      
-      className="cursor-pointer hover:bg-green-900/20 transition-all duration-300 
-                 transform hover:scale-105 hover:shadow-2xl border border-green-800/50"
-    >
-      <Card className="w-full mb-4 bg-zinc-800 border-zinc-700">
-      {user?.accountType === 'Admin' && (
-  <button
-    onClick={() => {
-      setShowModal(true);
-      setCourseToDelete(course);
-    }}
-    className="absolute bottom-4 right-4 p-2 bg-red-600 text-white rounded-full shadow-lg hover:bg-red-700 transition transform hover:scale-105 z-10"
-    title="Delete Course"
-  >
-    <DeleteIcon/>
-  
-  </button>
-                       )}
+  className="cursor-pointer hover:bg-green-900/20 transition-all duration-300 
+             transform hover:scale-105 hover:shadow-2xl border border-green-800/50"
+>
+  <Card className="w-full mb-4 bg-zinc-800 border-zinc-700">
+    {user?.accountType === 'Admin' && (
+      <button
+        onClick={() => {
+          setShowModal(true);
+          setCourseToDelete(course);
+        }}
+        className="absolute bottom-4 right-4 p-2 bg-red-600 text-white rounded-full shadow-lg hover:bg-red-700 transition transform hover:scale-105 z-10"
+        title="Delete Course"
+      >
+        <DeleteIcon/>
+      </button>
+    )}
 
-<div className="absolute bottom-4 left-4 z-10">
-          <button 
-            onClick={handleSaveToggle}
-            disabled={isLoading}
-            className="p-2 bg-zinc-900/50 rounded-full hover:bg-zinc-900/75 transition flex items-center justify-center"
-            title={isSaved ? "Unsave Course" : "Save Course"}
-          >
-            {isLoading ? (
-              <div className="animate-spin">
-                <svg className="w-8 h-8 text-gray-300" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-              </div>
-            ) : isSaved ? (
-              <FaBookmark className="text-blue-500 text-4xl" />
-            ) : (
-              <FaRegBookmark className="text-gray-300 text-4xl" />
-            )}
-          </button>
-        </div>
-      
-        <CardHeader className="flex justify-between items-center bg-zinc-900">
-          <div className="flex items-center space-x-2">
-            <div>{highlightText(course.courseName, searchTerm)}</div>
-            <div className="flex flex-wrap">{renderTags()}</div>
+    <div className="absolute bottom-4 left-4 z-10">
+      <button 
+        onClick={handleSaveToggle}
+        disabled={isLoading}
+        className="p-2 bg-zinc-900/50 rounded-full hover:bg-zinc-900/75 transition flex items-center justify-center"
+        title={isSaved ? "Unsave Course" : "Save Course"}
+      >
+        {isLoading ? (
+          <div className="animate-spin">
+            <svg className="w-8 h-8 text-gray-300" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
           </div>
-          <div className="text-sm text-gray-400">
-            {calculateTimeDifference(course.createdAt)}
-          </div>
-        </CardHeader>
-        <CardContent className="flex">
-          <img 
-            src={course.thumbnail} 
-            alt={course.courseName} 
-            className="w-1/3 h-48 object-cover mr-4 rounded"
-          />
-          
-          <div className="w-2/3">
-            <div className="mb-2">
-              <strong>Instructor:</strong> {highlightText(`${course.instructor.firstName} ${course.instructor.lastName}`, searchTerm)}
-            </div>
-            <div className="mb-2">
-              <strong>Description:</strong> 
-              {course.courseDescription.length > 100 ? (
-                <>
-                  {isDescriptionExpanded 
-                    ? course.courseDescription 
-                    : `${course.courseDescription.slice(0, 100)}...`}
-                  <span 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleDescription();
-                    }}
-                    className="text-blue-500 cursor-pointer ml-2"
-                  >
-                    {isDescriptionExpanded ? 'Read Less' : 'Read More'}
-                  </span>
-                </>
-              ) : (
-                course.courseDescription
-              )}
-            </div>
-            <div className="mb-2">
-              <strong>Address:</strong> {highlightText(course.address, searchTerm)}
-            </div>
-            <div className="mb-2">
-              <strong>Price:</strong> ₹{highlightText(course.price.toLocaleString(), searchTerm)}
-            </div>
-            <div className="mb-2">
-              <strong>Number of likes:</strong> {course.studentsEnrolled.length}
-            </div>
-            <div className="flex space-x-4 mt-2 items-center">
-              {/* <div className="flex items-center">
-                <a 
-                  onClick={(e) => e.stopPropagation()}
-                  href={`https://wa.me/${course.contact}`} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex items-center mr-2"
-                >
-                  WhatsApp
-                </a>
-                <CopyIcon 
-                  className="cursor-pointer text-gray-400 hover:text-white" 
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleCopyContact(course.contact);
-                  }}
-                />
-              </div>
-              
-              <div className="flex items-center">
-                <a 
-                  onClick={(e) => e.stopPropagation()}
-                  href={`mailto:${course.instructor.email}`} 
-                  className="flex items-center mr-2"
-                >
-                  Email
-                </a>
-                <CopyIcon 
-                  className="cursor-pointer text-gray-400 hover:text-white" 
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleCopyContact(course.instructor.email);
-                  }}
-                />
-              </div> */}
-            </div>
-            <div className="flex space-x-2">
-              <div>
-              <button 
-            onClick={openWhatsApp}
-            className="text-green-500 hover:text-green-400 transition"
-          >
-            <FaWhatsapp size={24} />
-          </button>
-              </div>
-          
-          <div>
-          <button 
-            onClick={openEmail}
-            className="text-blue-500 hover:text-blue-400 transition"
-          >
-            <FaEnvelope size={24} />
-          </button>
-          </div>
-          
-        </div>
-
-        <div className=" mt-32 flex space-x-2">
-          <div>
-          <button 
-            onClick={() => handleCopyToClipboard(course.contact)}
-            className="text-gray-400 hover:text-white transition"
-          >
-            <FaCopy size={40} />
-          </button>
-          </div>
-          <div>
-          <button 
-            onClick={() => handleCopyToClipboard(course.instructor.email)}
-            className="text-gray-400 hover:text-white transition"
-          >
-            <FaCopy size={40} />
-          </button>
-
-          </div>
-         
-        </div>
-        <div className=' mt-20'>
-
-        <a href="mailto:example@example.com" onClick={(e) => e.preventDefault()}>
-  <button onClick={() => handleCopyToClipboard('example@example.com')}>📋</button>
-</a>
-
-        </div>
-
-
-            
-
-          </div>
-        </CardContent>
-      </Card>
+        ) : isSaved ? (
+          <FaBookmark className="text-blue-500 text-4xl" />
+        ) : (
+          <FaRegBookmark className="text-gray-300 text-4xl" />
+        )}
+      </button>
     </div>
+
+    <CardHeader className="flex justify-between items-center bg-zinc-900">
+      <div className="flex items-center space-x-2">
+        <div>{highlightText(course.courseName, searchTerm)}</div>
+        <div className="flex flex-wrap">{renderTags()}</div>
+      </div>
+      <div className="text-sm text-gray-400">
+        {calculateTimeDifference(course.createdAt)}
+      </div>
+    </CardHeader>
+    <CardContent className="flex">
+      <img 
+        src={course.thumbnail} 
+        alt={course.courseName} 
+        className="w-1/3 h-48 object-cover mr-4 rounded"
+      />
+      
+      <div className="w-2/3">
+        <div className="mb-2">
+          <strong>Instructor:</strong> {highlightText(`${course.instructor.firstName} ${course.instructor.lastName}`, searchTerm)}
+        </div>
+        <div className="mb-2">
+          <strong>Description:</strong> 
+          {course.courseDescription.length > 100 ? (
+            <>
+              {isDescriptionExpanded 
+                ? course.courseDescription 
+                : `${course.courseDescription.slice(0, 100)}...`}
+              <span 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleDescription();
+                }}
+                className="text-blue-500 cursor-pointer ml-2"
+              >
+                {isDescriptionExpanded ? 'Read Less' : 'Read More'}
+              </span>
+            </>
+          ) : (
+            course.courseDescription
+          )}
+        </div>
+        <div className="mb-2">
+          <strong>Address:</strong> {highlightText(course.address, searchTerm)}
+        </div>
+        <div className="mb-2">
+          <strong>Price:</strong> ₹{highlightText(course.price.toLocaleString(), searchTerm)}
+        </div>
+        <div className="mb-2">
+          <strong>Number of likes:</strong> {course.studentsEnrolled.length}
+        </div>
+        <div className="flex space-x-4 mt-2 items-center">
+          <div className="flex items-center">
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                openWhatsApp(e);
+              }}
+              className="text-green-500 hover:text-green-400 transition"
+              title="Contact via WhatsApp"
+            >
+              <FaWhatsapp size={24} />
+            </button>
+          </div>
+          <div>
+          <button 
+              onClick={openEmailModal}
+              className="text-blue-500 hover:text-blue-400 transition"
+              title="Contact via Email"
+            >
+              <FaEnvelope size={24} />
+            </button>
+            </div>
+        </div>
+
+        <div className="mt-32 flex space-x-2">
+          <div>
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                handleCopyToClipboard(course.contact);
+              }}
+              className="text-gray-400 hover:text-white transition"
+            >
+              <FaCopy size={40} />
+            </button>
+          </div>
+          <div>
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                handleCopyToClipboard(course.instructor.email);
+              }}
+              className="text-gray-400 hover:text-white transition"
+            >
+              <FaCopy size={40} />
+            </button>
+          </div>
+        </div>
+        <div className="mt-20">
+          <a href="mailto:example@example.com" onClick={(e) => e.preventDefault()}>
+            <button onClick={() => handleCopyToClipboard('example@example.com')}>📋</button>
+          </a>
+        </div>
+      </div>
+
+     {/* Email Confirmation Modal */}
+  
+    </CardContent>
+  </Card>
+  <EmailConfirmationModal
+        show={showEmailModal}
+        onCancel={() => setShowEmailModal(false)}
+        onConfirm={handleConfirmEmail}
+      />
+</div>
+
   );
 };
 
@@ -411,6 +612,7 @@ const BuyPage = () => {
   const [filterType, setFilterType] = useState('all'); // 'all', 'latest', 'hostel'
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  
   const deleteCourse = async (courseId) => {
     console.log(courseId)
     try {
@@ -592,6 +794,7 @@ const reversedCoursesData = [...coursesData].reverse();
               
               }}
               setShowModal={setShowModal}
+              
               setCourseToDelete={setCourseToDelete}
               className="transition transform hover:scale-105 hover:shadow-xl"
             />

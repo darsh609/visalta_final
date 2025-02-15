@@ -5,6 +5,11 @@
 @tailwind components;
 @tailwind utilities;
 
+
+.backdrop-blur-sm {
+  backdrop-filter: blur(4px);
+}
+
 /* @font-face {
   font-family: 'Founders Grotesk';
   src: url('/fonts/founders-grotesk/FoundersGrotesk-Regular.otf') format('opentype');
