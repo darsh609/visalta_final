@@ -9,6 +9,7 @@ import { IoCopyOutline } from "react-icons/io5";
 import { MdMailOutline } from "react-icons/md";
 import { motion } from 'framer-motion';
 import { FiFilter, FiMap, FiTrash2 } from "react-icons/fi";
+import { set } from 'react-hook-form';
 
 const DeleteIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -619,9 +620,25 @@ const BuyPage = () => {
 
     }
     else{
-
-      setFilteredCourses(courses)
+      if(hostelFilter){
+        // const sorted = [...filteredCourses].sort((a, b) => 
+        // new Date(b.createdAt) - new Date(a.createdAt)
+        // );
+        // setFilteredCourses(sorted);
+        // setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');'
+        const hostelFilteredCourses = courses.filter(
+          course => course.address.toLowerCase().includes(userHostel.toLowerCase())
+        );
+        setFilteredCourses(hostelFilteredCourses);
+        setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+      }
+      else{
+        setFilteredCourses(courses)
       setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+
+      }
+
+      
 
     }
   
@@ -688,7 +705,7 @@ const BuyPage = () => {
                   : 'bg-zinc-700 hover:bg-zinc-600'
               }`}
             >
-              {hostelFilter ? 'My Hostel Courses' : 'Filter by My Hostel'}
+              {hostelFilter ? 'My Hostel Items' : 'Filter by My Hostel'}
             </Button>
           )}
         </div>
