@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FaWhatsapp, FaEnvelope, FaCopy } from 'react-icons/fa';
+import { FaWhatsapp} from 'react-icons/fa';
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import { toast } from 'react-hot-toast';
 import emailjs from 'emailjs-com'
@@ -8,15 +8,8 @@ import { useSelector } from 'react-redux';
 import { IoCopyOutline } from "react-icons/io5";
 import { MdMailOutline } from "react-icons/md";
 import { motion } from 'framer-motion';
-import { FiFilter, FiMap, FiTrash2 } from "react-icons/fi";
+import { FiFilter, FiTrash2 } from "react-icons/fi";
 import { set } from 'react-hook-form';
-
-const DeleteIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <polyline points="3 6 5 6 21 6"></polyline>
-    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-  </svg>
-);
 
 const Input = ({ placeholder, value, onChange, className }) => (
   <input
