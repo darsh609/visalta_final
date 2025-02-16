@@ -298,6 +298,7 @@ const UploadItemForm = () => {
                   name="contact"
                   value={formData.contact}
                   onChange={handleChange}
+                  onKeyPress={(e) => { if (e.key === ' ') e.preventDefault(); }}
                   className="w-full p-2 md:p-3 rounded-lg bg-transparent border-b border-black focus:border-blue-500 transition-all duration-300 outline-none text-sm md:text-base text-black"
                 />
               </div>
