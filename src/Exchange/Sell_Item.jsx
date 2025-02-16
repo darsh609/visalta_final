@@ -51,6 +51,18 @@ const UploadItemForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+     // Check word count for Product Name
+     if (name === 'courseName') {
+      const words = value.trim().split(/\s+/);
+      if (words.length > 5) return;
+    }
+    
+    // Check word count for Product Description
+    if (name === 'courseDescription') {
+      const words = value.trim().split(/\s+/);
+      if (words.length > 30) return;
+    }
+    
     const updatedData = { ...formData, [name]: value };
     setFormData(updatedData);
     validateForm(updatedData);
@@ -65,7 +77,7 @@ const UploadItemForm = () => {
   const handleAddTag = () => {
     if (tagInput.trim()) {
       const newTag = tagInput.trim();
-      if (!formData.tag.includes(newTag)) {
+      if (formData.tag.length < 3 && !formData.tag.includes(newTag)) {
         const updatedData = {
           ...formData,
           tag: [...formData.tag, newTag],
