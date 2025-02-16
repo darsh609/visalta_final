@@ -8,7 +8,11 @@ import { EarthCanvas, StarsCanvas } from "./canvas";
 import { SectionWrapper } from "../hoc";
 import { slideIn } from "../utils/motion";
 import AnimatedLogo from "../Home/AnimatedLogo";
+import { useNavigate } from "react-router-dom";
+
 const FeedbackForm = () => {
+  const navigate = useNavigate();
+
   const formRef = useRef();
   const [form, setForm] = useState({
     name: "",
@@ -76,7 +80,8 @@ const FeedbackForm = () => {
   return (
     <div className="fixed inset-0 w-screen bg-zinc-900 overflow-y-scroll ">
     {/* Animated Logo in the top-left corner with increased top spacing */}
-    <div className="absolute top-6 left-4 sm:top-8 sm:left-6 lg:top-10 lg:left-8">
+    <div className="absolute top-6 left-4 sm:top-8 sm:left-6 lg:top-10 lg:left-8"
+      onClick={() => navigate("/")}>
       <AnimatedLogo className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12" />
     </div>
   
