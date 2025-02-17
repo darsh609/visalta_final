@@ -60,6 +60,7 @@ export const Home = () => {
   useGSAP(() => {
     const tl = gsap.timeline();
     
+    // Initial animations remain the same
     tl.from(gsapRef.current, {
       opacity: 0,
       duration: 0.3,
@@ -83,7 +84,7 @@ export const Home = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Navbar scroll animation
+      // Navbar scroll animation remains the same
       let lastScrollPosition = 0;
       const handleScroll = () => {
         const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
@@ -124,21 +125,30 @@ export const Home = () => {
 
       window.addEventListener('scroll', handleScroll);
 
+      // Modified parallax function to prevent gaps
       const createParallax = (ref, startY, endY, scrubAmount = 1) => {
-        gsap.fromTo(ref.current,
-          { y: startY },
-          {
-            y: endY,
-            ease: "power1.out",
-            scrollTrigger: {
-              trigger: ref.current,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: scrubAmount,
-              markers: false,
+        if (ref.current) {
+          gsap.fromTo(ref.current,
+            { y: startY },
+            {
+              y: endY,
+              ease: "power1.out",
+              scrollTrigger: {
+                trigger: ref.current,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: scrubAmount,
+                markers: false,
+                onLeave: (self) => {
+                  // Reset y position when element leaves viewport to prevent gaps
+                  if (ref !== footerRef) { // Don't reset footer position
+                    gsap.set(ref.current, { y: 0 });
+                  }
+                }
+              }
             }
-          }
-        );
+          );
+        }
       };
 
       // Apply parallax with sequential timing
@@ -147,10 +157,27 @@ export const Home = () => {
       createParallax(infiniteMenuRef, -500, -390, 1.2);
       createParallax(feedbackSliderRef, -400, -450, 1);
       createParallax(ratingFormRef, -400, -200, 1);
-      createParallax(ballpitRef, -400, -150, 0.8);
-      createParallax(footerRef, -200, -150, 0.8);
+      
+      // Special handling for ballpit section - reduce animation range
+      createParallax(ballpitRef, -100, -50, 0.8);
+      
+      // Special handling for the footer to ensure it sticks properly
+      if (footerRef.current) {
+        gsap.fromTo(footerRef.current,
+          { y: 0 },  // Start at normal position
+          {
+            y: 0,    // Don't actually move the footer
+            scrollTrigger: {
+              trigger: footerRef.current,
+              start: "top bottom",
+              end: "bottom bottom",
+              markers: false,
+            }
+          }
+        );
+      }
 
-      // Fade animations
+      // Fade animations remain the same
       const sections = [
         marqueeRef, 
         featureCardRef, 
@@ -176,6 +203,18 @@ export const Home = () => {
         }
       });
 
+      // Fix gap by pinning footer to screen bottom when ballpit exits viewport
+      if (ballpitRef.current && footerRef.current) {
+        ScrollTrigger.create({
+          trigger: ballpitRef.current,
+          start: "bottom bottom",
+          end: "bottom top",
+          onLeaveBack: () => {
+            gsap.set(footerRef.current, { y: 0 });
+          }
+        });
+      }
+
       return () => {
         window.removeEventListener('scroll', handleScroll);
       };
@@ -185,11 +224,14 @@ export const Home = () => {
   }, []);
 
   return (
-    <div ref={containerRef} className='relative w-full min-h-screen text-white bg-white overflow-x-hidden'>
+    <div ref={containerRef} className='relative w-full text-white bg-white overflow-x-hidden'>
       <div ref={navbarRef}>
         <Navbar/>
       </div>
       
+      
+      {/* LandingPage section remains the same */}
+      <div ref={gsapRef} className='LandingPage w-full h-screen bg-zinc-900 pt-1'>
       <div ref={gsapRef} className='LandingPage w-full h-screen bg-zinc-900 pt-1'>
         <div className='textstructure mt-40 px-20 py-12'>
           {["Navigating", "Student's", "life"].map((item, index) => (
@@ -223,7 +265,7 @@ export const Home = () => {
           ))}
         </div>
 
-        <div className='border-t-2 border-zinc-800  flex justify-between items-center py-5 px-20'>
+        <div className='border-t-2 border-zinc-800 flex justify-between items-center py-5 px-20'>
           {["",""].map((item, index) => (
             <p key={index} className='text-md font-light'>{item}</p>
           ))}
@@ -240,8 +282,9 @@ export const Home = () => {
           </div>
         </div>
       </div>
+      </div>
 
-      <div className="sections-container    mt-16 relative" style={{ marginTop: '' }}>
+      <div className="sections-container mt-16 relative">
         <div ref={marqueeRef} className='relative' style={{ marginBottom: '-1px' }}>
           <Marquee />
         </div>
@@ -267,13 +310,13 @@ export const Home = () => {
 
         <div ref={ballpitRef} className='relative' style={{
           overflow: 'hidden',
-          minHeight: '500px',
+          minHeight: '500px', 
           maxHeight: '600px',
           width: '100%',
-          marginBottom: '-1px'
+          marginBottom: '-66px' // Changed from -1px to 0
         }}>
           <Ballpit
-            count={150}
+            count={190}
             gravity={1}
             friction={0.8}
             wallBounce={0.8}
@@ -281,10 +324,33 @@ export const Home = () => {
           />
         </div>
 
-        <div ref={footerRef} className='relative'>
+        {/* Footer with improved positioning */}
+        <div 
+          ref={footerRef} 
+          className="footer-wrapper"
+          style={{
+            position: 'relative',
+            marginTop: '0',
+            paddingTop: '0',
+            marginBottom: '0',
+            paddingBottom: '0'
+          }}
+        >
           <Footer />
         </div>
       </div>
+
+      {/* Clean up any potential spacing issues with CSS */}
+      <style jsx>{`
+        html, body {
+          margin: 0;
+          padding: 0;
+          overflow-x: hidden;
+        }
+        .footer-wrapper {
+          transform: translateY(0) !important; /* Override any GSAP transforms */
+        }
+      `}</style>
     </div>
   );
 };
