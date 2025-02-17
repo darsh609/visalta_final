@@ -1,243 +1,375 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import "./Auth.css";
-import { FaEye, FaEyeSlash, FaUserShield, FaGraduationCap } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux"
-// React Router
-import { Route, Routes, useNavigate } from "react-router-dom"
+import { 
+  FaEye, 
+  FaEyeSlash, 
+  FaUserShield, 
+  FaGraduationCap, 
+  FaUser, 
+  FaEnvelope, 
+  FaLock, 
+  FaCompass 
+} from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import AnimatedLogo from "../Home/AnimatedLogo";
+
+import { sendOtp } from "../services/operations/authAPI"
+import { setSignupData } from "../slices/authSlice"
+import { ACCOUNT_TYPE } from "../utils/constants"
+
+import { FaArrowUpLong } from "react-icons/fa6";
 
 const Signup = () => {
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
-    accountType: "",
+    confirmPassword: "",
+    accountType: "Student", // Default account type set to Student
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [passwordMatchError, setPasswordMatchError] = useState("");
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData((prevData) => ({
+      ...prevData,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const handleAccountTypeChange = (accountType) => {
     setFormData({ ...formData, accountType });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Sign Up Data: ", formData);
+  
+    // Check if passwords match
+    if (formData.password !== formData.confirmPassword) {
+      setPasswordMatchError("Passwords do not match!");
+      return;
+    }
+  
+    const signupData = { ...formData };
+  
+    try {
+      // Dispatch signup data
+      dispatch(setSignupData(signupData));
+  
+      // Wait for OTP dispatch to complete
+      await dispatch(sendOtp(formData.email, navigate));
+  
+      // Clear form only after successful OTP dispatch
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        accountType: "Student",
+      });
+    } catch (error) {
+      console.error("Failed to send OTP:", error);
+    }
   };
-
+  
   return (
+    <div className="auth-page-container relative min-h-screen bg-zinc-900">
+
+  
+   
+    {/* Floating particles effect */}
     <motion.div
-      className="auth-page-container"
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "100vh",
-        background: "linear-gradient(135deg, #121212, #1a1a1a)",
-        fontFamily: '"Poppins", sans-serif',
-        padding: "1rem",
-        overflowY: "auto",
-      }}
+      className="auth-page-container backdrop-blur-lg relative font-['Poppins']"
+
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
+      <div className="absolute flex py-11 px-8"
+      onClick={() => navigate("/")}>
+      <AnimatedLogo/>
+      </div>
+      <div className="flex items-center justify-center min-h-screen py-10">
+              {/* Floating particles effect */}
       <motion.div
-        className="auth-form-container"
-        style={{
-          background: "#1f1f1f",
-          padding: "2rem",
-          borderRadius: "10px",
-          boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.7)",
-          textAlign: "center",
-          width: "100%",
-          maxWidth: "400px",
-          margin: "1rem auto",
-        }}
+        className="absolute inset-0 pointer-events-none"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.5 }}
+        transition={{ duration: 2 }}
+      >
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-[#1db954] rounded-full"
+            initial={{
+              x: Math.random() * window.innerWidth,
+              y: Math.random() * window.innerHeight,
+            }}
+            animate={{
+              y: [0, -20, 0],
+              opacity: [0.2, 1, 0.2],
+            }}
+            transition={{
+              duration: 2 + Math.random() * 2,
+              repeat: Infinity,
+              repeatType: "reverse",
+            }}
+          />
+        ))}
+      </motion.div>
+
+      <motion.div
+        className="auth-form-container bg-gray-100 p-8 md:p-10 rounded-lg shadow-2xl backdrop-blur-sm w-full max-w-md m-4 border border-[#1db954]/20"
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 120 }}
       >
-        <h2 style={{ color: "#ffffff", marginBottom: "1rem", fontSize: "2rem" }}>
-          Join the Visalta Community
-        </h2>
-
-        <p
-          style={{
-            color: "#cccccc",
-            marginBottom: "1.5rem",
-            fontSize: "1.5rem",
-            fontWeight: "bold",
-            fontStyle: "italic",
-          }}
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.5 }}
+          className="mb-6"
         >
-          Empowering students to achieve greatness.
-        </p>
-
-        <input
-          type="text"
-          name="firstName"
-          placeholder="First Name"
-          value={formData.firstName}
-          onChange={handleChange}
-          required
-          className="input-field"
-          style={{
-            marginBottom: "1rem",
-            width: "100%",
-            padding: "0.8rem",
-            borderRadius: "5px",
-            border: "none",
-            background: "#333",
-            color: "#fff",
-          }}
-        />
-        <input
-          type="text"
-          name="lastName"
-          placeholder="Last Name"
-          value={formData.lastName}
-          onChange={handleChange}
-          required
-          className="input-field"
-          style={{
-            marginBottom: "1rem",
-            width: "100%",
-            padding: "0.8rem",
-            borderRadius: "5px",
-            border: "none",
-            background: "#333",
-            color: "#fff",
-          }}
-        />
-
-        <div style={{ marginBottom: "1.5rem", display: "flex", justifyContent: "space-between" }}>
-          <div
-            onClick={() => handleAccountTypeChange("Admin")}
-            style={{
-              flex: 1,
-              padding: "1rem",
-              marginRight: "0.5rem",
-              borderRadius: "10px",
-              background: formData.accountType === "Admin" ? "#5e60ce" : "#333",
-              color: "#fff",
-              cursor: "pointer",
-              textAlign: "center",
-              transition: "background 0.3s",
-            }}
+          <FaCompass className="text-[#1db954] text-6xl mx-auto mb-4 animate-spin-slow" />
+          <h2 className="text-2xl md:text-3xl font-bold text-black mb-2">
+            Join the Visalta Community
+          </h2>
+          <motion.p
+            className="text-[#1db954] text-lg md:text-xl italic font-medium"
+            animate={{ opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 2, repeat: Infinity }}
           >
-            <FaUserShield size={24} style={{ marginBottom: "0.5rem" }} />
-            <p style={{ margin: 0 }}>Admin</p>
-          </div>
-          <div
-            onClick={() => handleAccountTypeChange("Student")}
-            style={{
-              flex: 1,
-              padding: "1rem",
-              marginLeft: "0.5rem",
-              borderRadius: "10px",
-              background: formData.accountType === "Student" ? "#5e60ce" : "#333",
-              color: "#fff",
-              cursor: "pointer",
-              textAlign: "center",
-              transition: "background 0.3s",
-            }}
+            Navigating Student's Life
+          </motion.p>
+        </motion.div>
+
+        <div className="space-y-4">
+          {/* First Name */}
+          <motion.div
+            className="relative"
+            initial={{ x: -50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.6 }}
           >
-            <FaGraduationCap size={24} style={{ marginBottom: "0.5rem" }} />
-            <p style={{ margin: 0 }}>Student</p>
-          </div>
+            <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#1db954]" />
+            <input
+              type="text"
+              name="firstName"
+              placeholder="First Name"
+              value={formData.firstName}
+              onChange={handleChange}
+              required
+              className="w-full px-8 py-2 text-sm md:px-10 md:py-3 md:text-base bg-zinc-800 text-white rounded-lg border border-[#1db954]/30 focus:border-[#1db954] focus:ring-2 focus:ring-[#1db954]/20 transition-all duration-300"
+            />
+          </motion.div>
+
+          {/* Last Name */}
+          <motion.div
+            className="relative"
+            initial={{ x: 50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.6 }}
+          >
+            <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#1db954]" />
+            <input
+              type="text"
+              name="lastName"
+              placeholder="Last Name"
+              value={formData.lastName}
+              onChange={handleChange}
+              required
+              className="w-full px-8 py-2 text-sm md:px-10 md:py-3 md:text-base bg-zinc-800 text-white rounded-lg border border-[#1db954]/30 focus:border-[#1db954] focus:ring-2 focus:ring-[#1db954]/20 transition-all duration-300"
+            />
+          </motion.div>
+
+          {/* Account Type Toggle */}
+          <motion.div
+            className="flex gap-4"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.7 }}
+          >
+            <div
+              onClick={() => handleAccountTypeChange("Admin")}
+              className={`flex-1 p-3 md:p-4 rounded-lg cursor-pointer transition-all duration-300 flex flex-col items-center ${
+                formData.accountType === "Admin"
+                  ? "bg-[#1db954] shadow-md shadow-zinc-800"
+                  : "bg-gray-100 hover:bg-gray-100"
+              }`}
+            >
+              <FaUserShield className="text-2xl mb-2" />
+              <p className="text-xs md:text-sm">Admin</p>
+            </div>
+            <div
+              onClick={() => handleAccountTypeChange("Student")}
+              className={`flex-1 p-3 md:p-4 rounded-lg cursor-pointer transition-all duration-300 flex flex-col items-center ${
+                formData.accountType === "Student"
+                  ? "bg-[#1db954] shadow-md shadow-zinc-800"
+                  : "bg-gray-100 hover:bg-gray-100"
+              }`}
+            >
+              <FaGraduationCap className="text-2xl mb-2" />
+              <p className="text-xs md:text-sm">Student</p>
+            </div>
+          </motion.div>
+
+          {/* Email */}
+          <motion.div
+            className="relative"
+            initial={{ x: -50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.8 }}
+          >
+            <FaEnvelope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#1db954]" />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="w-full px-8 py-2 text-sm md:px-10 md:py-3 md:text-base bg-zinc-800 text-white rounded-lg border border-[#1db954]/30 focus:border-[#1db954] focus:ring-2 focus:ring-[#1db954]/20 transition-all duration-300"
+            />
+          </motion.div>
+
+          {/* Password */}
+          <motion.div
+            className="relative"
+            initial={{ x: -50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.9 }}
+          >
+            <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#1db954]" />
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              className="w-full px-8 py-2 text-sm md:px-10 md:py-3 md:text-base bg-zinc-800 text-white rounded-lg border border-[#1db954]/30 focus:border-[#1db954] focus:ring-2 focus:ring-[#1db954]/20 transition-all duration-300"
+            />
+            <motion.span
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/3 cursor-pointer text-[#1db954] hover:text-[#1db954]/80 transition-colors duration-300"
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </motion.span>
+          </motion.div>
+
+          {/* Confirm Password */}
+          <motion.div
+            className="relative"
+            initial={{ x: -50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 1 }}
+          >
+            <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#1db954]" />
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+              className="w-full px-8 py-2 text-sm md:px-10 md:py-3 md:text-base bg-zinc-800 text-white rounded-lg border border-[#1db954]/30 focus:border-[#1db954] focus:ring-2 focus:ring-[#1db954]/20 transition-all duration-300"
+            />
+            <motion.span
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute right-3 top-1/3 cursor-pointer text-[#1db954] hover:text-[#1db954]/80 transition-colors duration-300"
+            >
+              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+            </motion.span>
+          </motion.div>
+
+          {/* Password Match Error */}
+          {passwordMatchError && (
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-red-500 text-xs md:text-sm"
+            >
+              {passwordMatchError}
+            </motion.p>
+          )}
+
+          <motion.button
+            type="submit"
+            whileHover={{ scale: 1.02, backgroundColor: "#1db954" }}
+            whileTap={{ scale: 0.98 }}
+            onClick={handleSubmit}
+            className="w-full py-3 bg-[#1db954] text-white font-bold rounded-lg shadow-lg shadow-[#1db954]/20 hover:shadow-[#1db954]/40 transition-all duration-300 text-sm md:text-base"
+          >
+            Sign Up
+          </motion.button>
         </div>
 
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          className="input-field"
-          style={{
-            marginBottom: "1rem",
-            width: "100%",
-            padding: "0.8rem",
-            borderRadius: "5px",
-            border: "none",
-            background: "#333",
-            color: "#fff",
-          }}
-        />
-
-        <div style={{ position: "relative", marginBottom: "1.5rem" }}>
-          <input
-            type={showPassword ? "text" : "password"}
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-            className="input-field"
-            style={{
-              width: "100%",
-              padding: "0.8rem",
-              borderRadius: "5px",
-              border: "none",
-              background: "#333",
-              color: "#fff",
-            }}
-          />
-          <span
-            onClick={() => setShowPassword(!showPassword)}
-            style={{
-              position: "absolute",
-              top: "50%",
-              right: "10px",
-              transform: "translateY(-50%)",
-              cursor: "pointer",
-              color: "#5e60ce",
-              fontSize: "1.2rem",
-            }}
-          >
-            {showPassword ? <FaEyeSlash /> : <FaEye />}
-          </span>
-        </div>
-
-        <motion.button
-          type="submit"
-          className="submit-btn"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={handleSubmit}
-          style={{
-            width: "100%",
-            padding: "0.8rem",
-            borderRadius: "5px",
-            border: "none",
-            background: "#5e60ce",
-            color: "#fff",
-            fontWeight: "bold",
-            cursor: "pointer",
-          }}
+        <motion.div
+          className="mt-6 text-gray-400"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.1 }}
         >
-          Sign Up
-        </motion.button>
-
-        <p style={{ color: "#aaa", marginTop: "1rem" }}>
-          Already have an account? <a href="/login" style={{ color: "#5e60ce" }}>Login</a>
-        </p>
+          <p>
+            Already have an account?{" "}
+            <a
+              href="/login"
+              className="text-[#1db954] hover:text-[#1db954]/80 transition-colors duration-300"
+            >
+              Login
+            </a>
+          </p>
+        </motion.div>
       </motion.div>
+
+      <motion.div
+        className="absolute top-5 left-5"
+        initial={{ x: -50, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ delay: 1.2 }}
+      >
+        {/* <div
+          onClick={() => navigate("/")}
+          className="group px-5 py-2 border border-[#1db954]/30 text-white rounded-full hover:bg-[#1db954] hover:border-[#1db954] transition-all duration-300 flex items-center gap-2 cursor-pointer"
+        >
+          Home
+          <div className="w-2 h-2 bg-white rounded-full group-hover:w-5 group-hover:h-5 group-hover:rotate-[50deg] transition-all duration-500 flex items-center justify-center">
+            <FaArrowUpLong className="opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          </div>
+        </div> */}
+      </motion.div>
+      </div>
     </motion.div>
-  );
-};
+
+
+    <motion.div
+      className="absolute top-5 left-5"
+      initial={{ x: -50, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      transition={{ delay: 1.2 }}
+    >
+    </motion.div>
+  
+    </div>
+
+);
+}
+
+
+  
+
 
 export default Signup;

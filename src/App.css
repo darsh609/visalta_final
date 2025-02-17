@@ -1,1 +1,14 @@
 /* write your css here */
+/* Add to your global CSS file */
+html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+  
+  .parallax-wrapper {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    transform-style: preserve-3d;
+    transform: translateZ(0);
+  }

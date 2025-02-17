@@ -1,167 +1,182 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import "./Auth.css"; // Add your CSS file for styling
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useDispatch } from "react-redux"
-import { Link, useNavigate } from "react-router-dom"
-
-
+import { FaEye, FaEyeSlash, FaUser, FaLock, FaCompass } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { login } from "../services/operations/authAPI";
+import AnimatedLogo from "../Home/AnimatedLogo";
 
 export const Login = () => {
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
-  const { email, password } = formData
+  const { email, password } = formData;
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prevData) => ({
+      ...prevData,
       [name]: value,
-    });
+    }));
   };
 
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     console.log("Login Data: ", formData);
-//   };
-
   const handleSubmit = (e) => {
-    e.preventDefault()
-    // dispatch(login(email, password, navigate))
-  }
-  
+    e.preventDefault();
+    dispatch(login(email, password, navigate));
+  };
 
   return (
-    <motion.div
-      className="auth-page-container"
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "100vh",
-        background: "linear-gradient(135deg, #121212, #1a1a1a)",
-        fontFamily: '"Poppins", sans-serif',
-        padding: "1rem",
-        overflowY: "auto",
-      }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
-    >
+    <div className="auth-page-container relative min-h-screen">
       <motion.div
-        className="auth-form-container"
-        style={{
-          background: "#1f1f1f",
-          padding: "2rem",
-          borderRadius: "10px",
-          boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.7)",
-          textAlign: "center",
-          width: "100%",
-          maxWidth: "400px",
-          margin: "1rem auto",
-        }}
-        initial={{ y: -50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ type: "spring", stiffness: 120 }}
+        className="auth-page-container relative bg-zinc-900 font-['Poppins'] gap-0"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
       >
-        <h2 style={{ color: "#ffffff", marginBottom: "1rem", fontSize: "2rem" }}>
-          Welcome Back to Visalta
-        </h2>
-
-        <p
-          style={{
-            color: "#cccccc",
-            marginBottom: "1.5rem",
-            fontSize: "1.5rem",
-            fontWeight: "bold",
-            fontStyle: "italic",
-          }}
-        >
-          Shaping the future, one student at a time.
-        </p>
-
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          className="input-field"
-          style={{
-            marginBottom: "1rem",
-            width: "100%",
-            padding: "0.8rem",
-            borderRadius: "5px",
-            border: "none",
-            background: "#333",
-            color: "#fff",
-          }}
-        />
-
-        <div style={{ position: "relative", marginBottom: "1.5rem" }}>
-          <input
-            type={showPassword ? "text" : "password"}
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-            className="input-field"
-            style={{
-              width: "100%",
-              padding: "0.8rem",
-              borderRadius: "5px",
-              border: "none",
-              background: "#333",
-              color: "#fff",
-            }}
-          />
-          <span
-            onClick={() => setShowPassword(!showPassword)}
-            style={{
-              position: "absolute",
-              top: "50%",
-              right: "10px",
-              transform: "translateY(-50%)",
-              cursor: "pointer",
-              color: "#5e60ce",
-              fontSize: "1.2rem",
-            }}
-          >
-            {showPassword ? <FaEyeSlash /> : <FaEye />}
-          </span>
+        <div className="absolute flex px-8 py-10" onClick={() => navigate("/")}>
+          <AnimatedLogo />
         </div>
+        <div className="flex items-center justify-center min-h-screen">
+          <motion.div
+            className="absolute inset-0 pointer-events-none"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.5 }}
+            transition={{ duration: 2 }}
+          >
+            {[...Array(20)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-1 h-1 bg-[#1db954] rounded-full"
+                initial={{
+                  x: Math.random() * window.innerWidth,
+                  y: Math.random() * window.innerHeight,
+                }}
+                animate={{
+                  y: [0, -20, 0],
+                  opacity: [0.2, 1, 0.2],
+                }}
+                transition={{
+                  duration: 2 + Math.random() * 2,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                }}
+              />
+            ))}
+          </motion.div>
 
-        <motion.button
-          type="submit"
-          className="submit-btn"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={handleSubmit}
-          style={{
-            width: "100%",
-            padding: "0.8rem",
-            borderRadius: "5px",
-            border: "none",
-            background: "#5e60ce",
-            color: "#fff",
-            fontWeight: "bold",
-            cursor: "pointer",
-          }}
-        >
-          Login
-        </motion.button>
+          <motion.div
+            className="auth-form-container bg-gray-100 backdrop-blur-lg p-6 md:p-8 rounded-lg shadow-2xl w-full max-w-md m-4 border border-[#1db954]/20"
+            initial={{ y: -50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 120 }}
+          >
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.5 }}
+              className="mb-6"
+            >
+              <FaCompass className="text-[#1db954] text-6xl mx-auto mb-4 animate-spin-slow" />
+              <h2 className="text-2xl font-bold text-black mb-2">
+                Welcome Back to Visalta
+              </h2>
+              <motion.p
+                className="text-[#1db954] text-base md:text-lg italic font-medium"
+                animate={{ opacity: [0.5, 1, 0.5] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                Navigating student's life
+              </motion.p>
+            </motion.div>
 
-        <p style={{ color: "#aaa", marginTop: "1rem" }}>
-          Don't have an account? <a href="/signup" style={{ color: "#5e60ce" }}>Sign Up</a>
-        </p>
+            <div className="space-y-4">
+              <motion.div
+                className="relative"
+                initial={{ x: -50, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 0.6 }}
+              >
+                <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#1db954]" />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-8 py-2 text-sm md:px-10 md:py-3 md:text-base bg-zinc-800 text-white rounded-lg border border-[#1db954]/30 focus:border-[#1db954] focus:ring-2 focus:ring-[#1db954]/20 transition-all duration-300"
+                />
+              </motion.div>
+
+              <motion.div
+                className="relative"
+                initial={{ x: -50, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 0.7 }}
+              >
+                <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#1db954]" />
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-8 py-2 text-sm md:px-10 md:py-3 md:text-base bg-zinc-800 text-white rounded-lg border border-[#1db954]/30 focus:border-[#1db954] focus:ring-2 focus:ring-[#1db954]/20 transition-all duration-300"
+                />
+                <motion.span
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-[#1db954] hover:text-[#1aaa4c] transition-colors duration-300"
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </motion.span>
+              </motion.div>
+
+              <motion.button
+                type="submit"
+                whileHover={{ scale: 1.02, backgroundColor: "#1db954" }}
+                whileTap={{ scale: 0.98 }}
+                onClick={handleSubmit}
+                className="w-full py-3 bg-[#1db954] text-white font-bold rounded-lg shadow-lg shadow-[#1db954]/20 transition-all duration-300"
+              >
+                Login
+              </motion.button>
+            </div>
+
+            <motion.div
+              className="mt-6 space-y-2 text-gray-400"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8 }}
+            >
+              <p>
+                Don't have an account?{" "}
+                <a
+                  href="/signup"
+                  className="text-[#1db954] hover:text-[#1aaa4c] transition-colors duration-300"
+                >
+                  Sign Up
+                </a>
+              </p>
+              <p>
+                <span
+                  onClick={() => navigate("/forgot-password")}
+                  className="cursor-pointer text-[#1db954] hover:text-[#1aaa4c] transition-colors duration-300 underline font-medium"
+                >
+                  Forgot Password?
+                </span>
+              </p>
+            </motion.div>
+          </motion.div>
+        </div>
       </motion.div>
-    </motion.div>
+    </div>
   );
 };
 

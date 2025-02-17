@@ -5,6 +5,96 @@
 @tailwind components;
 @tailwind utilities;
 
+
+.backdrop-blur-sm {
+  backdrop-filter: blur(4px);
+}
+
+/* @font-face {
+  font-family: 'Founders Grotesk';
+  src: url('/fonts/founders-grotesk/FoundersGrotesk-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Founders Grotesk';
+  src: url('/fonts/founders-grotesk/FoundersGrotesk-RegularItalic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Founders Grotesk';
+  src: url('/fonts/founders-grotesk/FoundersGrotesk-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Founders Grotesk';
+  src: url('/fonts/founders-grotesk/FoundersGrotesk-BoldItalic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Founders Grotesk';
+  src: url('/fonts/founders-grotesk/FoundersGrotesk-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Founders Grotesk';
+  src: url('/fonts/founders-grotesk/FoundersGrotesk-LightItalic.otf') format('opentype');
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Founders Grotesk';
+  src: url('/fonts/founders-grotesk/FoundersGrotesk-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Founders Grotesk';
+  src: url('/fonts/founders-grotesk/FoundersGrotesk-MediumItalic.otf') format('opentype');
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Founders Grotesk';
+  src: url('/fonts/founders-grotesk/FoundersGrotesk-Semibold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Founders Grotesk';
+  src: url('/fonts/founders-grotesk/FoundersGrotesk-SemiboldItalic.otf') format('opentype');
+  font-weight: 600;
+  font-style: italic;
+}
+/* 
+/* Condensed Styles */
+/* @font-face {
+  font-family: 'Founders Grotesk Condensed';
+  src: url('/fonts/founders-grotesk/FoundersGroteskCond-Lt.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Founders Grotesk Condensed';
+  src: url('/fonts/founders-grotesk/FoundersGroteskXCond-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+} */ 
+
 /* [data-scroll-container] {
   overflow: hidden;
 } */

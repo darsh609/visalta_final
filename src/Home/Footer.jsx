@@ -1,155 +1,305 @@
-import React from "react";
-import { motion } from "framer-motion";
+
+import React, { useState } from "react";
+import { FaArrowUpLong } from "react-icons/fa6";
+import { toast } from "react-hot-toast";
 
 const Footer = () => {
-  const socialIcons = [
-    {
-      platform: "Facebook",
-      icon: "fab fa-facebook-f",
-      color: "text-blue-500",
-      href: "https://facebook.com",
-    },
-    {
-      platform: "LinkedIn",
-      icon: "fab fa-linkedin-in",
-      color: "text-blue-400",
-      href: "https://linkedin.com",
-    },
-    {
-      platform: "Instagram",
-      icon: "fab fa-instagram",
-      color: "text-pink-500",
-      href: "https://instagram.com",
-    },
-    {
-      platform: "WhatsApp",
-      icon: "fab fa-whatsapp",
-      color: "text-green-500",
-      href: "https://wa.me/1234567890", // Replace with your WhatsApp number
-    },
-    {
-      platform: "Phone",
-      icon: "fas fa-phone",
-      color: "text-yellow-400",
-      href: "tel:+1234567890", // Replace with your phone number
-    },
-  ];
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    email: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    toast.loading("Submitting your request...");
+
+    try {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/requests/submit`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      if (response.ok) {
+        toast.dismiss();
+        toast.success("Request submitted successfully! We'll call you shortly.");
+        setForm({ name: "", phone: "", email: "" });
+      } else {
+        toast.dismiss();
+        toast.error("All fields are required.");
+      }
+    } catch (error) {
+      console.error("Error submitting the request:", error);
+      toast.dismiss();
+      toast.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <footer className="bg-zinc-900 text-zinc-200 py-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* About Section */}
-          <div>
-            <h2 className="text-xl font-semibold text-yellow-400">About Visalta</h2>
-            <p className="mt-4 text-zinc-400">
-              Visalta strives to redefine creativity and collaboration through
-              cutting-edge technology and innovative solutions. Join us in
-              shaping the future!
-            </p>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h2 className="text-xl font-semibold text-yellow-400">Quick Links</h2>
-            <ul className="mt-4 space-y-2">
-              {["Home", "Services", "Projects", "Contact"].map((link, index) => (
-                <li key={index}>
-                  <a
-                    href={`/${link.toLowerCase()}`}
-                    className="hover:text-yellow-400 transition duration-300"
-                  >
-                    {link}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Social Links */}
-          <div>
-            <h2 className="text-xl font-semibold text-yellow-400">
-              Connect with Us
+    // import { FaArrowUpLong } from "react-icons/fa6";
+    // import { FaArrowUpLong as FaArrowIcon } from "react-icons/fa6"; // Or rename as needed
+    
+    <footer className="bg-[#D2D2D2] text-gray-800 py-10">
+      <div className="max-w-6xl mx-auto px-4">
+        {/* Top Section: Social & Contact */}
+        <div className="flex flex-col md:flex-row md:justify-between md:gap-20 space-y-8">
+          {/* Left Section: Social Links & Map */}
+          <div className="flex-1 space-y-6">
+            <h2 className="text-xs md:text-sm font-light tracking-tighter">
+              JOIN OUR SOCIALS
             </h2>
-            <div className="mt-4 flex flex-wrap gap-4 justify-start">
-              {socialIcons.map((social, index) => (
-                <motion.a
-                  key={index}
-                  href={social.href}
-                  aria-label={social.platform}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`w-14 h-14 bg-zinc-800 rounded-full flex items-center justify-center shadow-lg hover:shadow-${social.color} hover:scale-110 transition duration-300 ${social.color}`}
-                  whileHover={{ scale: 1.2, rotate: 10 }}
-                  whileTap={{ scale: 0.9 }}
+            <div className="flex flex-col space-y-2 text-xl md:text-3xl">
+              <a
+                href="https://www.instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cursor-pointer hover:text-[#1db954] transition-colors duration-300"
+              >
+                Instagram
+              </a>
+              <a
+                href="https://www.facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cursor-pointer hover:text-[#1db954] transition-colors duration-300"
+              >
+                Facebook
+              </a>
+              <a
+                href="https://www.linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cursor-pointer hover:text-[#1db954] transition-colors duration-300"
+              >
+                LinkedIn
+              </a>
+            </div>
+            <div className="mt-6 md:mt-10">
+              <iframe
+                id="map"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3794.897116509384!2d79.53083859999998!3d17.983522999999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a334fbb37aee6c3%3A0xf1b2c37fcb8fefce!2sNIT%20Warangal!5e0!3m2!1sen!2sin!4v1736005565336!5m2!1sen!2sin"
+                className="w-full   h-32 md:h-56 border-0"
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+          </div>
+    
+          {/* Right Section: Contact Info */}
+          <div className="flex-1 space-y-6">
+            <div className="space-y-2">
+              <div className="text-xs md:text-sm font-light tracking-tighter">
+                MONDAY–FRIDAY, 10AM–6PM
+              </div>
+              <div className="text-xl md:text-3xl font-bold">
+                <a
+                  href="mailto:teamvisalta@gmail.com"
+                  className="hover:text-[#1db954] transition-colors duration-300"
                 >
-                  <i className={`${social.icon} text-2xl`}></i>
-                </motion.a>
-              ))}
+                  teamvisalta@gmail.com
+                </a>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <div className="text-xs md:text-sm font-light uppercase tracking-tighter">
+                We respond within a few hours
+              </div>
+              <div className="text-xl md:text-3xl flex gap-2">
+                <a
+                  href="tel:8273463662"
+                  className="hover:text-[#1db954] transition-colors duration-300"
+                >
+                  827
+                </a>
+                <a
+                  href="tel:8273463662"
+                  className="hover:text-[#1db954] transition-colors duration-300"
+                >
+                  346
+                </a>
+                <a
+                  href="tel:8273463662"
+                  className="hover:text-[#1db954] transition-colors duration-300"
+                >
+                  3662
+                </a>
+              </div>
+              <div className="text-xs md:text-sm font-light flex flex-col">
+                <span>NIT Warangal,</span>
+                <span>1K Hostel,</span>
+                <span>Telangana 506004</span>
+              </div>
             </div>
           </div>
         </div>
+    
+        {/* Middle Section: Request Form */}
+        <div className="mt-20 max-w-6xl mx-auto px-4">
+  <form onSubmit={handleSubmit} className="space-y-6">
+    {/* Heading */}
+    <div className="text-xl md:text-3xl flex flex-col">
+      <span>Leave a request and</span>
+      <span>we'll call you.</span>
+    </div>
 
-        {/* Bottom Section */}
-        <div className="mt-10 border-t border-zinc-700 pt-6 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-sm text-zinc-400">
-            &copy; 2025 Visalta. All Rights Reserved.
-          </p>
-          <div className="flex space-x-4 mt-4 md:mt-0">
-            <a
-              href="/privacy-policy"
-              className="text-zinc-400 hover:text-yellow-400 transition duration-300"
-            >
-              Privacy Policy
+    {/* Inputs + Button Row */}
+    <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+      {/* Inputs Container */}
+      <div className="flex flex-col md:flex-row md:gap-12 w-full">
+        {/* Full Name */}
+        <div className="flex flex-col w-full">
+          <label className="text-xs md:text-sm text-black mb-1">FULL NAME</label>
+          <input
+            type="text"
+            name="name"
+            placeholder="Name"
+            value={form.name}
+            onChange={handleChange}
+            className="
+              w-full
+              border-b
+              border-gray-400
+              text-xs md:text-sm
+              uppercase
+              py-1 md:py-2
+              bg-transparent
+              focus:outline-none
+              focus:border-black
+            "
+          />
+        </div>
+
+        {/* Phone Number */}
+        <div className="flex flex-col w-full">
+          <label className="text-xs md:text-sm text-black mb-1">PHONE NUMBER</label>
+          <input
+            type="text"
+            name="phone"
+            placeholder="Phone"
+            value={form.phone}
+            onChange={handleChange}
+            className="
+              w-full
+              border-b
+              border-gray-400
+              text-xs md:text-sm
+              uppercase
+              py-1 md:py-2
+              bg-transparent
+              focus:outline-none
+              focus:border-black
+            "
+          />
+        </div>
+
+        {/* Email */}
+        <div className="flex flex-col w-full">
+          <label className="text-xs md:text-sm text-black mb-1">EMAIL</label>
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={handleChange}
+            className="
+              w-full
+              border-b
+              border-gray-400
+              text-xs md:text-sm
+              uppercase
+              py-1 md:py-2
+              bg-transparent
+              focus:outline-none
+              focus:border-black
+            "
+          />
+        </div>
+      </div>
+
+      {/* Submit Button */}
+      <button
+        type="submit"
+        className="
+          px-3 md:px-5
+          py-1 md:py-2
+          border border-zinc-400
+          rounded-full
+          text-xs md:text-sm
+          uppercase
+          tracking-tighter
+          font-light
+          hover:bg-black
+          hover:text-white
+          transition-all
+          duration-300
+          flex
+          items-center
+          gap-2
+          group
+          cursor-pointer
+          self-start md:self-auto
+        "
+        disabled={loading}
+      >
+        {loading ? "Submitting..." : "Leave a request"}
+        <div
+          className="
+            w-2 h-2
+            bg-black
+            rounded-full
+            group-hover:w-4 group-hover:h-4
+            group-hover:rotate-[50deg]
+            transition-all
+            duration-500
+            flex
+            items-center
+            justify-center
+          "
+        >
+          <FaArrowUpLong className="opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        </div>
+      </button>
+    </div>
+  </form>
+</div>
+
+    
+        {/* Bottom Section: Terms & Links */}
+        <div className=" mt-20 text-center text-xs md:text-sm text-gray-500">
+          <div className="flex flex-col md:flex-row md:justify-between md:px-4 space-y-2 md:space-y-0">
+            <p>VISALTA, INC. © 2024</p>
+            <a href="#" className="hover:text-[#1db954] cursor-pointer">
+              TERMS AND CONDITIONS
             </a>
-            <a
-              href="/terms-of-service"
-              className="text-zinc-400 hover:text-yellow-400 transition duration-300"
-            >
-              Terms of Service
+            <a href="#" className="hover:text-[#1db954] cursor-pointer">
+              COOKIES POLICY
+            </a>
+            <a href="#" className="hover:text-[#1db954] cursor-pointer">
+              WARRANTY AGREEMENT
             </a>
           </div>
         </div>
       </div>
-
-      {/* Responsive Media Queries */}
-      <style jsx>{`
-        @media (max-width: 768px) {
-          .grid-cols-3 {
-            grid-template-columns: 1fr;
-          }
-
-          .w-14 {
-            width: 48px;
-          }
-
-          .h-14 {
-            height: 48px;
-          }
-
-          .justify-start {
-            justify-content: center;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .flex-wrap {
-            flex-direction: column;
-            gap: 1rem;
-          }
-
-          .w-14 {
-            width: 42px;
-          }
-
-          .h-14 {
-            height: 42px;
-          }
-        }
-      `}</style>
     </footer>
+    
+
+  
   );
 };
 
 export default Footer;
+

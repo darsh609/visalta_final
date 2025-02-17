@@ -9,38 +9,11 @@ const {
   createCourse,
   getAllCourses,
   getCourseDetails,
+  deleteCourse
 } = require("../controllers/Course")
 
 
-// // Categories Controllers Import
-// const {
-//   showAllCategories,
-//   createCategory,
-//   categoryPageDetails,
-// } = require("../controllers/Category")
 
-// Sections Controllers Import
-// const {
-//   createSection,
-//   updateSection,
-//   deleteSection,
-// } = require("../controllers/Section")
-
-// Sub-Sections Controllers Import
-// const {
-//   createSubSection,
-//   updateSubSection,
-//   deleteSubSection,
-// } = require("../controllers/Subsection")
-
-// // Rating Controllers Import
-// const {
-//   createRating,
-//   getAverageRating,
-//   getAllRating,
-// } = require("../controllers/RatingAndReview")
-
-// Importing Middlewares
 const { auth, isStudent, isAdmin } = require("../middlewares/auth")
 
 // ********************************************************************************************************
@@ -48,38 +21,18 @@ const { auth, isStudent, isAdmin } = require("../middlewares/auth")
 // ********************************************************************************************************
 
 // Courses can Only be Created by Instructors
-router.post("/createCourse", auth, isStudent, createCourse)
-//Add a Section to a Course
-// router.post("/addSection", auth, isInstructor, createSection)
-// // Update a Section
-// router.post("/updateSection", auth, isInstructor, updateSection)
-// // Delete a Section
-// router.post("/deleteSection", auth, isInstructor, deleteSection)
-// // Edit Sub Section
-// router.post("/updateSubSection", auth, isInstructor, updateSubSection)
-// // Delete Sub Section
-// router.post("/deleteSubSection", auth, isInstructor, deleteSubSection)
-// // Add a Sub Section to a Section
-// router.post("/addSubSection", auth, isInstructor, createSubSection)
-// // Get all Registered Courses
-router.get("/getAllCourses", getAllCourses)
+router.post("/createCourse", auth , createCourse)
+router.post("/deleteCourse" , deleteCourse)
+
+router.get("/getAllCourses", auth,getAllCourses)
 // Get Details for a Specific Courses
 router.post("/getCourseDetails", getCourseDetails)
 
-// ********************************************************************************************************
-//                                      Category routes (Only by Admin)
-// ********************************************************************************************************
-// Category can Only be Created by Admin
-// // TODO: Put IsAdmin Middleware here
-// router.post("/createCategory", auth, isAdmin, createCategory)
-// router.get("/showAllCategories", showAllCategories)
-// router.post("/getCategoryPageDetails", categoryPageDetails)
 
-// ********************************************************************************************************
-//                                      Rating and Review
-// ********************************************************************************************************
-// router.post("/createRating", auth, isStudent, createRating)
-// router.get("/getAverageRating", getAverageRating)
-// router.get("/getReviews", getAllRating)
+router.get("/mycourses",auth,require("../controllers/Course").getInstructorCourses )
+router.post("/dolike",auth,require("../controllers/Liked").Like)
+router.post("/dislike",auth,require("../controllers/Liked").Dislike)
+router.get("/getalllike",auth,require("../controllers/Liked").getAllLikedCourses)
+
 
 module.exports = router
