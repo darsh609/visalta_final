@@ -3,6 +3,7 @@ const Profile = require("../models/Profile")
 
 const Course = require("../models/Course")
 const User = require("../models/User")
+const RatingAndReview = require("../models/RatingAndRaview")
 const { uploadImageToCloudinary } = require("../utils/imageUploader")
 const mongoose = require("mongoose")
 const { convertSecondsToDuration } = require("../utils/secToDuration")
@@ -58,21 +59,25 @@ exports.updateProfile = async (req, res) => {
   }
 }
 
+
 exports.deleteAccount = async (req, res) => {
   try {
-    const id = req.user.id
-    console.log(id)
-    const user = await User.findById({ _id: id })
+    const id = req.user.id;
+    console.log("Deleting user with id:", id);
+
+    // Find the user by id
+    const user = await User.findById(id);
     if (!user) {
       return res.status(404).json({
         success: false,
         message: "User not found",
-      })
+      });
     }
-    // Delete Assosiated Profile with the User
-    await Profile.findByIdAndDelete({
-      _id: new mongoose.Types.ObjectId(user.additionalDetails),
-    })
+
+    // Delete the associated profile
+    await Profile.findByIdAndDelete(user.additionalDetails);
+
+    // Remove the user from all courses they are enrolled in
     for (const courseId of user.courses) {
       await Course.findByIdAndUpdate(
         courseId,
@@ -80,20 +85,35 @@ exports.deleteAccount = async (req, res) => {
         { new: true }
       )
     }
-    // Now Delete User
-    await User.findByIdAndDelete({ _id: id })
+
+    // Remove the user from all courses they liked
+    for (const likedCourseId of user.Likedcourses) {
+      await Course.findByIdAndUpdate(
+        likedCourseId,
+        { $pull: { studentsEnrolled: id } },
+        { new: true }
+      );
+    }
+
+    // Delete all ratings and reviews made by the user
+    await RatingAndReview.deleteMany({ user: id });
+
+    // Now delete the user account itself
+    await User.findByIdAndDelete(id);
+
     res.status(200).json({
       success: true,
       message: "User deleted successfully",
-    })
-    // await CourseProgress.deleteMany({ userId: id })
+    });
   } catch (error) {
-    console.log(error)
-    res
-      .status(500)
-      .json({ success: false, message: "User Cannot be deleted successfully" })
+    console.error("Error deleting account:", error);
+    res.status(500).json({
+      success: false,
+      message: "User cannot be deleted successfully",
+    });
   }
-}
+};
+
 
 exports.getAllUserDetails = async (req, res) => {
   try {

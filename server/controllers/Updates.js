@@ -77,7 +77,7 @@ exports.createUpdate = async (req, res) => {
       <body>
           <div class="container">
               <div style="text-align: center;">
-                  <img class="logo" src="https://i.postimg.cc/25V8F6Nh/Visalta.jpg" alt="Platform Logo" />
+                  <img class="logo" src="https://iili.io/2yOho5Q.jpg" alt="Platform Logo" />
               </div>
       
               <div style="color: #ffffff; text-align: center; font-size: 28px; font-weight: bold; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; padding: 10px 0; background-color: #1c2a1f; border-bottom: 3px solid #4ade80;">
@@ -94,7 +94,7 @@ exports.createUpdate = async (req, res) => {
                   </p>
                   <ul style="color: #ffffff; font-size: 16px;">
                       <li><strong>Title:</strong> ${title}</li>
-                      <li><strong>Date:</strong> ${category}</li>
+                      <li><strong>Category:</strong> ${category}</li>
                       <li><strong>Description:</strong> ${description}</li>
                       <li><strong>Date:</strong> ${date}</li>
                       
