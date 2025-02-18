@@ -20,6 +20,10 @@ const updateSchema = new mongoose.Schema({
   link: {
     type: String, // Optional link for additional information
     default: null,
+  },
+  category:{
+    type: String,
+    required: true
   }
 }, { timestamps: true });
 

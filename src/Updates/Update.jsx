@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaCalendarAlt, FaUser, FaBell, FaTrashAlt } from "react-icons/fa";
+import {  FaUser} from "react-icons/fa";
 import moment from "moment";
 import sorry from "../assets/sorry.png";
 import SpotlightCard from "./SpotlightCard";
 import { useSelector } from "react-redux";
-
+import toast, { Toaster } from "react-hot-toast";
+import { FaGlobe, FaBolt, FaRegBuilding, FaUsers, FaHandshake, FaBell, FaCalendarAlt, FaTag, FaUserCircle, FaTrashAlt } from 'react-icons/fa';
 const BASE_URL = process.env.REACT_APP_BASE_URL + "/updates";
 
 const UpdateSection = () => {
+  const MAX_WORDS = 30;
+  const MAX_TITLE_WORDS = 5;
   const [updates, setUpdates] = useState([]);
   const [formData, setFormData] = useState({
     title: "",
@@ -17,6 +20,7 @@ const UpdateSection = () => {
     date: "",
     createdBy: "",
     link: "",
+    category:""
   });
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -44,26 +48,77 @@ const UpdateSection = () => {
 
   // Handle form input changes
   const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === 'title') {
+      const words = value.trim().split(/\s+/);
+      if (words.length > 5) return;
+    }
+    
+    // Check word count for Product Description
+    if (name === 'description') {
+      const words = value.trim().split(/\s+/);
+      if (words.length > 30) return;
+    }
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   // Handle Create Update
+  // const handleCreate = async (e) => {
+ 
+  //   e.preventDefault();
+
+  //   const loadingToastId = toast.loading("Listing your Product..");
+  //   try {
+  //     await axios.post(`${BASE_URL}/createupdate`, formData);
+  //     setFormData({
+  //       title: "",
+  //       description: "",
+  //       date: "",
+  //       createdBy: "",
+  //       link: "",
+  //       category:""
+  //     });
+  //     fetchUpdates(); // Refresh updates
+
+  //     toast.success("TAPs Added Successfully!", { id: loadingToastId });
+      
+  //   } catch (error) {
+  //     console.error("Error creating update:", error);
+  //     toast.error(error.message, { id: loadingToastId });
+  //   }
+  // };
   const handleCreate = async (e) => {
     e.preventDefault();
+  
+
     try {
-      await axios.post(`${BASE_URL}/createupdate`, formData);
+      await toast.promise(
+        axios.post(`${BASE_URL}/createupdate`, formData),
+        {
+          loading: "Listing your Product...",
+          success: "TAPs Added Successfully!",
+          error: (err) =>
+            `Error creating update: ${
+              err.response?.data?.message || err.message
+            }`,
+        }
+      );
+  
       setFormData({
         title: "",
         description: "",
         date: "",
         createdBy: "",
         link: "",
+        category: "",
       });
       fetchUpdates(); // Refresh updates
     } catch (error) {
       console.error("Error creating update:", error);
+      // No need for additional toast.error here as toast.promise handles errors.
     }
   };
+  
 
   // Handle Delete Update
   const handleDelete = async (id) => {
@@ -80,16 +135,39 @@ const UpdateSection = () => {
     formData.title.trim() &&
     formData.description.trim() &&
     formData.date.trim() &&
-    formData.createdBy.trim();
+    formData.createdBy.trim()&&
+    formData.category.trim();
 
   // Filter Updates
-  const filteredUpdates = updates.filter(
-    (update) =>
+  // const filteredUpdates = updates.filter(
+  //   (update) =>
+  //     update.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //     update.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //     update.createdBy.toLowerCase().includes(searchQuery.toLowerCase())||
+  //     update.category.toLowerCase().includes(searchQuery.toLowerCase())
+  // );
+  const [selectedCategory, setSelectedCategory] = useState("ALL");
+  const filteredUpdates = updates.filter((update) => {
+    const matchesSearch =
       update.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       update.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      update.createdBy.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+      update.createdBy.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      update.category.toLowerCase().includes(searchQuery.toLowerCase());
 
+    let matchesCategory = true;
+    if (selectedCategory !== "ALL") {
+      // For "Clubs" and "Societies", perform substring matching
+      if (selectedCategory === "Clubs") {
+        matchesCategory = update?.category?.toLowerCase().includes("clubs");
+      } else if (selectedCategory === "Societies") {
+        matchesCategory = update?.category?.toLowerCase().includes("societies");
+      } else {
+        matchesCategory =
+          update?.category?.toLowerCase() === selectedCategory.toLowerCase();
+      }
+    }
+    return matchesSearch && matchesCategory;
+  });
   // Highlight Matched Text
   const highlightText = (text, query) => {
     if (!query) return text;
@@ -138,6 +216,15 @@ const UpdateSection = () => {
       }
     }
   };
+
+
+
+  // // Filter updates based on selected category.
+  //  filteredUpdates = updates.filter((update) => {
+  //   if (selectedCategory === "ALL") return true;
+  //   return update.category === selectedCategory;
+  // });
+
   return (
     <div className="bg-zinc-900 text-zinc-200 min-h-screen flex flex-col items-center px-4 py-12">
       <div className="w-full max-w-7xl">
@@ -145,140 +232,207 @@ const UpdateSection = () => {
         Timely Alerts And Posts 🚀
         </h1>
 
+
+        <div className="flex gap-4 justify-center mb-8">
+        <button
+          onClick={() => setSelectedCategory("ALL")}
+          className={`flex items-center gap-2 px-4 py-2 rounded-full border ${
+            selectedCategory === "ALL" ? "bg-primary text-white" : "bg-zinc-700 text-zinc-300"
+          }`}
+        >
+          <FaGlobe />
+          <span>ALL</span>
+        </button>
+        <button
+          onClick={() => setSelectedCategory("Flash alerts")}
+          className={`flex items-center gap-2 px-4 py-2 rounded-full border ${
+            selectedCategory === "Flash alerts" ? "bg-primary text-white" : "bg-zinc-700 text-zinc-300"
+          }`}
+        >
+          <FaBolt />
+          <span>Flash alerts</span>
+        </button>
+        <button
+          onClick={() => setSelectedCategory("Official")}
+          className={`flex items-center gap-2 px-4 py-2 rounded-full border ${
+            selectedCategory === "Official" ? "bg-primary text-white" : "bg-zinc-700 text-zinc-300"
+          }`}
+        >
+          <FaRegBuilding />
+          <span>Official</span>
+        </button>
+        <button
+          onClick={() => setSelectedCategory("Clubs")}
+          className={`flex items-center gap-2 px-4 py-2 rounded-full border ${
+            selectedCategory === "Clubs" ? "bg-primary text-white" : "bg-zinc-700 text-zinc-300"
+          }`}
+        >
+          <FaUsers />
+          <span>Clubs</span>
+        </button>
+        <button
+          onClick={() => setSelectedCategory("Societies")}
+          className={`flex items-center gap-2 px-4 py-2 rounded-full border ${
+            selectedCategory === "Societies" ? "bg-primary text-white" : "bg-zinc-700 text-zinc-300"
+          }`}
+        >
+          <FaHandshake />
+          <span>Societies</span>
+        </button>
+        <button
+          onClick={() => setSelectedCategory("Other")}
+          className={`flex items-center gap-2 px-4 py-2 rounded-full border ${
+            selectedCategory === "Other" ? "bg-primary text-white" : "bg-zinc-700 text-zinc-300"
+          }`}
+        >
+          <FaHandshake />
+          <span>Other</span>
+        </button>
+      </div>
+
         {/* Search Bar */}
         <div className="flex justify-center mb-8 w-full">
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search updates..."
+            placeholder="Search here..."
             className="w-full max-w-2xl p-3 bg-zinc-800 rounded-lg text-zinc-200 focus:outline-none  focus:ring-primary"
           />
         </div>
 
         {/* Updates List */}
         <AnimatePresence>
-          <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
+                   <motion.div
+  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+  variants={containerVariants}
+  initial="hidden"
+  animate="visible"
+>
+  {filteredUpdates.length > 0 ? (
+    filteredUpdates.map((update) => {
+      const active = isActive(update.date);
+      const daysAgo = moment().diff(moment(update.createdAt), "days");
+
+      return (
+        <div
+          onClick={() => {
+            if (active && update.link) window.open(update.link, "_blank");
+          }}
+          key={update._id} // moved key here for proper list rendering
+        >
+          <SpotlightCard
+            className={`p-6 rounded-xl shadow-lg transform transition-all duration-300 ${
+              active && update.link !== ""
+                ? "cursor-pointer"
+                : "cursor-not-allowed opacity-70"
+            } ${active ? "bg-zinc-800 hover:shadow-green-500/50" : "bg-zinc-700 hover:shadow-red-500/50"}`}
+            variants={cardVariants}
+            whileHover="hover"
+            onClick={() => {
+              if (active && update.link) window.open(update.link, "_blank");
+            }}
           >
-            {filteredUpdates.length > 0 ? (
-              filteredUpdates.map((update) => {
-                const active = isActive(update.date);
-                const daysAgo = moment().diff(moment(update.createdAt), "days");
-
-                return (
-                  <div onClick={() => {
-                    if (active && update.link) window.open(update.link, "_blank");
-                  }}>
-                    <SpotlightCard
-                    key={update._id}
-                    className={`p-6 rounded-xl shadow-lg transform transition-all duration-300 ${
-                      active&&update.link!=""
-                        ? "cursor-pointer"
-                        : "" 
-                        
-                    }       ${active?"bg-zinc-800 hover:shadow-green-500/50":"bg-zinc-700 opacity-70  hover:shadow-red-500/50 cursor-not-allowed"}`}
-                    variants={cardVariants}
-                    whileHover="hover"
-                    onClick={() => {
-                      if (active && update.link) window.open(update.link, "_blank");
-                    }}
-                  >
-                    <div className="flex items-center justify-between mb-4 " >
-                      <div className="flex items-center gap-3">
-                        <FaBell
-                          className={`text-2xl ${
-                            active ? "text-green-500" : "text-red-500"
-                          }`}
-                        />
-                        <h2
-                          className="text-xl font-bold"
-                          dangerouslySetInnerHTML={{
-                            __html: highlightText(update.title, searchQuery),
-                          }}
-                        />
-                      </div>
-                      <span 
-                        className={`font-bold text-sm ${
-                          active ? "text-green-500" : "text-red-500"
-                        }`}
-                      >
-                        {active ? "Active" : "Inactive"}
-                      </span>
-                    </div>
-
-                    <p
-                      className="text-sm mb-4 text-zinc-300"
-                      dangerouslySetInnerHTML={{
-                        __html: highlightText(update.description, searchQuery),
-                      }}
-                    />
-
-                    <div className="space-y-2 text-sm text-zinc-400 mb-4">
-                      <div className="flex items-center gap-2">
-                        <FaCalendarAlt />
-                        <span>{moment(update.date).format("MMMM D, YYYY")}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <FaCalendarAlt />
-                        <span>
-                          Created {daysAgo} {daysAgo === 1 ? "day" : "days"} ago
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <FaUser />
-                        <span
-                          className="font-bold text-green-400"
-                          dangerouslySetInnerHTML={{
-                            __html: highlightText(update.createdBy, searchQuery),
-                          }}
-                        />
-                      </div>
-                    </div>
-
-                    {isAdmin && (
-                      <div className="flex justify-end">
-                        <motion.button
-                          className="text-red-500 hover:text-red-700"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleDelete(update._id);
-                          }}
-                          whileHover={{ scale: 1.2 }}
-                          whileTap={{ scale: 0.9 }}
-                        >
-                          <FaTrashAlt />
-                        </motion.button>
-                      </div>
-                    )}
-                  </SpotlightCard>
-                  </div>
-                  
-                );
-              })
-            ) : (
-              <motion.div
-                className="col-span-full flex flex-col items-center justify-center"
-                variants={noResultVariants}
-              >
-                <img
-                  src={sorry}
-                  alt="No Updates Found"
-                  className="w-64 h-64 mb-4 opacity-70"
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <FaBell
+                  className={`text-2xl ${
+                    active ? "text-green-500" : "text-red-500"
+                  }`}
                 />
-                <p className="text-2xl font-semibold text-zinc-300">
-                  No Updates Found
-                </p>
-              </motion.div>
+                <h2
+                  className="text-xl font-bold"
+                  dangerouslySetInnerHTML={{
+                    __html: highlightText(update.title, searchQuery),
+                  }}
+                />
+              </div>
+              <span
+                className={`font-bold text-sm ${
+                  active ? "text-green-500" : "text-red-500"
+                }`}
+              >
+                {active ? "Active" : "Inactive"}
+              </span>
+            </div>
+
+            <p
+              className="text-sm mb-4 text-zinc-300"
+              dangerouslySetInnerHTML={{
+                __html: highlightText(update.description, searchQuery),
+              }}
+            />
+
+            <div className="space-y-2 text-sm text-zinc-400 mb-4">
+              <div className="flex items-center gap-2">
+                <FaCalendarAlt />
+                <span>{moment(update.date).format("MMMM D, YYYY")}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <FaCalendarAlt />
+                <span>
+                  Created {daysAgo} {daysAgo === 1 ? "day" : "days"} ago
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <FaTag />
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: highlightText(update.category, searchQuery),
+                  }}
+                />
+              </div>
+              <div className="flex items-center gap-2">
+                <FaUserCircle />
+                <span
+                  className="font-bold text-green-400"
+                  dangerouslySetInnerHTML={{
+                    __html: highlightText(update.createdBy, searchQuery),
+                  }}
+                />
+              </div>
+            </div>
+
+            {isAdmin && (
+              <div className="flex justify-end">
+                <motion.button
+                  className="text-red-500 hover:text-red-700"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDelete(update._id);
+                  }}
+                  whileHover={{ scale: 1.2 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <FaTrashAlt />
+                </motion.button>
+              </div>
             )}
-          </motion.div>
+          </SpotlightCard>
+        </div>
+      );
+    })
+  ) : (
+    <motion.div
+      className="col-span-full flex flex-col items-center justify-center"
+      variants={noResultVariants}
+    >
+      <img
+        src={sorry}
+        alt="No Updates Found"
+        className="w-64 h-64 mb-4 opacity-70"
+      />
+      <p className="text-2xl font-semibold text-zinc-300">
+        No TAPs Found
+      </p>
+    </motion.div>
+  )}
+</motion.div>
+
         </AnimatePresence>
 
         {/* Admin Form */}
-        {isAdmin && (
+        {/* {isAdmin && (
           <motion.div
             className="mt-12 max-w-xl mx-auto p-8 bg-zinc-800 rounded-xl shadow-lg"
             initial={{ opacity: 0, y: 50 }}
@@ -345,7 +499,107 @@ const UpdateSection = () => {
               )}
             </form>
           </motion.div>
-        )}
+        )} */}
+
+{isAdmin && (
+        <motion.div
+          className="mt-12 max-w-xl mx-auto p-8 bg-zinc-800 rounded-xl shadow-lg"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        >
+          <h2 className="text-2xl font-semibold mb-6 text-center text-primary">
+            Add a New Update
+          </h2>
+          <form onSubmit={handleCreate} className="space-y-4">
+            <div>
+              <input
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+                placeholder="Title"
+                className="w-full p-3 bg-zinc-700 rounded-lg text-zinc-200 focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+              <small className="text-zinc-400">
+                {formData.title.split(/\s+/).filter((word) => word !== "").length}{" "}
+                / {MAX_TITLE_WORDS} words
+              </small>
+            </div>
+
+            <div>
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                placeholder="Description"
+                className="w-full p-3 bg-zinc-700 rounded-lg text-zinc-200 focus:outline-none focus:ring-2 focus:ring-primary"
+                rows="4"
+              />
+              <small className="text-zinc-400">
+                {
+                  formData.description
+                    .split(/\s+/)
+                    .filter((word) => word !== "").length
+                }{" "}
+                / {MAX_WORDS} words
+              </small>
+            </div>
+
+            <select
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+              className="w-full p-3 bg-zinc-700 rounded-lg text-zinc-200 focus:outline-none focus:ring-2 focus:ring-primary"
+            >
+              <option value="">Select Category</option>
+              <option value="Flash alerts">Flash alerts</option>
+              <option value="Official">Official</option>
+              <option value="Clubs">Clubs</option>
+              <option value="Societies">Societies</option>
+              <option value="other">Other</option>
+            </select>
+
+            <div className="grid grid-cols-2 gap-4">
+              <input
+                type="date"
+                name="date"
+                value={formData.date}
+                onChange={handleChange}
+                className="p-3 bg-zinc-700 rounded-lg text-zinc-200 focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+              <input
+                type="text"
+                name="createdBy"
+                value={formData.createdBy}
+                onChange={handleChange}
+                placeholder="Created By"
+                className="p-3 bg-zinc-700 rounded-lg text-zinc-200 focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
+
+            <input
+              type="url"
+              name="link"
+              value={formData.link}
+              onChange={handleChange}
+              placeholder="Optional Link"
+              className="w-full p-3 bg-zinc-700 rounded-lg text-zinc-200 focus:outline-none focus:ring-2 focus:ring-primary"
+            />
+
+            {isFormValid && (
+              <motion.button
+                type="submit"
+                className="w-full bg-primary text-zinc-900 px-4 py-3 rounded-lg hover:bg-green-700 transition-colors"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Add Update
+              </motion.button>
+            )}
+          </form>
+        </motion.div>)}
+
       </div>
     </div>
   );

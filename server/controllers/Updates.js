@@ -16,10 +16,10 @@ const User = require("../models/User"); // Importing the User schema
 
 exports.createUpdate = async (req, res) => {
   try {
-    const { title, description, date, createdBy, link } = req.body;
+    const { title, description, date, createdBy, link ,category} = req.body;
     
     // Create a new update
-    const newUpdate = new Update({ title, description, date, createdBy, link });
+    const newUpdate = new Update({ title, description, date, createdBy, link ,category});
     await newUpdate.save();
     
     // Fetch all user emails from the database
@@ -90,12 +90,14 @@ exports.createUpdate = async (req, res) => {
                   </p>
                   
                   <p style="font-size: 18px; color: #ffffff;">
-                      A new TAPs (Timely Alerts and Posts) update has been added:
+                      A new TAPs (Timely Alerts and Posts)  update has been added:
                   </p>
                   <ul style="color: #ffffff; font-size: 16px;">
                       <li><strong>Title:</strong> ${title}</li>
+                      <li><strong>Date:</strong> ${category}</li>
                       <li><strong>Description:</strong> ${description}</li>
                       <li><strong>Date:</strong> ${date}</li>
+                      
                       <li><strong>Link:</strong> <a href="${link}" style="color: #4ade80;">Click here to view</a></li>
                   </ul>
                   
