@@ -10,6 +10,8 @@ import { MdMailOutline } from "react-icons/md";
 import { motion } from 'framer-motion';
 import { FiFilter, FiTrash2 } from "react-icons/fi";
 import { set } from 'react-hook-form';
+import moment from "moment";
+import sorry from "../assets/sorry.png";
 
 const Input = ({ placeholder, value, onChange, className }) => (
   <input
@@ -652,6 +654,18 @@ const BuyPage = () => {
 
     setFilteredCourses(filtered);
   };
+  const noResultVariants = {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: { 
+      opacity: 1, 
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 20
+      }
+    }
+  };
 
   const handleHostelFilter = () => {
     setHostelFilter(!hostelFilter);
@@ -667,7 +681,7 @@ const BuyPage = () => {
   };
 
   return (
-    <div className="container max-w-full p-12 bg-zinc-900 min-h-full ">
+    <div className="container max-w-full p-12 bg-zinc-900 min-h-screen ">
       <h1 className="text-4xl font-bold text-center mb-8 text-white">
       Instant Connections for Every Find
           <span className="block text-lg font-normal text-zinc-400 mt-2">From textbooks to gadgets, search with ease and reach out to sellers in just a click.
@@ -714,7 +728,19 @@ const BuyPage = () => {
         </div>
       ) : filteredCourses.length === 0 ? (
         <div className="text-center text-gray-400 animate-fade-in">
-          No courses found
+          <motion.div
+      className="col-span-full flex flex-col items-center justify-center"
+      variants={noResultVariants}
+    >
+      <img
+        src={sorry}
+        alt="No Updates Found"
+        className="w-64 h-64 mb-4 opacity-70"
+      />
+      <p className="text-2xl font-semibold text-zinc-300">
+      Product Not Available
+      </p>
+    </motion.div>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
