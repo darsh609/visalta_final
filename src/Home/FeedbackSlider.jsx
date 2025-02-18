@@ -1,8 +1,5 @@
-
-//ashihs need to make the delete icon and modal look better in review slider
-//make it like even when we r not hivering the icon of delte should come
 import React, { useState, useEffect } from 'react';
-import { Star, Trash2, AlertCircle } from 'lucide-react';
+import { Star, Trash2, AlertCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
@@ -47,7 +44,6 @@ const DeleteConfirmationModal = ({ isOpen, onClose, onConfirm, reviewId }) => {
 
 const FeedbackSlider = () => {
   const { user } = useSelector((state) => state.profile);
-  console.log("---->",user)
   const isAdmin = user?.accountType === "Admin";
   
   const [feedbacks, setFeedbacks] = useState([]);
@@ -60,7 +56,6 @@ const FeedbackSlider = () => {
 
   const itemsPerPage = 3;
 
-  // Fetch reviews from backend
   const fetchReviews = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_BASE_URL}/review/`);
@@ -79,17 +74,13 @@ const FeedbackSlider = () => {
     fetchReviews();
   }, []);
 
-  // Handle delete review
   const handleDeleteReview = async (id) => {
     try {
       const token = JSON.parse(localStorage.getItem("token"));
-      console.log(id)
       
       const response = await fetch(`${process.env.REACT_APP_BASE_URL}/review/delete`, {
         method: 'POST',
         headers: {
-          
-          
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
@@ -97,7 +88,6 @@ const FeedbackSlider = () => {
       });
 
       const data = await response.json();
-      console.log("----data-->",JSON.stringify({ id}))
 
       if (data.success) {
         toast.success('Review deleted successfully', {
@@ -110,16 +100,12 @@ const FeedbackSlider = () => {
           },
         });
         setIsModalOpen(false);
-        // Refresh reviews
         fetchReviews();
       } else {
         throw new Error(data.message);
       }
-    } 
-    catch (error) {
-      console.log("--------->",error.message)
+    } catch (error) {
       toast.error(error.message || 'Failed to delete review', {
-        
         icon: '❌',
         style: {
           background: '#333',
@@ -131,7 +117,6 @@ const FeedbackSlider = () => {
     }
   };
 
-  // Your existing fetchUserName function remains the same
   const fetchUserName = async (userId) => {
     if (userNames[userId]) return userNames[userId];
 
@@ -157,6 +142,10 @@ const FeedbackSlider = () => {
   const ReviewCard = ({ review }) => {
     const daysAgo = moment().diff(moment(review.createdAt), 'days');
     const [userName, setUserName] = useState("Loading...");
+    const [isExpanded, setIsExpanded] = useState(false);
+    const words = review.review.split(' ');
+    const isLongReview = words.length > 4;
+    const previewText = isLongReview ? words.slice(0, 4).join(' ') + '...' : review.review;
 
     useEffect(() => {
       if (typeof review.user === "object" && review?.user?._id) {
@@ -167,56 +156,78 @@ const FeedbackSlider = () => {
     }, [review.user]);
 
     return (
-      <div className="bg-zinc-800 rounded-xl shadow-2xl p-8 flex flex-col h-full border border-zinc-700 
-                      hover:border-zinc-500 transition-all duration-300 ease-in-out transform 
-                      hover:-translate-y-2 hover:shadow-xl
-                      group relative overflow-hidden">
-        {/* Admin Delete Button */}
-
-        {isAdmin && (
-          <button
-            onClick={() => {
-              setSelectedReviewId(review._id);
-              setIsModalOpen(true);
-            }}
-            className="absolute top-4 right-4 p-2 rounded-full bg-zinc-700/50 hover:bg-red-500/50 
-                     transition-colors duration-200 opacity-0 group-hover:opacity-100"
-            title="Delete Review"
-          >
-            <Trash2 className="w-5 h-5 text-white" />
-          </button>
-        )}
-        
-        <div className="flex justify-center mb-4">
-          {[...Array(5)].map((_, index) => (
-            <Star
-              key={index}
-              className={`w-6 h-6 transform transition-transform duration-300 group-hover:scale-110 ${
-                index < review.rating
-                  ? 'text-yellow-400 fill-yellow-400'
-                  : 'text-zinc-600'
-              }`}
-            />
-          ))}
-        </div>
-        
-        <p className="text-zinc-300 text-base mb-6 flex-grow italic leading-relaxed">
-          "{review.review}"
-        </p>
-        
-        <div className="mt-auto border-t border-zinc-700 pt-4">
-          <h3 className="font-semibold text-base text-zinc-200 mb-1">
-            {userName}
-          </h3>
-          <p className="text-zinc-400 text-sm">
-            {daysAgo} {daysAgo === 1 ? 'day' : 'days'} ago
-          </p>
+      <div className="relative group">
+        <div className="absolute inset-0 bg-gradient-to-r from-[#49DE80]/20 to-zinc-800/10 rounded-xl blur-xl transform group-hover:scale-105 transition-transform duration-300" />
+        <div className="relative bg-zinc-900/70 backdrop-blur-md rounded-xl p-6 border 
+                      group-hover:border-[#49DE80] transition-all duration-300 h-full
+                      shadow-md shadow-zinc-950/20 hover:shadow-[#49DE80]/50">
+          {isAdmin && (
+            <button
+              onClick={() => {
+                setSelectedReviewId(review._id);
+                setIsModalOpen(true);
+              }}
+              className="absolute top-4 right-4 p-2 rounded-full bg-zinc-800/50 hover:bg-red-500/20 
+                       transition-colors duration-200"
+              title="Delete Review"
+            >
+              <Trash2 className="w-5 h-5 text-white/70 hover:text-red-500" />
+            </button>
+          )}
+          
+          <div className="flex gap-1 mb-4">
+            {[...Array(5)].map((_, index) => (
+              <Star
+                key={index}
+                className={`w-5 h-5 transition-transform duration-300 group-hover:scale-110 ${
+                  index < review.rating
+                    ? 'text-[#49DE80] fill-[#49DE80]'
+                    : 'text-zinc-700'
+                }`}
+              />
+            ))}
+          </div>
+          
+          <div className="mb-6">
+            <p className="text-zinc-300 text-base leading-relaxed">
+              {isExpanded ? review.review : previewText}
+            </p>
+            {isLongReview && (
+              <button
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="mt-2 text-[#49DE80] hover:text-[#49DE80]/80 text-sm flex items-center gap-1 transition-colors duration-200"
+              >
+                {isExpanded ? (
+                  <>Show less <ChevronUp className="w-4 h-4" /></>
+                ) : (
+                  <>Show more <ChevronDown className="w-4 h-4" /></>
+                )}
+              </button>
+            )}
+          </div>
+          
+          <div className="border-t border-zinc-800/50 pt-4">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[#49DE80]/20 to-zinc-800/20 flex items-center justify-center">
+                <span className="text-[#49DE80] font-medium">
+                  {userName.charAt(0).toUpperCase()}
+                </span>
+              </div>
+              <div>
+                <h3 className="font-medium text-zinc-200">
+                  {userName}
+                </h3>
+                <p className="text-zinc-800 text-sm">
+                  {daysAgo} {daysAgo === 1 ? 'day' : 'days'} ago
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
   };
 
-  // Your existing pagination and animation logic
   const totalPages = Math.ceil(feedbacks.length / itemsPerPage);
 
   useEffect(() => {
@@ -239,13 +250,13 @@ const FeedbackSlider = () => {
   };
 
   return (
-    <div className="w-full p-8 bg-zinc-900 min-h-[400px] shadow-2xl border border-zinc-800">
+    <div className="w-full p-8 bg-white min-h-[00px] backdrop-blur-md rounded-3xl ">
       <div 
         className="relative"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
-        <div className={`grid gap-6 transition-all duration-300 ease-in-out
+        <div className={`grid gap-2 transition-all duration-300 ease-in-out
                         lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1
                         ${isVisible ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-4'}`}>
           {getCurrentPageItems().map((feedback) => (
@@ -267,7 +278,6 @@ const FeedbackSlider = () => {
         </div> */}
       </div>
 
-      {/* Delete Confirmation Modal */}
       <DeleteConfirmationModal
         isOpen={isModalOpen}
         onClose={() => {
