@@ -124,7 +124,7 @@ const CourseCard = ({ course, searchTerm, onDelete, deleteCourse, setShowModal, 
   const htmlMessage = `
     <div style="background-color: #1a1a1a; color: #fff; font-family: Arial, sans-serif; padding: 20px;">
       <div style="text-align: center; margin-bottom: 20px;">
-        <img src="https://i.postimg.cc/25V8F6Nh/Visalta.jpg" alt="Visalta Logo" style="max-width: 150px;">
+        <img src="https://iili.io/2yOho5Q.jpg" alt="Visalta Logo" style="max-width: 150px;">
       </div>
       <h2 style="color: #a8d5ba;">Hello!</h2>
       <p>

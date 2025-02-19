@@ -316,7 +316,7 @@ export const Home = () => {
           marginBottom: '-66px' // Changed from -1px to 0
         }}>
           <Ballpit
-            count={190}
+            count={180}
             gravity={1}
             friction={0.8}
             wallBounce={0.8}
