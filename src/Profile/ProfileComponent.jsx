@@ -294,25 +294,25 @@ const ProfileComponent = () => {
                 </motion.div>
               </div>
 
-              <div className="grid grid-cols-2 gap-6">
-                {[
-                  { label: 'First Name', name: 'firstName' },
-                  { label: 'Last Name', name: 'lastName' },
-                  { label: 'Email', name: 'email' },
-                  { label: 'Phone', name: 'phone' }
-                ].map((field, index) => (
-                  <motion.div 
-                    key={field.name}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.2 + index * 0.1 }}
-                    className="space-y-1"
-                  >
-                    <p className="text-sm text-zinc-500">{field.label}</p>
-                    <p className="text-white">{profileData[field.name] || 'Not set'}</p>
-                  </motion.div>
-                ))}
-              </div>
+              <div className="grid grid-cols-2 gap-8">
+              {[
+                { label: 'First Name', name: 'firstName' },
+                { label: 'Last Name', name: 'lastName' },
+                { label: 'Email', name: 'email' },
+                { label: 'Phone', name: 'phone' }
+              ].map((field, index) => (
+                <motion.div 
+                  key={field.name}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2 + index * 0.1 }}
+                  className="space-y-1"
+                >
+                  <p className="text-sm text-zinc-500">{field.label}</p>
+                  <p className=" md:text-white text-white text-sm">{profileData[field.name] || 'Not set'}</p>
+                </motion.div>
+              ))}
+            </div>
             </div>
           </Card>
 
