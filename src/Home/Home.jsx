@@ -337,7 +337,9 @@ export const Home = () => {
           marginBottom: '-66px'
         }}>
           <Ballpit
+
             count={isMobile ? 90 : 190} // Reduce balls on mobile for better performance
+
             gravity={1}
             friction={0.8}
             wallBounce={0.8}

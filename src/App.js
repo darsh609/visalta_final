@@ -159,7 +159,7 @@ function App() {
         }
       />
       <Route
-        path="expeditions"
+        path="traverse"
         element={
           <PrivateRoute>
             <Traverse/>
