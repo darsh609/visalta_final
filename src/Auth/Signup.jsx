@@ -94,7 +94,7 @@ const Signup = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
-      <div className="absolute flex py-11 px-8"
+      <div className="relative flex py-11 px-8"
       onClick={() => navigate("/")}>
       <AnimatedLogo/>
       </div>
