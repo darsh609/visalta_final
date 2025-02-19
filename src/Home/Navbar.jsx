@@ -24,6 +24,13 @@ function Navbar() {
 
       {/* Links for larger screens */}
       <div className="hidden md:flex items-center gap-6">
+      <motion.div
+          onClick={() => navigate("update")}
+          className="text-lg capitalize font-light cursor-pointer hover:text-green-400 transition"
+          whileHover={{ scale: 1.1 }}
+        >
+          TAPs
+        </motion.div>
         <motion.div
           onClick={() => navigate("insight")}
           className="text-lg capitalize font-light cursor-pointer hover:text-green-400 transition"
@@ -31,13 +38,7 @@ function Navbar() {
         >
           Insight
         </motion.div>
-        <motion.div
-          onClick={() => navigate("update")}
-          className="text-lg capitalize font-light cursor-pointer hover:text-green-400 transition"
-          whileHover={{ scale: 1.1 }}
-        >
-          TAPs
-        </motion.div>
+       
         <motion.div
           onClick={() => navigate("contact")}
           className="text-lg capitalize font-light cursor-pointer hover:text-green-400 transition"

@@ -95,7 +95,7 @@ const UpdateSection = () => {
       await toast.promise(
         axios.post(`${BASE_URL}/createupdate`, formData),
         {
-          loading: "Listing your Product...",
+          loading: "Adding TAPs..",
           success: "TAPs Added Successfully!",
           error: (err) =>
             `Error creating update: ${
