@@ -130,7 +130,7 @@ const Oneday = () => {
               <div
                 key={place._id}
                 className="group relative bg-zinc-800/30 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg border border-zinc-700/50 cursor-pointer"
-                onClick={() => openMap(place.location)}
+                onClick={() => window.open(`${place.location}`, "_blank")}
               >
                 <div className="relative">
                   {place.imageUrl ? (

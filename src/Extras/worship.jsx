@@ -227,7 +227,8 @@ const Worship = () => {
             {(searchTerm ? searchResults : worshipData).map((temple) => (
               <div
                 key={temple._id}
-                className="group relative bg-zinc-800/30 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg border border-zinc-700/50"
+                className="group cursor-pointer relative bg-zinc-800/30 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg border border-zinc-700/50"
+                onClick={() => window.open(`${temple.location}`, "_blank")}
               >
                 <div className="relative">
                   <img
