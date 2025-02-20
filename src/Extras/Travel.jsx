@@ -246,8 +246,8 @@ const Travel = () => {
             {(searchTerm ? searchResults : weekendData).map((place) => (
               <div
                 key={place._id}
-                className="group relative bg-zinc-800/30 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg border border-zinc-700/50"
-                onClick={() => openMap(place.location)}
+                className="group relative cursor-pointer bg-zinc-800/30 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg border border-zinc-700/50"
+                onClick={() => window.open(`${place.location}`, "_blank")}
               >
                 <div className="relative">
                   {place.imageUrl ? (
