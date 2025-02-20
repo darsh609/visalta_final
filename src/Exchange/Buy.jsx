@@ -128,18 +128,18 @@ const CourseCard = ({ course, searchTerm, onDelete, deleteCourse, setShowModal, 
       </div>
       <h2 style="color: #a8d5ba;">Hello!</h2>
       <p>
-        I'm <strong>${user.firstName}</strong> from <strong>${user.additionalDetails.hostel}</strong>. I discovered your listing on <strong>Visalta</strong> and I'm very interested in your second-hand product.
+        I'm <strong>${user?.firstName}</strong> from <strong>${user?.additionalDetails?.hostel}</strong>. I discovered your listing on <strong>Visalta</strong> and I'm very interested in your second-hand product.
       </p>
       <h3 style="color: #a8d5ba;">Product Details:</h3>
       <p>
-        <strong>Name:</strong> ${course.courseName}<br>
-        <strong>Price:</strong> ₹${course.price.toLocaleString()}
+        <strong>Name:</strong> ${course?.courseName}<br>
+        <strong>Price:</strong> ₹${course?.price?.toLocaleString()}
       </p>
       <div style="text-align: center; margin: 20px 0;">
-        <img src="${course.thumbnail}" alt="${course.courseName}" style="max-width: 300px; border: 2px solid #a8d5ba; border-radius: 8px;">
+        <img src="${course?.thumbnail}" alt="${course?.courseName}" style="max-width: 300px; border: 2px solid #a8d5ba; border-radius: 8px;">
       </div>
-      <p><strong>Contact Number:</strong> ${user.additionalDetails.contactNumber}</p>
-       <p><strong>Contact Email:</strong> ${user.email}</p>
+      <p><strong>Contact Number:</strong> ${user?.additionalDetails.contactNumber}</p>
+       <p><strong>Contact Email:</strong> ${user?.email}</p>
       <p>I have a few questions:</p>
       <ol>
         <li>Is the product still available?</li>
@@ -147,24 +147,24 @@ const CourseCard = ({ course, searchTerm, onDelete, deleteCourse, setShowModal, 
         <li>Is there any possibility of a discount?</li>
       </ol>
       <p>Looking forward to your reply.</p>
-      <p>Best regards,<br><strong>${user.firstName}</strong></p>
+      <p>Best regards,<br><strong>${user?.firstName}</strong></p>
       <p style="font-style: italic; margin-top: 20px;">This email was sent by the VISALTA team.</p>
     </div>
   `;
-    const subject = `Inquiry: Request for More Details about ${course.courseName} from Visalta`;
+    const subject = `Inquiry: Request for More Details about ${course?.courseName} from Visalta`;
   
   
   const sendEmail = () => {
     // Build the template parameters for the product owner's email
     const templateParams = {
       subject, // Fills in the {{subject}} placeholder
-      from_name: user.firstName,
-      from_hostel: user.additionalDetails.hostel,
-      product_name: course.courseName,
-      product_price: `₹${course.price.toLocaleString()}`,
-      to_name: course.instructor.firstName,
+      from_name: user?.firstName,
+      from_hostel: user?.additionalDetails.hostel,
+      product_name: course?.courseName,
+      product_price: `₹${course?.price.toLocaleString()}`,
+      to_name: course?.instructor.firstName,
       message: htmlMessage, // The HTML email body for the owner
-      to_email: course.instructor.email
+      to_email: course?.instructor.email
     };
   
     // Replace with your actual EmailJS IDs
@@ -323,8 +323,8 @@ const CourseCard = ({ course, searchTerm, onDelete, deleteCourse, setShowModal, 
       transition={{ duration: 0.3 }}
     >
       <img 
-        src={course.thumbnail} 
-        alt={course.courseName}
+        src={course?.thumbnail} 
+        alt={course?.courseName}
         className="w-full h-full object-cover"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/80 to-transparent"></div>
@@ -335,7 +335,7 @@ const CourseCard = ({ course, searchTerm, onDelete, deleteCourse, setShowModal, 
       <div className="p-2 flex justify-between items-center">
         {/* Title */}
         <h3 className="px-3 text-2xl font-bold text-white font-poppins">
-          {highlightText(course.courseName, searchTerm)}
+          {highlightText(course?.courseName, searchTerm)}
         </h3>
 
         {/* Action Buttons */}
@@ -391,8 +391,8 @@ const CourseCard = ({ course, searchTerm, onDelete, deleteCourse, setShowModal, 
         <span className="text-white font-semibold">Description: </span>
         <span className="text-white">
           {isDescriptionExpanded ? course.courseDescription : 
-           `${course.courseDescription.slice(0, 10)}${course.courseDescription.length > 10 ? '...' : ''}`}
-          {course.courseDescription.length > 10 && (
+           `${course?.courseDescription.slice(0, 10)}${course?.courseDescription.length > 10 ? '...' : ''}`}
+          {course?.courseDescription.length > 10 && (
             <motion.button 
               onClick={() => setIsDescriptionExpanded(!isDescriptionExpanded)}
               className="ml-2 text-[#49DE80] font-semibold"
