@@ -3,6 +3,7 @@ import Eatables_Card from "../assets/Eatables_Card.png";
 import Travel_Card from "../assets/Travel_Card.png";
 import { motion, useAnimation } from 'framer-motion';
 import Buy_Card from "../assets/Buy_Card.png";
+import Sell_Card from "../assets/Sell_Card.png";
 import { Power4 } from 'gsap/all';
 import { useNavigate } from 'react-router-dom';
 
@@ -37,10 +38,10 @@ const FeatureCard = () => {
                     <div className="w-full md:w-1/2 mb-6 md:mb-0">
                         <div className="flex items-center gap-2 mb-4">
                             <div className="w-2 h-2 bg-white rounded-full" />
-                            <span className="text-white text-base md:text-lg font-light">CARDBOARD SPACESHIP</span>
+                            <span className="text-white text-base md:text-lg font-light">EXPLORE RESTRAUNTS</span>
                         </div>
                         <div className="flex gap-2 flex-wrap mb-4">
-                            {["BRANDED TEMPLATE", "SALES DECK", "SOCIAL MEDIA TEMPLATES"].map((tag, idx) => (
+                            {["EATERIES", "FEAST", "CUISINE"].map((tag, idx) => (
                                 <span key={idx} className="px-3 py-1 bg-white/10 text-white rounded-full text-xs sm:text-sm mb-1 mr-1">
                                     {tag}
                                 </span>
@@ -71,7 +72,7 @@ const FeatureCard = () => {
                                     </h1>
                                 </div>
                                 <div className='card w-full h-full rounded-xl overflow-hidden'>
-                                    <img className='w-full h-full object-cover' src={Eatables_Card} alt="" />
+                                    <img className='w-full h-full  object-cover' src={Eatables_Card} alt="" />
                                 </div>
                             </motion.div>
                         </CardWrapper>
@@ -81,11 +82,17 @@ const FeatureCard = () => {
                     <div className="w-full md:w-1/2">
                         <div className="flex items-center gap-2 mb-4">
                             <div className="w-2 h-2 bg-white rounded-full" />
-                            <span className="text-white text-base md:text-lg font-light">AH2 & MATT HORN</span>
+                            <span className="text-white text-base md:text-lg font-light">CHART YOUR NEXT EXPEDITIONS</span>
                         </div>
                         <div className="flex gap-2 flex-wrap mb-4">
                             <span className="px-3 py-1 bg-white/10 text-white rounded-full text-xs sm:text-sm">
-                                PITCH DECK
+                                VENTURE
+                            </span>
+                            <span className="px-3 py-1 bg-white/10 text-white rounded-full text-xs sm:text-sm">
+                                PILGRIMAGE
+                            </span>
+                            <span className="px-3 py-1 bg-white/10 text-white rounded-full text-xs sm:text-sm">
+                                DAY TRIP
                             </span>
                         </div>
                         
@@ -100,7 +107,8 @@ const FeatureCard = () => {
                                 style={{ position: 'relative', zIndex: 1 }}>
                                 <div className='absolute inset-0 flex items-center justify-center z-[1000] pointer-events-none'>
                                     <h1 className='flex overflow-hidden text-[#F9F7E7] font-["Founders_Grotesk_Condensed"] font-bold text-5xl sm:text-6xl md:text-8xl leading-none tracking-tight uppercase'>
-                                        {"Traverse".split('').map((item, index) => (
+
+                                        {"traverse".split('').map((item, index) => (
                                             <motion.span
                                                 key={index}
                                                 initial={{ y: "100%" }}
@@ -125,10 +133,10 @@ const FeatureCard = () => {
                     <div className="w-full md:w-1/2 mb-6 md:mb-0">
                         <div className="flex items-center gap-2 mb-4">
                             <div className="w-2 h-2 bg-white rounded-full" />
-                            <span className="text-white text-base md:text-lg font-light">CARDBOARD SPACESHIP</span>
+                            <span className="text-white text-base md:text-lg font-light">GET PRODUCT INQUIRY</span>
                         </div>
                         <div className="flex gap-2 flex-wrap mb-4">
-                            {["BRANDED TEMPLATE", "SALES DECK", "SOCIAL MEDIA TEMPLATES"].map((tag, idx) => (
+                            {["THRIFT STORE", "FINDS"].map((tag, idx) => (
                                 <span key={idx} className="px-3 py-1 bg-white/10 text-white rounded-full text-xs sm:text-sm mb-1 mr-1">
                                     {tag}
                                 </span>
@@ -145,8 +153,8 @@ const FeatureCard = () => {
                                 className="cardcontainer relative h-[40vh] sm:h-[50vh] md:h-[60vh]"
                                 style={{ position: 'relative', zIndex: 1 }}>
                                 <div className='absolute inset-0 flex items-center justify-center z-[1000] pointer-events-none'>
-                                    <h1 className='flex overflow-hidden text-[#F9F7E7] font-["Founders_Grotesk_Condensed"] font-bold text-5xl sm:text-6xl md:text-8xl leading-none tracking-tight uppercase'>
-                                        {"buy".split('').map((item, index) => (
+                                    <h1 className='flex overflow-hidden text-[#4b4b50] font-["Founders_Grotesk_Condensed"] font-bold text-5xl sm:text-6xl md:text-8xl leading-none tracking-tight uppercase'>
+                                        {"catalog".split('').map((item, index) => (
                                             <motion.span
                                                 key={index}
                                                 initial={{ y: "100%" }}
@@ -168,11 +176,14 @@ const FeatureCard = () => {
                     <div className="w-full md:w-1/2">
                         <div className="flex items-center gap-2 mb-4">
                             <div className="w-2 h-2 bg-white rounded-full" />
-                            <span className="text-white text-base md:text-lg font-light">AH2 & MATT HORN</span>
+                            <span className="text-white text-base md:text-lg font-light">LIST PRODUCTS</span>
                         </div>
                         <div className="flex gap-2 flex-wrap mb-4">
                             <span className="px-3 py-1 bg-white/10 text-white rounded-full text-xs sm:text-sm">
-                                PITCH DECK
+                                TRADE
+                            </span>
+                            <span className="px-3 py-1 bg-white/10 text-white rounded-full text-xs sm:text-sm">
+                                OFFER
                             </span>
                         </div>
                         
@@ -186,8 +197,8 @@ const FeatureCard = () => {
                                 className="cardcontainer relative h-[40vh] sm:h-[50vh] md:h-[60vh]"
                                 style={{ position: 'relative', zIndex: 1 }}>
                                 <div className='absolute inset-0 flex items-center justify-center z-[1000] pointer-events-none'>
-                                    <h1 className='flex overflow-hidden text-[#F9F7E7] font-["Founders_Grotesk_Condensed"] font-bold text-5xl sm:text-6xl md:text-8xl leading-none tracking-tight uppercase'>
-                                        {"sell".split('').map((item, index) => (
+                                    <h1 className='flex overflow-hidden text-[#4b4b50]  font-["Founders_Grotesk_Condensed"] font-bold text-5xl sm:text-6xl md:text-8xl leading-none tracking-tight uppercase'>
+                                        {"list&sell".split('').map((item, index) => (
                                             <motion.span
                                                 key={index}
                                                 initial={{ y: "100%" }}
@@ -200,7 +211,7 @@ const FeatureCard = () => {
                                     </h1>
                                 </div>
                                 <div className='card w-full h-full rounded-xl overflow-hidden'>
-                                    <img className='w-full h-full object-cover' src={Travel_Card} alt="" />
+                                    <img className='w-full h-full object-cover' src={Sell_Card} alt="" />
                                 </div>
                             </motion.div>
                         </CardWrapper>
