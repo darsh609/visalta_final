@@ -63,7 +63,7 @@ const Traverse = () => {
             transition={{ type: "spring", stiffness: 300 }}
             className="text-4xl md:text-6xl font-bold text-center"
           >
-            Chart Your Next Expedition
+            Plan Your Next Journey
           </motion.h1>
         </motion.div>
         <motion.p

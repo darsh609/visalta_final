@@ -95,7 +95,7 @@ const UpdateSection = () => {
       await toast.promise(
         axios.post(`${BASE_URL}/createupdate`, formData),
         {
-          loading: "Listing your Product...",
+          loading: "Adding TAPs..",
           success: "TAPs Added Successfully!",
           error: (err) =>
             `Error creating update: ${
@@ -224,6 +224,14 @@ const UpdateSection = () => {
   //   if (selectedCategory === "ALL") return true;
   //   return update.category === selectedCategory;
   // });
+  const categories = [
+    { id: 'ALL', icon: FaGlobe, label: 'ALL' },
+    { id: 'Flash alerts', icon: FaBolt, label: 'Flash alerts' },
+    { id: 'Official', icon: FaRegBuilding, label: 'Official' },
+    { id: 'Clubs', icon: FaUsers, label: 'Clubs' },
+    { id: 'Societies', icon: FaHandshake, label: 'Societies' },
+    { id: 'Other', icon: FaHandshake, label: 'Other' }
+  ];
 
   return (
     <div className="bg-zinc-900 text-zinc-200 min-h-screen flex flex-col items-center px-4 py-12">
@@ -232,7 +240,7 @@ const UpdateSection = () => {
         Timely Alerts And Posts 🚀
         </h1>
 
-
+{/* 
         <div className="flex gap-4 justify-center mb-8">
         <button
           onClick={() => setSelectedCategory("ALL")}
@@ -288,7 +296,23 @@ const UpdateSection = () => {
           <FaHandshake />
           <span>Other</span>
         </button>
-      </div>
+      </div> */}
+       <div className="flex flex-wrap gap-2 md:gap-4 justify-center mb-4 md:mb-8 px-2 md:px-4">
+      {categories.map(({ id, icon: Icon, label }) => (
+        <button
+          key={id}
+          onClick={() => setSelectedCategory(id)}
+          className={`flex items-center gap-1 md:gap-2 px-2 md:px-4 py-1 md:py-2 rounded-full border text-xs md:text-base transition-all duration-200 ${
+            selectedCategory === id 
+              ? "bg-primary text-white border-primary" 
+              : "bg-zinc-700 text-zinc-300 border-zinc-600 hover:bg-zinc-600"
+          }`}
+        >
+          <Icon className="w-3 h-3 md:w-4 md:h-4" />
+          <span className="whitespace-nowrap">{label}</span>
+        </button>
+      ))}
+    </div>
 
         {/* Search Bar */}
         <div className="flex justify-center mb-8 w-full">
