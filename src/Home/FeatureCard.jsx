@@ -153,7 +153,7 @@ const FeatureCard = () => {
                                 className="cardcontainer relative h-[40vh] sm:h-[50vh] md:h-[60vh]"
                                 style={{ position: 'relative', zIndex: 1 }}>
                                 <div className='absolute inset-0 flex items-center justify-center z-[1000] pointer-events-none'>
-                                    <h1 className='flex overflow-hidden text-[#4b4b50] font-["Founders_Grotesk_Condensed"] font-bold text-5xl sm:text-6xl md:text-8xl leading-none tracking-tight uppercase'>
+                                    <h1 className='flex overflow-hidden text-[#F9F7E7] font-["Founders_Grotesk_Condensed"] font-bold text-5xl sm:text-6xl md:text-8xl leading-none tracking-tight uppercase'>
                                         {"catalog".split('').map((item, index) => (
                                             <motion.span
                                                 key={index}
