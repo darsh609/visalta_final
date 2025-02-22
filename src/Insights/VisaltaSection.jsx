@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ShoppingBag, Bell, MapPin, Users, Shield, Heart } from 'lucide-react';
+import ContactForm from './ContactForm';
+import {useNavigate} from 'react-router-dom';
 
 const featuresList = [
   {
@@ -34,8 +36,19 @@ const featuresList = [
   }
 ];
 
+
 const SlidingFeatures = () => {
+  const handleScrollToForm = () => {
+    const formElement = document.getElementById('contact-form');
+    if (formElement) {
+      formElement.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
   const [scrollPosition, setScrollPosition] = useState(0);
+  const navigate = useNavigate();
   const itemHeight = {
     base: 80,    // Height for mobile
     sm: 90,      // Height for small tablets
@@ -69,7 +82,8 @@ const SlidingFeatures = () => {
           <p className="text-xs md:text-sm lg:text-lg text-gray-300">
             A one-stop platform for students to buy, sell, and stay updated. From our marketplace to TAPs (Timely Alerts & Posts) and curated event recommendations, we make campus life easier and more connected.
           </p>
-          <button className="bg-[#1db954] hover:bg-green-700 text-white text-sm md:text-base px-4 py-2 md:px-6 md:py-2 lg:px-8 lg:py-3 rounded-lg font-semibold transition-colors">
+          <button className="bg-[#1db954] hover:bg-green-700 text-white text-sm md:text-base px-4 py-2 md:px-6 md:py-2 lg:px-8 lg:py-3 rounded-lg font-semibold transition-colors"
+              onClick={handleScrollToForm}>
             Let's Connect
           </button>
         </div>

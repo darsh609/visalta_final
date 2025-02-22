@@ -66,7 +66,7 @@ const ContactForm = () => {
   }, [reset, isSubmitSuccessful]);
 
   return (
-    <div className="min-h-screen bg-zinc-950 flex items-center justify-center p-4 sm:p-6 md:p-8">
+    <div id="contact-form" className="min-h-screen bg-zinc-950 flex items-center justify-center p-4 sm:p-6 md:p-8">
       <div className="container max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-6 lg:gap-8">
         {/* Contact Info Card */}
         <div className="bg-zinc-900 text-zinc-100 p-6 sm:p-8 rounded-lg w-full md:w-[380px] lg:w-[420px] shadow-lg">
