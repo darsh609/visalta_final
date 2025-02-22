@@ -78,10 +78,7 @@ exports.deleteAccount = async (req, res) => {
     await Profile.findByIdAndDelete(user.additionalDetails);
 
     // Remove the user from all courses they are enrolled in
-    
-      await Course.deleteMany({ createdBy: id });
-
-    
+      await Course.deleteMany({ instructor: id });
 
     // Remove the user from all courses they liked
     for (const likedCourseId of user.Likedcourses) {
