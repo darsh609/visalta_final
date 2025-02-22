@@ -128,7 +128,7 @@ const CourseCard = ({ course, searchTerm, onDelete, deleteCourse, setShowModal, 
       </div>
       <h2 style="color: #a8d5ba;">Hello!</h2>
       <p>
-        I'm <strong>${user?.firstName}</strong> from <strong>${user?.additionalDetails?.hostel}</strong>. I discovered your listing on <strong>Visalta</strong> and I'm very interested in your second-hand product.
+        I'm <strong>${user?.firstName}</strong> from <strong>${user?.additionalDetails?.hostel}</strong>. I discovered your listing on <strong>Visalta</strong> and I'm very interested in your product.
       </p>
       <h3 style="color: #a8d5ba;">Product Details:</h3>
       <p>
@@ -171,8 +171,6 @@ const CourseCard = ({ course, searchTerm, onDelete, deleteCourse, setShowModal, 
     const serviceID = 'service_s7b9s1v';
     const templateID = 'template_fkv8gud';
     const userID = 'NnYBFTHd9piExxQjw';
-  
-    // Build a response email for the user that is a copy of the owner's email
     // with an additional header informing them that their inquiry has been forwarded.
     const ssubject = "Inquiry Received – Seller Will Contact You Shortly!";
   
@@ -183,8 +181,8 @@ const CourseCard = ({ course, searchTerm, onDelete, deleteCourse, setShowModal, 
       </div>
       <h2 style="color: #a8d5ba;">Inquiry Confirmed!</h2>
       <p>
-        Hi ${user.firstName},<br><br>
-        We’ve successfully forwarded your inquiry regarding <strong>${course.courseName}</strong> to the seller.
+        Hi ${user?.firstName},<br><br>
+        We’ve successfully forwarded your inquiry regarding <strong>${course?.courseName}</strong> to the seller.
         Expect to hear from them soon – they will be in touch with you directly.
       </p>
       <p>

@@ -186,7 +186,7 @@ function App() {
 
       {/* Additional Protected Routes */}
       <Route
-        path="Buy"
+        path="purchase"
         element={
           <PrivateRoute>
             <BuyPage />
