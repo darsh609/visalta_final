@@ -63,7 +63,7 @@ const Footer = () => {
             </h2>
             <div className="flex flex-col space-y-2 text-xl md:text-3xl">
               <a
-                href="https://www.instagram.com"
+                href="https://www.instagram.com/visalta.in/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="cursor-pointer hover:text-[#1db954] transition-colors duration-300"
