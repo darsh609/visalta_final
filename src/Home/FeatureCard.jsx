@@ -29,7 +29,7 @@ const FeatureCard = () => {
         <div className='w-full py-8 sm:py-12 md:py-20 bg-[#005b41] rounded-tl-3xl rounded-tr-3xl text-black'>
             <div className='w-full px-4 sm:px-8 md:px-20 border-b-[1px] border-[#fff] pb-8 sm:pb-12 md:pb-20'>
                 <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[3vw] leading-tight md:leading-[3.5vw] font-normal text-white">
-                    Featured Project
+                    Explore
                 </h1>
             </div>
 

@@ -28,7 +28,7 @@ const feedbackController = {
       const body = `
         <div style="font-family: Arial, sans-serif; line-height: 1.6; background-color: #1a1a1a; padding: 40px 20px; max-width: 600px; margin: 0 auto; color: #ffffff; border: 1px solid #333333; border-radius: 8px; background-color: #232323;">
     <div style="text-align: center; margin-bottom: 30px;">
-        <img src="https://iili.io/2yOho5Q.jpg" alt="Visalta Logo" style="max-width: 200px; padding: 20px; background-color: #ffffff; border-radius: 10px;" />
+        <img src="https://iili.io/3H2mdI1.jpg" alt="Visalta Logo" style="max-width: 200px; padding: 20px; background-color: #ffffff; border-radius: 10px;" />
     </div>
     
     <div style="text-align: center; font-size: 28px; font-weight: bold; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; padding: 10px 0; color: #ffffff; background-color: #1c2a1f; border-bottom: 3px solid #4ade80;">

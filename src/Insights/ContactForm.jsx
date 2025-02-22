@@ -74,7 +74,7 @@ const ContactForm = () => {
             <div className="text-center md:text-left">
               <h3 className="text-lg sm:text-xl font-semibold mb-2">Chat on us</h3>
               <p className="text-sm sm:text-base text-zinc-400">Our friendly team is here to help.</p>
-              <p className="text-sm sm:text-base text-zinc-400">darshkumar0609@gmail.com</p>
+              <p className="text-sm sm:text-base text-zinc-400">teamvisalta@gmail.com</p>
             </div>
             
             <div className="text-center md:text-left">
@@ -87,6 +87,7 @@ const ContactForm = () => {
               <h3 className="text-lg sm:text-xl font-semibold mb-2">Call us</h3>
               <p className="text-sm sm:text-base text-zinc-400">Mon - Fri From 8am to 5pm</p>
               <p className="text-sm sm:text-base text-zinc-400">+91 8081792286</p>
+              <p className="text-sm sm:text-base text-zinc-400">+91 8273463662</p>
             </div>
           </div>
         </div>
