@@ -85,7 +85,7 @@ const VisaltaCards = () => {
             Welcome to Visalta
           </h2>
           <p className="text-xs sm:text-sm text-zinc-300">
-            Welcome to Visalta, your ultimate guide to life at NIT Warangal. From the best food spots and shopping stops to serene holy places and academic guides, we’re here to help you explore, enjoy, and make the most of your campus journey. Let Visalta be your trusted companion in discovering everything that makes college life unforgettable!
+          A platform for college students to buy, sell, and stay connected. Our marketplace simplifies trading, while TAPs (Timely Alerts & Posts) keep you updated on campus events. Need a venue or getaway? Explore our curated recommendations for resorts, entertainment, and peaceful retreats. We make college life simpler, smarter, and more engaging.
           </p>
         </Card>
       </motion.div>
@@ -100,7 +100,7 @@ const VisaltaCards = () => {
             Our Mission
           </h2>
           <p className="text-xs sm:text-sm text-zinc-300">
-            To empower the students of NIT Warangal by providing a comprehensive guide to explore, experience, and enjoy their campus life to the fullest, blending convenience with community-driven insights.
+          To simplify and enrich college life with a seamless marketplace, real-time updates via TAPs (Timely Alerts & Posts), and curated recommendations for events and getaways. We strive to make campus life more connected, convenient, and engaging.
           </p>
         </Card>
       </motion.div>
@@ -115,7 +115,7 @@ const VisaltaCards = () => {
             Our Vision
           </h2>
           <p className="text-xs sm:text-sm text-zinc-300">
-            To be the go-to platform for every NIT Warangal student, offering curated recommendations, practical guidance, and seamless access to opportunities that enhance both their academic journey and personal growth.
+          To build a thriving student community where buying, selling, and staying informed is effortless. We envision a campus experience that is more connected, convenient, and engaging for every student.
           </p>
         </Card>
       </motion.div>
@@ -130,7 +130,7 @@ const VisaltaCards = () => {
             Community
           </h2>
           <p className="text-xs sm:text-sm text-zinc-300">
-            Join NITW students to share experiences, build connections, and grow through cultural exchange.
+          A student-driven network to buy, sell, share updates, and engage in campus life.
           </p>
         </Card>
       </motion.div>
