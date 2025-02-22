@@ -280,7 +280,7 @@ exports.Like = async (req, res) => {
             <body>
                 <div class="container">
                     <div style="text-align: center;">
-                        <img class="logo" src="https://iili.io/2yOho5Q.jpg" alt="Visalta Logo" />
+                        <img class="logo" src="https://iili.io/3H2mdI1.jpg" alt="Visalta Logo" />
                     </div>
             
                     <div style="color: #ffffff; text-align: center; font-size: 28px; font-weight: bold; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; padding: 10px 0; background-color: #1c2a1f; border-bottom: 3px solid #4ade80;">
