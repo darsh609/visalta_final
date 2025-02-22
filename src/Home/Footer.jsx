@@ -123,19 +123,19 @@ const Footer = () => {
                   href="tel:8273463662"
                   className="hover:text-[#1db954] transition-colors duration-300"
                 >
-                  827
+                  808
                 </a>
                 <a
                   href="tel:8273463662"
                   className="hover:text-[#1db954] transition-colors duration-300"
                 >
-                  346
+                  179
                 </a>
                 <a
                   href="tel:8273463662"
                   className="hover:text-[#1db954] transition-colors duration-300"
                 >
-                  3662
+                  2286
                 </a>
               </div>
               <div className="text-xs md:text-sm font-light flex flex-col">

@@ -67,7 +67,7 @@ exports.courseEnrollmentEmail = (courseName, name) => {
     
     <body>
         <div class="container">
-            <a href="https://ibb.co/VHb437G"><img src="https://i.ibb.co/PTJHt7y/Visalta-nitw-high-resolution-logo.png" alt="Visalta-nitw-high-resolution-logo" border="0" /></a>
+            <a href="https://iili.io/3H2mdI1.jpg"><img src="https://i.ibb.co/PTJHt7y/Visalta-nitw-high-resolution-logo.png" alt="Visalta-nitw-high-resolution-logo" border="0" /></a>
             <div class="message">Course Registration Confirmation</div>
             <div class="body">
                 <p>Dear ${name},</p>

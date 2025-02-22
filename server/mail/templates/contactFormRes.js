@@ -141,7 +141,7 @@ exports.contactUsEmail = (
     <body>
         <div class="container">
             <a href="">
-                <img class="logo" src="https://iili.io/2yOho5Q.jpg" alt="Visalta Logo" border="0" />
+                <img class="logo" src="https://iili.io/3H2mdI1.jpg" alt="Visalta Logo" border="0" />
             </a>
             <div class="message">Thank You for Reaching Out</div>
             <div class="body">

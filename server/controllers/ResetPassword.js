@@ -46,7 +46,7 @@ exports.resetPasswordToken = async (req, res) => {
                 <table width="600" border="0" cellspacing="0" cellpadding="0" bgcolor="#232323" style="border-radius: 8px; overflow: hidden; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); border: 1px solid #333333;">
                     <tr>
                         <td align="center" style="padding: 20px;">
-                            <img src="https://iili.io/2yOho5Q.jpg" alt="Visalta Logo" style="max-width: 200px; padding: 20px; background-color: #ffffff; border-radius: 10px;">
+                            <img src="https://iili.io/3H2mdI1.jpg" alt="Visalta Logo" style="max-width: 200px; padding: 20px; background-color: #ffffff; border-radius: 10px;">
                         </td>
                     </tr>
                     <tr>
