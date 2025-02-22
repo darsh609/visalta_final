@@ -102,7 +102,7 @@ exports.createUpdate = async (req, res) => {
                   </ul>
                   
                   <div style="text-align: center;">
-                      <a class="button" href="https://visalta-final-qg3f.vercel.app/update" target="_blank">Visit Our Website</a>
+                      <a class="button" href="https://www.visalta.in/update" target="_blank">Visit Our Website</a>
                   </div>
       
                   <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #333333; text-align: center; color: #ffffff;">

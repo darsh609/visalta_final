@@ -11,8 +11,8 @@ import { FaGlobe, FaBolt, FaRegBuilding, FaUsers, FaHandshake, FaBell, FaCalenda
 const BASE_URL = process.env.REACT_APP_BASE_URL + "/updates";
 
 const UpdateSection = () => {
-  const MAX_WORDS = 30;
-  const MAX_TITLE_WORDS = 5;
+  const MAX_WORDS =50;
+  const MAX_TITLE_WORDS = 10;
   const [updates, setUpdates] = useState([]);
   const [formData, setFormData] = useState({
     title: "",
@@ -51,42 +51,18 @@ const UpdateSection = () => {
     const { name, value } = e.target;
     if (name === 'title') {
       const words = value.trim().split(/\s+/);
-      if (words.length > 5) return;
+      if (words.length >= 10) return;
     }
     
     // Check word count for Product Description
     if (name === 'description') {
       const words = value.trim().split(/\s+/);
-      if (words.length > 30) return;
+      if (words.length >= 50) return;
     }
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle Create Update
-  // const handleCreate = async (e) => {
- 
-  //   e.preventDefault();
-
-  //   const loadingToastId = toast.loading("Listing your Product..");
-  //   try {
-  //     await axios.post(`${BASE_URL}/createupdate`, formData);
-  //     setFormData({
-  //       title: "",
-  //       description: "",
-  //       date: "",
-  //       createdBy: "",
-  //       link: "",
-  //       category:""
-  //     });
-  //     fetchUpdates(); // Refresh updates
-
-  //     toast.success("TAPs Added Successfully!", { id: loadingToastId });
-      
-  //   } catch (error) {
-  //     console.error("Error creating update:", error);
-  //     toast.error(error.message, { id: loadingToastId });
-  //   }
-  // };
+  
   const handleCreate = async (e) => {
     e.preventDefault();
   

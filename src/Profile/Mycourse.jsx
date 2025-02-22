@@ -300,7 +300,7 @@ const Mycourse = () => {
   };
 
   return (
-    <div className="container max-w-full p-12 bg-zinc-900 min-h-full">
+    <div className="container max-w-full p-12 bg-zinc-900 min-h-screen">
      
       <h1 className="text-4xl font-bold text-center mb-8 text-white">
         My Products
