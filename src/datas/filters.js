@@ -62,7 +62,7 @@ export const filterData = [
     },
     {
       id: "16",
-      title: "North-Indiam",
+      title: "North-Indian",
     },
     {
       id: "17",
