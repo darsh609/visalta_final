@@ -76,7 +76,8 @@ const SlidingFeatures = () => {
             Who are We
           </h2>
           <h1 className="text-2xl md:text-3xl lg:text-5xl font-bold leading-tight">
-            Navigating,<br />
+            Navigating,
+            <br/>
             Students life
           </h1>
           <p className="text-xs md:text-sm lg:text-lg text-gray-300">

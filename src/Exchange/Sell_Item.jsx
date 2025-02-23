@@ -257,7 +257,7 @@ const UploadItemForm = () => {
 
               <div className="col-span-2">
                 <label className="block text-sm md:text-base text-black mb-2 font-medium">Tags</label>
-                <div className="flex gap-2 mb-2">
+                <div className="flex flex-wrap gap-2 mb-2">
                   <input
                     type="text"
                     value={tagInput}
