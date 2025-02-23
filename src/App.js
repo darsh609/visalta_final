@@ -29,6 +29,7 @@ import UpdatePassword from "./Auth/UpdatePassword";
 import PrivateRoute from "./Auth/PrivateRoute";
 import ForgotPassword from "./Auth/Forgotpassword";
 import Traverse from "./Extras/Traverse";
+import AdminPanel from "./AdminPanel";
 function App() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -217,6 +218,7 @@ function App() {
           </PrivateRoute>
         }
       />
+      <Route path="Adminpanel" element={<AdminPanel />} />
     
 
  
