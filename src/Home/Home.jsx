@@ -290,9 +290,9 @@ export const Home = () => {
                 {index === 1 && (
                   <motion.div 
                     initial={{width:0}} 
-                    animate={{width: isMobile ? "20vw" : "10vw"}}
+                    animate={{width: "10vw"}}
                     transition={{ease:[0.76, 0, 0.24, 1], duration:1}} 
-                    className='image ml-[0.5vw] w-[8vw] md:w-[8vw] rounded-xl h-[6.5vw] md:h-[6.5vw] relative z-10 overflow-hidden self-center'
+                    className='image ml-[0.5vw] w-[8vw] h-[6.5vw] md:rounded-xl relative z-10 overflow-hidden self-center' // Only apply rounded corners on desktop
                     style={{
                       transform: 'perspective(1000px) rotateX(5deg)',
                       transformStyle: 'preserve-3d',
@@ -303,7 +303,7 @@ export const Home = () => {
                     <img 
                       src={maskerImg} 
                       alt="" 
-                      className="w-full h-full object-cover rounded-xl transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl"
+                      className="w-full h-full object-cover md:rounded-xl transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl" // Only apply rounded corners on desktop
                     />
                   </motion.div>
                 )}
