@@ -24,6 +24,18 @@ function Navbar() {
 
       {/* Links for larger screens */}
       <div className="hidden md:flex items-center gap-6">
+        {
+         user?.accountType === 'Admin' && (<motion.div
+          onClick={() => navigate("AdminPanel")}
+          className="text-lg capitalize font-light cursor-pointer hover:text-green-400 transition"
+          whileHover={{ scale: 1.1 }}
+        >
+            AdminPanel
+          
+        </motion.div>)
+
+        }
+      
       <motion.div
           onClick={() => navigate("update")}
           className="text-lg capitalize font-light cursor-pointer hover:text-green-400 transition"
