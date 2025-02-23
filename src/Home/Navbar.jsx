@@ -97,6 +97,26 @@ function Navbar() {
       {/* Dropdown Menu */}
       {menuOpen && (
         <div className="absolute top-16 right-4 bg-zinc-800 rounded-lg shadow-lg p-4 flex flex-col gap-4 w-48">
+          {
+         user?.accountType === 'Admin' && (<motion.div
+          onClick={() => navigate("AdminPanel")}
+          className="text-lg capitalize font-light cursor-pointer hover:text-green-400 transition"
+          whileHover={{ scale: 1.1 }}
+        >
+            AdminPanel
+          
+        </motion.div>)
+
+        }
+        <div
+            onClick={() => {
+              navigate("update");
+              setMenuOpen(false);
+            }}
+            className="text-lg capitalize font-light cursor-pointer hover:text-green-400 transition"
+          >
+            TAPS
+          </div>
           <div
             onClick={() => {
               navigate("insight");
@@ -106,15 +126,7 @@ function Navbar() {
           >
             Insight
           </div>
-          <div
-            onClick={() => {
-              navigate("update");
-              setMenuOpen(false);
-            }}
-            className="text-lg capitalize font-light cursor-pointer hover:text-green-400 transition"
-          >
-            TAPS
-          </div>
+          
           <div
             onClick={() => {
               navigate("contact");
