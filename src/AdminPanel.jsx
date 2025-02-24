@@ -127,7 +127,7 @@ const AdminPanel = () => {
 
   const deleteFeedback = async () => {
     try {
-      await axios.delete(`${BASE_URL}/feedback/${feedbackToDelete._id}`, {
+      await axios.delete(`${BASE_URL}/feedback/feedback/${feedbackToDelete._id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setFeedbacks(feedbacks.filter((fb) => fb._id !== feedbackToDelete._id));
@@ -147,7 +147,7 @@ const AdminPanel = () => {
 
   const deleteRequest = async () => {
     try {
-      await axios.delete(`${BASE_URL}/requests/${requestToDelete._id}`, {
+      await axios.delete(`${BASE_URL}/requests/request/${requestToDelete._id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setRequests(requests.filter((req) => req._id !== requestToDelete._id));
