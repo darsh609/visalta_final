@@ -7,7 +7,7 @@ import sorry from "../assets/sorry.png";
 import SpotlightCard from "./SpotlightCard";
 import { useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
-import { FaGlobe, FaBolt, FaRegBuilding, FaUsers, FaHandshake, FaBell, FaCalendarAlt, FaTag, FaUserCircle, FaTrashAlt } from 'react-icons/fa';
+import { FaGlobe,FaSeedling, FaBolt, FaRegBuilding, FaUsers, FaHandshake, FaBell, FaCalendarAlt, FaTag, FaUserCircle, FaTrashAlt } from 'react-icons/fa';
 const BASE_URL = process.env.REACT_APP_BASE_URL + "/updates";
 
 const UpdateSection = () => {
@@ -203,12 +203,16 @@ const UpdateSection = () => {
   // });
   const categories = [
     { id: 'ALL', icon: FaGlobe, label: 'ALL' },
+    { id: 'Spring-Spree', icon: FaSeedling, label: 'Spring-Spree' },
+   
     { id: 'Flash alerts', icon: FaBolt, label: 'Flash alerts' },
     { id: 'Official', icon: FaRegBuilding, label: 'Official' },
     { id: 'Clubs', icon: FaUsers, label: 'Clubs' },
     { id: 'Societies', icon: FaHandshake, label: 'Societies' },
-    { id: 'Other', icon: FaHandshake, label: 'Other' }
+    { id: 'Other', icon: FaHandshake, label: 'Other' },
+   
   ];
+  
 
   return (
     <div className="bg-zinc-900 text-zinc-200 min-h-screen flex flex-col items-center px-4 py-12">
@@ -217,63 +221,6 @@ const UpdateSection = () => {
         Timely Alerts And Posts 🚀
         </h1>
 
-{/* 
-        <div className="flex gap-4 justify-center mb-8">
-        <button
-          onClick={() => setSelectedCategory("ALL")}
-          className={`flex items-center gap-2 px-4 py-2 rounded-full border ${
-            selectedCategory === "ALL" ? "bg-primary text-white" : "bg-zinc-700 text-zinc-300"
-          }`}
-        >
-          <FaGlobe />
-          <span>ALL</span>
-        </button>
-        <button
-          onClick={() => setSelectedCategory("Flash alerts")}
-          className={`flex items-center gap-2 px-4 py-2 rounded-full border ${
-            selectedCategory === "Flash alerts" ? "bg-primary text-white" : "bg-zinc-700 text-zinc-300"
-          }`}
-        >
-          <FaBolt />
-          <span>Flash alerts</span>
-        </button>
-        <button
-          onClick={() => setSelectedCategory("Official")}
-          className={`flex items-center gap-2 px-4 py-2 rounded-full border ${
-            selectedCategory === "Official" ? "bg-primary text-white" : "bg-zinc-700 text-zinc-300"
-          }`}
-        >
-          <FaRegBuilding />
-          <span>Official</span>
-        </button>
-        <button
-          onClick={() => setSelectedCategory("Clubs")}
-          className={`flex items-center gap-2 px-4 py-2 rounded-full border ${
-            selectedCategory === "Clubs" ? "bg-primary text-white" : "bg-zinc-700 text-zinc-300"
-          }`}
-        >
-          <FaUsers />
-          <span>Clubs</span>
-        </button>
-        <button
-          onClick={() => setSelectedCategory("Societies")}
-          className={`flex items-center gap-2 px-4 py-2 rounded-full border ${
-            selectedCategory === "Societies" ? "bg-primary text-white" : "bg-zinc-700 text-zinc-300"
-          }`}
-        >
-          <FaHandshake />
-          <span>Societies</span>
-        </button>
-        <button
-          onClick={() => setSelectedCategory("Other")}
-          className={`flex items-center gap-2 px-4 py-2 rounded-full border ${
-            selectedCategory === "Other" ? "bg-primary text-white" : "bg-zinc-700 text-zinc-300"
-          }`}
-        >
-          <FaHandshake />
-          <span>Other</span>
-        </button>
-      </div> */}
        <div className="flex flex-wrap gap-2 md:gap-4 justify-center mb-4 md:mb-8 px-2 md:px-4">
       {categories.map(({ id, icon: Icon, label }) => (
         <button
@@ -431,77 +378,6 @@ const UpdateSection = () => {
 </motion.div>
 
         </AnimatePresence>
-
-        {/* Admin Form */}
-        {/* {isAdmin && (
-          <motion.div
-            className="mt-12 max-w-xl mx-auto p-8 bg-zinc-800 rounded-xl shadow-lg"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-          >
-            <h2 className="text-2xl font-semibold mb-6 text-center text-primary">
-              Add a New Update
-            </h2>
-            <form
-              onSubmit={handleCreate}
-              className="space-y-4"
-            >
-              <input
-                type="text"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-                placeholder="Title"
-                className="w-full p-3 bg-zinc-700 rounded-lg text-zinc-200 focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-              <textarea
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                placeholder="Description"
-                className="w-full p-3 bg-zinc-700 rounded-lg text-zinc-200 focus:outline-none focus:ring-2 focus:ring-primary"
-                rows="4"
-              />
-              <div className="grid grid-cols-2 gap-4">
-                <input
-                  type="date"
-                  name="date"
-                  value={formData.date}
-                  onChange={handleChange}
-                  className="p-3 bg-zinc-700 rounded-lg text-zinc-200 focus:outline-none focus:ring-2 focus:ring-primary"
-                />
-                <input
-                  type="text"
-                  name="createdBy"
-                  value={formData.createdBy}
-                  onChange={handleChange}
-                  placeholder="Created By"
-                  className="p-3 bg-zinc-700 rounded-lg text-zinc-200 focus:outline-none focus:ring-2 focus:ring-primary"
-                />
-              </div>
-              <input
-                type="url"
-                name="link"
-                value={formData.link}
-                onChange={handleChange}
-                placeholder="Optional Link"
-                className="w-full p-3 bg-zinc-700 rounded-lg text-zinc-200 focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-              {isFormValid && (
-                <motion.button
-                  type="submit"
-                  className="w-full bg-primary text-zinc-900 px-4 py-3 rounded-lg hover:bg-green-700 transition-colors"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Add Update
-                </motion.button>
-              )}
-            </form>
-          </motion.div>
-        )} */}
-
 {isAdmin && (
         <motion.div
           className="mt-12 max-w-xl mx-auto p-8 bg-zinc-800 rounded-xl shadow-lg"
@@ -557,6 +433,7 @@ const UpdateSection = () => {
               <option value="Flash alerts">Flash alerts</option>
               <option value="Official">Official</option>
               <option value="Clubs">Clubs</option>
+              <option value="Spring-Spree">Spring-Spree</option>
               <option value="Societies">Societies</option>
               <option value="other">Other</option>
             </select>
