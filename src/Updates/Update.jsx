@@ -43,8 +43,9 @@ const UpdateSection = () => {
     fetchUpdates();
   }, []);
 
-  // Determine Active or Inactive Status
-  const isActive = (date) => moment(date).isAfter(moment());
+  
+  const isActive = date => moment().isSameOrBefore(moment(date), 'day');
+
 
   // Handle form input changes
   const handleChange = (e) => {

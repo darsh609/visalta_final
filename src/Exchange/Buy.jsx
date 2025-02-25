@@ -12,6 +12,7 @@ import { FiFilter, FiTrash2 } from "react-icons/fi";
 import { set } from 'react-hook-form';
 import moment from "moment";
 import sorry from "../assets/sorry.png";
+import { useNavigate } from 'react-router-dom';
 
 const Input = ({ placeholder, value, onChange, className }) => (
   <input
@@ -677,6 +678,7 @@ const BuyPage = () => {
       setFilteredCourses(courses);
     }
   };
+  const navigate=useNavigate()
 
   return (
     <div className="container max-w-full p-12 bg-zinc-900 min-h-screen ">
@@ -701,18 +703,24 @@ const BuyPage = () => {
             <FiFilter className="w-5 h-5"/>
            {sortOrder === 'asc' ? 'Price' : 'date added'}
           </Button>
-          {userHostel && (
-            <Button 
-              onClick={handleHostelFilter}
-              className={`transition ${
-                hostelFilter 
-                  ? 'bg-green-600 hover:bg-green-700' 
-                  : 'bg-zinc-700 hover:bg-zinc-600'
-              }`}
-            >
-              {hostelFilter ? 'My Hostel Items' : 'Filter by My Hostel'}
-            </Button>
-          )}
+          <Button 
+  onClick={() => {
+    if (!userHostel) {
+      toast.error("Add your hostel here!");
+      navigate("/my-profile/settings", { replace: true });
+    } else {
+      handleHostelFilter();
+    }
+  }}
+  className={`transition ${
+    hostelFilter 
+      ? 'bg-green-600 hover:bg-green-700' 
+      : 'bg-zinc-700 hover:bg-zinc-600'
+  }`}
+>
+  {hostelFilter ? 'My Hostel Items' : 'Filter by My Hostel'}
+</Button>
+
         </div>
       </div>
 
