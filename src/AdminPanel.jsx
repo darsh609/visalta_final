@@ -24,7 +24,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 const token = JSON.parse(localStorage.getItem("token"));
 
 const AdminPanel = () => {
-  const [activeTab, setActiveTab] = useState("Contacts");
+  const [activeTab, setActiveTab] = useState("User-Details");
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
