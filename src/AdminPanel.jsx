@@ -19,7 +19,7 @@ import en from 'javascript-time-ago/locale/en';
 
 TimeAgo.addDefaultLocale(en);
 const timeAgo = new TimeAgo('en-US');
-const TABS = ["Contacts", "Requests", "Feedbacks"];
+const TABS = ["User-Details","Contacts", "Requests", "Feedbacks",];
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const token = JSON.parse(localStorage.getItem("token"));
 
@@ -191,6 +191,28 @@ const AdminPanel = () => {
       minute: '2-digit'
     });
   };
+
+
+  const [users, setUsers] = useState([]);
+  const [loadingUsers, setLoadingUsers] = useState(false);
+
+  useEffect(() => {
+    setLoadingUsers(true);
+    fetch(`${BASE_URL}/users/all`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setUsers(data.users);
+        } else {
+          setUsers([]);
+        }
+        setLoadingUsers(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching users:", error);
+        setLoadingUsers(false);
+      });
+  }, []);
 
   return (
     <div className="min-h-screen bg-zinc-900 text-white p-4 md:p-6">
@@ -465,7 +487,77 @@ const AdminPanel = () => {
       )}
     </>
   )}
+  {
+    activeTab==="User-Details" && (
+      <>
+      {/* Display total number of users at the top */}
+      <div className="mb-4">
+        <p className="text-xl font-bold text-white">
+          Total Users: {users.length}
+        </p>
+      </div>
+
+      {loadingUsers ? (
+        <motion.div 
+          className="flex items-center gap-3 text-gray-400"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+        >
+          <Loader className="w-5 h-5 animate-spin" />
+          Loading users...
+        </motion.div>
+      ) : users.length > 0 ? (
+        <div className="w-full max-w-7xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-7">
+          {users.slice().reverse().map((user) => (
+            <motion.div
+              key={user._id}
+              className="bg-zinc-800/90 p-5 lg:p-6 rounded-2xl flex flex-col gap-3 shadow-lg transition-all duration-300 hover:shadow-2xl hover:bg-zinc-800 hover:translate-y-[-4px]"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              <div className="flex justify-between items-start">
+                <div className="flex-1">
+                  <p className="text-xl font-bold text-[#49DE80] mb-1">
+                    {user.name}
+                  </p>
+                  {user.createdAt && (
+                    <div className="flex items-center gap-2 text-sm text-gray-400">
+                      <Clock className="w-4 h-4" />
+                      {formatTimeAgo(user.createdAt)}
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="space-y-2">
+                <p className="text-gray-300 flex items-center gap-2">
+                  <Mail className="w-4 h-4" />
+                  {user.email}
+                </p>
+                <p className="text-gray-300 flex items-center gap-2">
+                  <span className="w-4 h-4">👤</span>
+                  {user.accountType}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      ) : (
+        <motion.p 
+          className="text-gray-400 text-lg"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+        >
+          No users found.
+        </motion.p>
+      )}
+    </>
+    )
+  }
+
 </div>
+
+
       {/* Confirmation Modal for Contacts */}
       <AnimatePresence>
         {confirmModal && (

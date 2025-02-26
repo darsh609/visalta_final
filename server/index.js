@@ -91,7 +91,7 @@ app.use("/api/v1/requests", requestRoutes);
 
 app.use("/api/v1/restraunts", require("./routes/Restraunts"));
 app.use("/api/v1/worship", require("./routes/Worship"));
-
+app.use("/api/v1/users", require("./routes/users"));
 app.listen(PORT, () => {
 	console.log(`App is running at ${PORT}`)
 })
