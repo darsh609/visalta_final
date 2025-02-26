@@ -89,6 +89,9 @@ const requestRoutes = require("./routes/Request");
 
 app.use("/api/v1/requests", requestRoutes);
 
+const notificationPreferenceRoutes = require("./routes/notificationPreferenceRoutes");
+app.use("/api/v1/notifications", notificationPreferenceRoutes);
+
 app.use("/api/v1/restraunts", require("./routes/Restraunts"));
 app.use("/api/v1/worship", require("./routes/Worship"));
 app.use("/api/v1/users", require("./routes/users"));

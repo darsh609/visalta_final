@@ -129,6 +129,10 @@ const User = require("../models/User"); // Importing the User schema
 // };
 
 
+
+const NotificationPreference = require("../models/NotificationPreference");
+// const User = require("../models/User"); // No longer needed for email sending
+
 exports.createUpdate = async (req, res) => {
   try {
     const { title, description, date, createdBy, link, category } = req.body;
@@ -140,11 +144,12 @@ exports.createUpdate = async (req, res) => {
     // Send the response immediately so the UI updates without waiting for emails to send
     res.status(201).json({ message: "Update created", newUpdate });
     
-    // Process email notifications asynchronously
-    User.find({}, "email firstName")
-      .then(users => {
+    // Process email notifications asynchronously:
+    // Find all notification preferences where the 'categories' array includes the update category
+    NotificationPreference.find({ categories: { $regex: `^${category}$`, $options: 'i' } })
+      .then((prefs) => {
         const emailSubject = "🚀 Important Alert: New Timely Alert and Posts (TAPs) Update!";
-        users.forEach(user => {
+        prefs.forEach((pref) => {
           const emailBody = `
             <!DOCTYPE html>
             <html>
@@ -199,8 +204,8 @@ exports.createUpdate = async (req, res) => {
                         Important Alert: Timely Alert and Posts (TAPs) Update! 🚀
                     </div>
                     <div style="padding: 20px;">
-                        <p style="font-size: 18px; color: #ffffff;">Hello ${user.firstName},</p>
-                        <p style="font-size: 18px; color: #ffffff;">A new TAPs (Timely Alerts and Posts) update has been added:</p>
+                        <p style="font-size: 18px; color: #ffffff;">Hello,</p>
+                        <p style="font-size: 18px; color: #ffffff;">A new TAPs update has been added:</p>
                         <ul style="color: #ffffff; font-size: 16px;">
                             <li><strong>Title:</strong> ${title}</li>
                             <li><strong>Category:</strong> ${category}</li>
@@ -220,18 +225,18 @@ exports.createUpdate = async (req, res) => {
             </body>
             </html>
           `;
-          
           // Fire off the email without awaiting its completion
-          mailSender(user.email, emailSubject, emailBody)
-            .catch(err => console.error(`Failed to send email to ${user.email}:`, err));
+          mailSender(pref.email, emailSubject, emailBody)
+            .catch(err => console.error(`Failed to send email to ${pref.email}:`, err));
         });
       })
-      .catch(err => console.error("Error fetching users for email notifications:", err));
+      .catch(err => console.error("Error fetching notification preferences for email notifications:", err));
       
   } catch (error) {
     res.status(500).json({ error: "Error creating update" });
   }
 };
+
 
 // Delete an update
 
