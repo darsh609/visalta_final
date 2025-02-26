@@ -473,7 +473,7 @@ const UpdateSection = () => {
             className={`p-6 rounded-xl shadow-lg transform transition-all duration-300 ${
               active && update.link !== ""
                 ? "cursor-pointer"
-                : "cursor-not-allowed opacity-70"
+                : "cursor-not-allowed"
             } ${active ? "bg-zinc-800 hover:shadow-green-500/50" : "bg-zinc-700 hover:shadow-red-500/50"}`}
             variants={cardVariants}
             whileHover="hover"
