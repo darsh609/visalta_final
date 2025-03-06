@@ -363,7 +363,7 @@ const ProfileComponent = () => {
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-2 md:space-x-3">
               <Package size={18} className="md:size-24 text-[#1db954]" />
-              <span className="text-zinc-400 text-xs md:text-base">Products</span>
+              <span className="text-zinc-400 text-xs md:text-base">My-Products</span>
             </div>
             <span className="text-white text-lg md:text-xl font-semibold">{myCoursesCount}</span>
           </div>
