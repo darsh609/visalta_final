@@ -333,12 +333,12 @@ const CourseCard = ({ course, searchTerm, onDelete, deleteCourse, setShowModal, 
       {/* Title and Buttons Container */}
       <div className="p-2 flex justify-between items-center">
         {/* Title */}
-        <h3 className="px-3 text-2xl font-bold text-white font-poppins">
+        <h3 className="px-3 text-lg md:text-2xl font-bold text-white font-poppins">
           {highlightText(course?.courseName, searchTerm)}
         </h3>
 
         {/* Action Buttons */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 md:gap-2">
           <motion.button   
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}            
@@ -346,18 +346,18 @@ const CourseCard = ({ course, searchTerm, onDelete, deleteCourse, setShowModal, 
               e.stopPropagation();
               openWhatsApp(e);
             }}
-            className="w-10 h-10 flex items-center justify-center rounded-xl text-[#F1F8E8] hover:text-[#49DE80]"
+            className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-xl text-[#F1F8E8] hover:text-[#49DE80]"
           >
-            <FaWhatsapp size={25} />
+            <FaWhatsapp className="w-4 h-4 md:w-5 md:h-5" />
           </motion.button>
 
           <motion.button 
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={openEmailModal}
-            className="w-10 h-10 flex items-center justify-center rounded-xl text-[#F1F8E8] hover:text-[#49DE80]"
+            className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-xl text-[#F1F8E8] hover:text-[#49DE80]"
           >
-            <MdMailOutline size={25} />
+            <MdMailOutline className="w-4 h-4 md:w-5 md:h-5" />
           </motion.button>
 
           <motion.button 
@@ -365,19 +365,19 @@ const CourseCard = ({ course, searchTerm, onDelete, deleteCourse, setShowModal, 
             whileTap={{ scale: 0.9 }}
             onClick={handleSaveToggle}
             disabled={isLoading}
-            className="w-10 h-10 flex items-center justify-center rounded-xl text-[#F1F8E8] hover:text-[#49DE80]"
+            className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-xl text-[#F1F8E8] hover:text-[#49DE80]"
           >
             {isLoading ? (
               <div className="animate-spin">
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24">
+                <svg className="w-3 h-3 md:w-5 md:h-5" fill="none" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
               </div>
             ) : isSaved ? (
-              <FaBookmark className="text-[#49DE80]" size={20} />
+              <FaBookmark className="text-[#49DE80] w-3 h-3 md:w-5 md:h-5" />
             ) : (
-              <FaRegBookmark size={20} />
+              <FaRegBookmark className="w-3 h-3 md:w-5 md:h-5" />
             )}
           </motion.button>
         </div>
@@ -387,14 +387,14 @@ const CourseCard = ({ course, searchTerm, onDelete, deleteCourse, setShowModal, 
     <div className="p-5 space-y-2">
       {/* Description */}
       <div className="font-poppins">
-        <span className="text-white font-semibold">Description: </span>
-        <span className="text-white">
+        <span className="text-white font-semibold text-xs md:text-base">Description: </span>
+        <span className="text-white text-xs md:text-base">
           {isDescriptionExpanded ? course.courseDescription : 
            `${course?.courseDescription.slice(0, 10)}${course?.courseDescription.length > 10 ? '...' : ''}`}
           {course?.courseDescription.length > 10 && (
             <motion.button 
               onClick={() => setIsDescriptionExpanded(!isDescriptionExpanded)}
-              className="ml-2 text-[#49DE80] font-semibold"
+              className="ml-2 text-[#49DE80] font-semibold text-xs md:text-base"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -406,13 +406,13 @@ const CourseCard = ({ course, searchTerm, onDelete, deleteCourse, setShowModal, 
 
       {/* Price */}
       <div className="font-poppins">
-        <span className="text-white font-semibold">Price: </span>
-        <span className="text-[#49DE80] font-bold text-lg">
+        <span className="text-white font-semibold text-xs md:text-base">Price: </span>
+        <span className="text-[#49DE80] font-bold text-sm md:text-lg">
           ₹{highlightText(course.price.toLocaleString(), searchTerm)}
         </span>
       </div>
 
-      <div className="text-sm text-gray-500 font-poppins">
+      <div className="text-xs md:text-sm text-gray-500 font-poppins">
         {calculateTimeDifference(course.createdAt)}
       </div>
 
@@ -430,7 +430,7 @@ const CourseCard = ({ course, searchTerm, onDelete, deleteCourse, setShowModal, 
               <motion.span 
                 key={index}
                 whileHover={{ scale: 1.05 }}
-                className="px-3 py-1 text-sm rounded-full bg-[#49DE80]/10 text-[#49DE80] font-poppins font-medium"
+                className="px-3 py-1 text-xs md:text-sm rounded-full bg-[#49DE80]/10 text-[#49DE80] font-poppins font-medium"
               >
                 {tag}
               </motion.span>
@@ -443,16 +443,16 @@ const CourseCard = ({ course, searchTerm, onDelete, deleteCourse, setShowModal, 
             <div className="space-y-3 flex-1 font-poppins">
               <motion.div 
                 whileHover={{ x: 5 }}
-                className="text-white font-semibold"
+                className="text-white font-semibold text-xs md:text-base"
               >
                 {highlightText(`${course.instructor.firstName} ${course.instructor.lastName}`, searchTerm)}
               </motion.div>
 
-              <div className="text-white">
+              <div className="text-white text-xs md:text-base">
                 {highlightText(course.address, searchTerm)}
               </div>
 
-              <div>
+              <div className="text-xs md:text-base">
                 <span className="text-white font-semibold">Interests: </span>
                 <span className="text-[#49DE80] font-bold">{course.studentsEnrolled.length}</span>
               </div>
@@ -464,30 +464,30 @@ const CourseCard = ({ course, searchTerm, onDelete, deleteCourse, setShowModal, 
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => handleCopyToClipboard(course.contact)} 
-                className="bg-zinc-800/30 text-center w-40 rounded-xl h-12 relative text-white/80 font-poppins font-semibold group"
+                className="bg-zinc-800/30 text-center w-32 md:w-40 rounded-xl h-10 md:h-12 relative text-white/80 font-poppins font-semibold group"
               >
                 <motion.div 
-                  className="bg-[#49DE80] rounded-xl h-8 w-1/5 flex items-center justify-center absolute left-1 top-1 group-hover:w-[124px] z-10 transition-all duration-300"
+                  className="bg-[#49DE80] rounded-xl h-6 md:h-8 w-1/5 flex items-center justify-center absolute left-1 top-1 group-hover:w-[calc(100%-8px)] z-10 transition-all duration-300"
                   transition={{ duration: 0.3 }}
                 >
-                  <IoCopyOutline className="text-white" />
+                  <IoCopyOutline className="text-white w-3 h-3 md:w-4 md:h-4" />
                 </motion.div>
-                <p className="translate-x-1 text-sm">WhatsApp</p>
+                <p className="translate-x-1 text-xs md:text-sm">WhatsApp</p>
               </motion.button>
 
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => handleCopyToClipboard(course.instructor.email)}
-                className="bg-zinc-800/30 text-center w-32 rounded-xl h-12 relative text-white/80 font-poppins font-semibold group"
+                className="bg-zinc-800/30 text-center w-24 md:w-32 rounded-xl h-10 md:h-12 relative text-white/80 font-poppins font-semibold group"
               >
                 <motion.div 
-                  className="bg-[#49DE80] rounded-xl h-8 w-1/4 flex items-center justify-center absolute left-1 top-1 group-hover:w-[94px] z-10 transition-all duration-300"
+                  className="bg-[#49DE80] rounded-xl h-6 md:h-8 w-1/4 flex items-center justify-center absolute left-1 top-1 group-hover:w-[calc(100%-8px)] z-10 transition-all duration-300"
                   transition={{ duration: 0.3 }}
                 >
-                  <IoCopyOutline className="text-white" />
+                  <IoCopyOutline className="text-white w-3 h-3 md:w-4 md:h-4" />
                 </motion.div>
-                <p className="translate-x-1 text-sm">Email</p>
+                <p className="translate-x-1 text-xs md:text-sm">Email</p>
               </motion.button>
             </div>
           </div>
@@ -504,9 +504,9 @@ const CourseCard = ({ course, searchTerm, onDelete, deleteCourse, setShowModal, 
           setShowModal(true);
           setCourseToDelete(course);
         }}
-        className="absolute bottom-4 right-4 flex items-center justify-center  text-red-500 hover:text-red-400 transition-colors"
+        className="absolute bottom-4 right-4 flex items-center justify-center text-red-500 hover:text-red-400 transition-colors"
       >
-        <FiTrash2 className="w-5 h-5" />
+        <FiTrash2 className="w-4 h-4 md:w-5 md:h-5" />
       </motion.button>
     )}
 
@@ -519,7 +519,8 @@ const CourseCard = ({ course, searchTerm, onDelete, deleteCourse, setShowModal, 
         onConfirm={handleConfirmEmail}
       />
     </div>
-  </motion.div> );
+  </motion.div>
+  );
 };
 
 const BuyPage = () => {
