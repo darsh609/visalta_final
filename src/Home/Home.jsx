@@ -107,8 +107,8 @@ export const Home = () => {
     .from(gsapRef.current, {
       transform: "scaleX(0.7) scaleY(0.2)",
       borderRadius: "50px",
-      duration: 2,
-      ease: "expo.out"
+      duration: 1,
+      ease: "power2.inOut"
     })
     .from(".Navbar", {
       opacity: 0
