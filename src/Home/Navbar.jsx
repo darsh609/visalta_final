@@ -13,11 +13,11 @@ function Navbar() {
     <nav className="Navbar fixed z-[10] w-full p-4 md:p-8 font-['Neue Montreal'] flex justify-between items-center bg-transparent text-white">
       {/* Logo */}
       <motion.div
-        className="logo text-2xl font-bold cursor-pointer"
+        className="logo font-bold"
         onClick={() => navigate("/")}
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 1.0}}
       >
         <AnimatedLogo/>
       </motion.div>
