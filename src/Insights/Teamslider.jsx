@@ -270,7 +270,7 @@ const ProfileCards = () => {
             {/* Card number */}
             <div className="absolute bottom-0 right-0">
               <span className="text-lg sm:text-2xl lg:text-4xl font-bold text-white">
-                {currentCard + 1}/4
+                {currentCard + 1}/2
               </span>
             </div>
           </div>
