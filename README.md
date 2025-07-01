@@ -3,7 +3,7 @@
 **Visalta** is a student-centric platform built using the **MERN stack**, designed to solve real campus-life problems. From exchanging items to discovering budget-friendly restaurants, worship places, and getting updates — Visalta connects the student community with powerful tools, feedback features, and a dynamic admin panel.
 
 > 👨‍💻 Lead Developer: Darsh Kumar  
-> 👨‍🎨 UI & Frontend: Designed by teammate  
+> 👨‍🎨 UI & Frontend: Designed by Ashish Tyagi
 > 🧠 Built during: Dec 2024 – Feb 2025  
 > 🌐 Live: [www.visalta.in](http://www.visalta.in)
 
