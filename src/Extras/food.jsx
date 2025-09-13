@@ -32,14 +32,17 @@ export const Food = () => {
       }));
       setAllRestaurants(transformedData);
       setFilteredRestaurants(transformedData);
-    } catch (error) {
+    } 
+    catch (error) {
       console.error('Error fetching restaurants:', error);
       toast.error('Failed to fetch restaurants');
     }
   };
 
-  useEffect(() => {
+  useEffect(
+    () => {
     fetchRestaurants();
+
   }, []);
 
   // Handle delete restaurant with confirmation

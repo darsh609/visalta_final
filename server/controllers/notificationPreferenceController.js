@@ -16,12 +16,13 @@ exports.updateNotificationPreference = async (req, res) => {
     // Check if a preference already exists for this user.
     let notificationPreference = await NotificationPreference.findOne({ user: userId });
 
-    if (notificationPreference) {
-      // Update existing preference.
+    if (notificationPreference) { // Update existing preference.
       notificationPreference.email = email;
       notificationPreference.categories = categories;
       await notificationPreference.save();
-    } else {
+
+    } 
+    else {
       // Create a new preference document.
       notificationPreference = new NotificationPreference({
         user: userId,

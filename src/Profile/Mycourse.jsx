@@ -40,7 +40,8 @@ const CourseCard = ({ course, onRemove }) => {
           color: "white",
         },
       });
-    } catch (error) {
+    } 
+    catch (error) {
       console.error("Failed to delete course:", error);
       toast.error("Failed to delete course.", {
         style: {
@@ -48,7 +49,8 @@ const CourseCard = ({ course, onRemove }) => {
           color: "white",
         },
       });
-    } finally {
+    } 
+    finally {
       setIsLoading(false);
       setShowModal(false);
     }
@@ -189,39 +191,6 @@ const CourseCard = ({ course, onRemove }) => {
                   <span className="text-[#49DE80] font-bold">{course.studentsEnrolled.length}</span>
                 </div>
               </div>
-
-              {/* Action Buttons */}
-              {/* <div className="flex flex-col items-end space-y-2">
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => handleCopyToClipboard(course.contact)} 
-                  className="bg-zinc-800/30 text-center w-40 rounded-xl h-12 relative text-white/80 font-poppins font-semibold group"
-                >
-                  <motion.div 
-                    className="bg-[#49DE80] rounded-xl h-8 w-1/5 flex items-center justify-center absolute left-1 top-1 group-hover:w-[124px] z-10 transition-all duration-300"
-                    transition={{ duration: 0.3 }}
-                  >
-                    <IoCopyOutline className="text-white" />
-                  </motion.div>
-                  <p className="translate-x-1 text-sm">WhatsApp</p>
-                </motion.button>
-
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => handleCopyToClipboard(course.instructor.email)}
-                  className="bg-zinc-800/30 text-center w-32 rounded-xl h-12 relative text-white/80 font-poppins font-semibold group"
-                >
-                  <motion.div 
-                    className="bg-[#49DE80] rounded-xl h-8 w-1/4 flex items-center justify-center absolute left-1 top-1 group-hover:w-[94px] z-10 transition-all duration-300"
-                    transition={{ duration: 0.3 }}
-                  >
-                    <IoCopyOutline className="text-white" />
-                  </motion.div>
-                  <p className="translate-x-1 text-sm">Email</p>
-                </motion.button>
-              </div> */}
             </div>
           </motion.div>
         )}

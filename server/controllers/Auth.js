@@ -125,7 +125,6 @@ exports.login = async (req, res) => {
 	try {
 		// Get email and password from request body
 		const { email, password } = req.body;
-
 		// Check if email or password is missing
 		if (!email || !password) {
 			// Return 400 Bad Request status code with error message
@@ -150,8 +149,11 @@ exports.login = async (req, res) => {
 		// Generate JWT token and Compare Password
 		if (await bcrypt.compare(password, user.password)) {
 			const token = jwt.sign(
+
 				{ email: user.email, id: user._id, accountType: user.accountType },
+
 				process.env.JWT_SECRET,
+
 				{
 					expiresIn: "24h",
 				}
@@ -180,7 +182,8 @@ exports.login = async (req, res) => {
 				message: `Password is incorrect`,
 			});
 		}
-	} catch (error) {
+	} 
+	catch (error) {
 		console.error(error);
 		// Return 500 Internal Server Error status code with error message
 		return res.status(500).json({
@@ -214,6 +217,7 @@ exports.sendotp = async (req, res) => {
 			specialChars: false,
 		});
 		const result = await OTP.findOne({ otp: otp });
+
 		console.log("Result is Generate OTP Func");
 		console.log("OTP", otp);
 		console.log("Result", result);
@@ -222,6 +226,7 @@ exports.sendotp = async (req, res) => {
 				upperCaseAlphabets: false,
 			});
 		}
+
 		const otpPayload = { email, otp };
 		const otpBody = await OTP.create(otpPayload);
 		console.log("OTP Body", otpBody);
@@ -269,6 +274,7 @@ exports.changePassword = async (req, res) => {
 
 		// Update password
 		const encryptedPassword = await bcrypt.hash(newPassword, 10);
+		
 		const updatedUserDetails = await User.findByIdAndUpdate(
 			req.user.id,
 			{ password: encryptedPassword },
