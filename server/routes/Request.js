@@ -3,8 +3,6 @@ const requestController = require("../controllers/Request");
 
 const router = express.Router();
 
-
-
 // Route to submit a new request
 router.post("/submit", requestController.submitRequest);
 
