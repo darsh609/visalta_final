@@ -185,16 +185,16 @@ const ProfileCards = () => {
       role: 'Frontend Developer',
       image: AshishImage
     },
-    //{
-    //   name: 'VIVEK BOHRA',
-    //   role: 'Data Architect',
-    //   image: VivekImage
-    // },
-    // {
-    //   name: 'LIVO RANJAN',
-    //   role: 'Visual Designer',
-    //   image: LivoImage
-    // }
+    {
+      name: 'VIVEK BOHRA',
+      role: 'Data Architect',
+      image: VivekImage
+    },
+    {
+      name: 'LIVO RANJAN',
+      role: 'Visual Designer',
+      image: LivoImage
+    }
   ];
   
   const handleCardClick = () => {
