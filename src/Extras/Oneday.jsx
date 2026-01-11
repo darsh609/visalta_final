@@ -126,50 +126,55 @@ const Oneday = () => {
           <p className="text-center text-zinc-400">Loading places...</p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-            {(searchTerm ? searchResults : onedayData).map((place) => (
-              <div
-                key={place._id}
-                className="group relative bg-zinc-800/30 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg border border-zinc-700/50 cursor-pointer"
-                onClick={() => openMap(place.location)}
-              >
-                <div className="relative">
-                  {place.imageUrl ? (
-                    <img
-                      src={place.imageUrl}
-                      alt={place.placeName}
-                      className="w-full h-48 object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-48 bg-zinc-700 flex items-center justify-center">
-                      <span className="text-zinc-500">No image available</span>
-                    </div>
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/80 to-transparent" />
-                </div>
-                <div className="p-4">
-                  <h3 className="text-xl font-bold mb-2 group-hover:text-[#FF6B6B] transition-colors">
-                    {place.placeName}
-                  </h3>
-                  {place.timing && (
-                    <p className="text-zinc-400 mb-2">{place.timing}</p>
-                  )}
-                </div>
-                {/* Delete Icon */}
-                {
-                    isAdmin && ( <div
-                        className="absolute bottom-4 right-4 z-20 bg-red-500/80 p-2 rounded-full cursor-pointer shadow-lg hover:bg-red-600 transition-colors"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setDeleteModal({ isOpen: true, id: place._id });
-                        }}
-                      >
-                        <FiTrash2 className="w-5 h-5 text-white" />
-                      </div>)
-                }
-               
+          {(searchTerm ? searchResults : onedayData).map((place) => (
+            <div
+              key={place._id}
+              className="group relative bg-zinc-800/30 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg border border-zinc-700/50 cursor-pointer"
+              onClick={() => window.open(`${place.location}`, "_blank")}
+            >
+              <div className="relative">
+                {place.imageUrl ? (
+                  <img
+                    src={place.imageUrl}
+                    alt={place.placeName}
+                    className="w-full h-48 object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-48 bg-zinc-700 flex items-center justify-center">
+                    <span className="text-zinc-500">No image available</span>
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/80 to-transparent" />
               </div>
-            ))}
-          </div>
+              <div className="p-4">
+                <h3 className="text-xl font-bold mb-2 group-hover:text-[#FF6B6B] transition-colors">
+                  {place.placeName}
+                </h3>
+                {place.timing && (
+                  <p className="text-zinc-400 mb-2">{place.timing}</p>
+                )}
+                <div className="flex items-center gap-2 text-[#FF6B6B] group-hover:text-white transition-colors mt-2">
+                  <FiMap />
+                  <span>View on Map</span>
+                </div>
+              </div>
+              {/* Delete Icon */}
+              {
+                isAdmin && (
+                  <div
+                    className="absolute bottom-4 right-4 z-20 bg-red-500/80 p-2 rounded-full cursor-pointer shadow-lg hover:bg-red-600 transition-colors"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setDeleteModal({ isOpen: true, id: place._id });
+                    }}
+                  >
+                    <FiTrash2 className="w-5 h-5 text-white" />
+                  </div>
+                )
+              }
+            </div>
+          ))}
+        </div>
         )}
 
         {/* Delete Confirmation Modal */}

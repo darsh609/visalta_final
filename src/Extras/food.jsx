@@ -32,14 +32,17 @@ export const Food = () => {
       }));
       setAllRestaurants(transformedData);
       setFilteredRestaurants(transformedData);
-    } catch (error) {
+    } 
+    catch (error) {
       console.error('Error fetching restaurants:', error);
       toast.error('Failed to fetch restaurants');
     }
   };
 
-  useEffect(() => {
+  useEffect(
+    () => {
     fetchRestaurants();
+
   }, []);
 
   // Handle delete restaurant with confirmation
@@ -229,7 +232,8 @@ export const Food = () => {
           {(searchTerm ? searchResults : filteredRestaurants).map((restaurant, idx) => (
             <div
               key={idx}
-              onClick={() => openMap(restaurant.location || restaurant.Name + " Kazipet Warangal")}
+              // onClick={() => openMap(restaurant.location || restaurant.Name + " Kazipet Warangal")}'
+              onClick={() => window.open(`${restaurant.location}`, "_blank")}
               className="group cursor-pointer bg-zinc-800/30 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg transform hover:scale-105 transition-all duration-300 border border-zinc-700/50 relative"
             >
               <div className="relative">

@@ -29,6 +29,7 @@ import UpdatePassword from "./Auth/UpdatePassword";
 import PrivateRoute from "./Auth/PrivateRoute";
 import ForgotPassword from "./Auth/Forgotpassword";
 import Traverse from "./Extras/Traverse";
+import AdminPanel from "./AdminPanel";
 function App() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -60,7 +61,7 @@ function App() {
           element={
 
             <OpenRoute>
-  <Login />
+            <Login />
             </OpenRoute>
             
  
@@ -159,7 +160,7 @@ function App() {
         }
       />
       <Route
-        path="expeditions"
+        path="traverse"
         element={
           <PrivateRoute>
             <Traverse/>
@@ -186,7 +187,7 @@ function App() {
 
       {/* Additional Protected Routes */}
       <Route
-        path="Buy"
+        path="purchase"
         element={
           <PrivateRoute>
             <BuyPage />
@@ -217,6 +218,7 @@ function App() {
           </PrivateRoute>
         }
       />
+      <Route path="Adminpanel" element={<AdminPanel />} />
     
 
  

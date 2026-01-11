@@ -13,17 +13,36 @@ function Navbar() {
     <nav className="Navbar fixed z-[10] w-full p-4 md:p-8 font-['Neue Montreal'] flex justify-between items-center bg-transparent text-white">
       {/* Logo */}
       <motion.div
-        className="logo text-2xl font-bold cursor-pointer"
+        className="logo font-bold"
         onClick={() => navigate("/")}
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 1.0}}
       >
         <AnimatedLogo/>
       </motion.div>
 
       {/* Links for larger screens */}
       <div className="hidden md:flex items-center gap-6">
+        {
+         user?.accountType === 'Admin' && (<motion.div
+          onClick={() => navigate("AdminPanel")}
+          className="text-lg capitalize font-light cursor-pointer hover:text-green-400 transition"
+          whileHover={{ scale: 1.1 }}
+        >
+            AdminPanel
+          
+        </motion.div>)
+
+        }
+      
+      <motion.div
+          onClick={() => navigate("update")}
+          className="text-lg capitalize font-light cursor-pointer hover:text-green-400 transition"
+          whileHover={{ scale: 1.1 }}
+        >
+Alerts
+        </motion.div>
         <motion.div
           onClick={() => navigate("insight")}
           className="text-lg capitalize font-light cursor-pointer hover:text-green-400 transition"
@@ -31,13 +50,7 @@ function Navbar() {
         >
           Insight
         </motion.div>
-        <motion.div
-          onClick={() => navigate("update")}
-          className="text-lg capitalize font-light cursor-pointer hover:text-green-400 transition"
-          whileHover={{ scale: 1.1 }}
-        >
-          TAPs
-        </motion.div>
+       
         <motion.div
           onClick={() => navigate("contact")}
           className="text-lg capitalize font-light cursor-pointer hover:text-green-400 transition"
@@ -84,6 +97,26 @@ function Navbar() {
       {/* Dropdown Menu */}
       {menuOpen && (
         <div className="absolute top-16 right-4 bg-zinc-800 rounded-lg shadow-lg p-4 flex flex-col gap-4 w-48">
+          {
+         user?.accountType === 'Admin' && (<motion.div
+          onClick={() => navigate("AdminPanel")}
+          className="text-lg capitalize font-light cursor-pointer hover:text-green-400 transition"
+          whileHover={{ scale: 1.1 }}
+        >
+            AdminPanel
+          
+        </motion.div>)
+
+        }
+        <div
+            onClick={() => {
+              navigate("update");
+              setMenuOpen(false);
+            }}
+            className="text-lg capitalize font-light cursor-pointer hover:text-green-400 transition"
+          >
+            Alerts
+          </div>
           <div
             onClick={() => {
               navigate("insight");
@@ -93,15 +126,7 @@ function Navbar() {
           >
             Insight
           </div>
-          <div
-            onClick={() => {
-              navigate("update");
-              setMenuOpen(false);
-            }}
-            className="text-lg capitalize font-light cursor-pointer hover:text-green-400 transition"
-          >
-            TAPS
-          </div>
+          
           <div
             onClick={() => {
               navigate("contact");

@@ -107,6 +107,14 @@ const ProfileComponent = () => {
   const fileInputRef = useRef(null);
   const secondaryFileInputRef = useRef(null);
 
+
+    const [isMobile, setIsMobile] = useState(false);
+  
+    // Function to check if viewport is mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
   const handleClick = (ref) => {
     ref.current.click();
   };
@@ -209,139 +217,137 @@ const ProfileComponent = () => {
       </div>
       </div>
       <div className="w-full max-w-3xl px-4 py-8 flex flex-col">
-        <motion.h1 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-3xl font-bold text-white mb-8 text-center"
+      <motion.h1 
+  initial={{ opacity: 0, y: -20 }}
+  animate={{ opacity: 1, y: 0 }}
+  className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-4 sm:mb-6 md:mb-8 text-center"
+>
+  My Profile
+</motion.h1>
+<div className="flex-grow space-y-6">
+  {/* Personal Information Card */}
+  <Card delay={0.1}>
+    <div className="p-4 md:p-6">
+      <div className="mb-4 md:mb-6">
+        <h3 className="text-[#1db954] text-lg md:text-xl font-semibold">Personal Information</h3>
+      </div>
+
+      <div className="flex flex-col items-center mb-6 md:mb-8">
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          transition={{ type: "spring", stiffness: 300 }}
+          className="relative group"
         >
-          My Profile
-        </motion.h1>
-
-        <div className="flex-grow space-y-6">
-          {/* Personal Information Card */}
-          <Card delay={0.1}>
-            <div className="p-6">
-              <div className="mb-6">
-                <h3 className="text-[#1db954] text-xl font-semibold">Personal Information</h3>
-              </div>
-
-              <div className="flex flex-col items-center mb-8">
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                  className="relative group"
-                >
-                  <div className="h-48 w-48 rounded-full bg-gradient-to-r from-[#1db954] to-[#1db954]/70 p-1.5">
-                    <div className="h-full w-full rounded-full bg-zinc-800 flex items-center justify-center text-3xl font-bold text-white relative overflow-hidden shadow-2xl">
-                      <motion.img 
-                        src={previewSource || user?.image} 
-                        alt="Profile"
-                        className="h-full w-full object-cover"
-                        initial={{ scale: 0.9, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ duration: 0.3 }}
-                      />
-                      <AnimatePresence>
-                        {!imageFile && (
-                          <motion.label
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: 10 }}
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.9 }}
-                            className="absolute bottom-4 right-4 p-3 rounded-full bg-[#1db954] cursor-pointer hover:bg-[#1db954]/80 transition-all shadow-lg"
-                          >
-                            <input
-                              type="file"
-                              accept="image/*"
-                              className="hidden"
-                              ref={fileInputRef}
-                              onChange={handleFileChange}
-                            />
-                            <Camera size={24} className="text-white" />
-                          </motion.label>
-                        )}
-
-{imageFile && !uploadSuccess && (
-                          <motion.button
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.8 }}
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.9 }}
-                            onClick={handleFileUpload}
-                            disabled={loading}
-                            className="absolute bottom-4 right-4 px-6 py-3 rounded-full text-sm bg-[#1db954] text-white font-medium shadow-lg hover:bg-[#1db954]/80 transition-all"
-                          >
-                            {loading ? "Uploading..." : "Upload"}
-                          </motion.button>
-                        )}
-
-                        {uploadSuccess && (
-                          <motion.div
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.8 }}
-                            className="absolute bottom-4 right-4 px-6 py-3 rounded-full text-sm bg-[#1db954] text-white font-medium shadow-lg flex items-center gap-2"
-                          >
-                            <Check size={20} />
-                            Uploaded
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-6">
-                {[
-                  { label: 'First Name', name: 'firstName' },
-                  { label: 'Last Name', name: 'lastName' },
-                  { label: 'Email', name: 'email' },
-                  { label: 'Phone', name: 'phone' }
-                ].map((field, index) => (
-                  <motion.div 
-                    key={field.name}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.2 + index * 0.1 }}
-                    className="space-y-1"
+          <div className="h-32 w-32 md:h-48 md:w-48 rounded-full bg-gradient-to-r from-[#1db954] to-[#1db954]/70 p-1.5">
+            <div className="h-full w-full rounded-full bg-zinc-800 flex items-center justify-center text-2xl md:text-3xl font-bold text-white relative overflow-hidden shadow-2xl">
+              <motion.img 
+                src={previewSource || user?.image} 
+                alt="Profile"
+                className="h-full w-full object-cover"
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              />
+              <AnimatePresence>
+                {!imageFile && (
+                  <motion.label
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="absolute bottom-2 right-2 md:bottom-4 md:right-4 p-2 md:p-3 rounded-full bg-[#1db954] cursor-pointer hover:bg-[#1db954]/80 transition-all shadow-lg"
                   >
-                    <p className="text-sm text-zinc-500">{field.label}</p>
-                    <p className="text-white">{profileData[field.name] || 'Not set'}</p>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </Card>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      ref={fileInputRef}
+                      onChange={handleFileChange}
+                    />
+                    <Camera size={16} className="md:size-24 text-white" />
+                  </motion.label>
+                )}
 
-          {/* Overview Cards */}
-          <div className="space-y-4">
-            <motion.h3 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3 }}
-              className="text-[#1db954] text-lg font-semibold"
-            >
-              Overview
-            </motion.h3>
-            <div className="grid grid-cols-2 gap-4">
-              {/* Favorites Card */}
-             {/* Favorites Card */}
+                {imageFile && !uploadSuccess && (
+                  <motion.button
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={handleFileUpload}
+                    disabled={loading}
+                    className="absolute bottom-2 right-2 md:bottom-4 md:right-4 px-3 py-1 md:px-6 md:py-3 rounded-full text-xs md:text-sm bg-[#1db954] text-white font-medium shadow-lg hover:bg-[#1db954]/80 transition-all"
+                  >
+                    {loading ? "Uploading..." : "Upload"}
+                  </motion.button>
+                )}
+
+                {uploadSuccess && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    className="absolute bottom-2 right-2 md:bottom-4 md:right-4 px-3 py-1 md:px-6 md:py-3 rounded-full text-xs md:text-sm bg-[#1db954] text-white font-medium shadow-lg flex items-center gap-1 md:gap-2"
+                  >
+                    <Check size={16} className="md:size-20" />
+                    Uploaded
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-8">
+        {[
+          { label: 'First Name', name: 'firstName' },
+          { label: 'Last Name', name: 'lastName' },
+          { label: 'Email', name: 'email', fullWidth: true },
+          { label: 'Phone', name: 'phone' }
+        ].map((field, index) => (
+          <motion.div 
+            key={field.name}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 + index * 0.1 }}
+            className={`space-y-1 ${field.fullWidth ? 'col-span-1 sm:col-span-2' : ''}`}
+          >
+            <p className="text-xs md:text-sm text-zinc-500">{field.label}</p>
+            <p className="text-white text-xs md:text-sm truncate">{profileData[field.name] || 'Not set'}</p>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  </Card>
+
+  {/* Overview Cards */}
+  <div className="space-y-2 md:space-y-4">
+    <motion.h3 
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: 0.3 }}
+      className="text-[#1db954] text-base md:text-lg font-semibold"
+    >
+      Overview
+    </motion.h3>
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+      {/* Favorites Card */}
       <Card delay={0.4}>
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => navigate("saved-items")} 
-          className="w-full p-4"
+          className="w-full p-3 md:p-4"
         >
-          <div  className="flex justify-between items-center">
-            <div className="flex items-center space-x-3">
-              <Heart size={24} className="text-[#1db954]" />
-              <span className="text-zinc-400">Saved Items</span>
+          <div className="flex justify-between items-center">
+            <div className="flex items-center space-x-2 md:space-x-3">
+              <Heart size={18} className="md:size-24 text-[#1db954]" />
+              <span className="text-zinc-400 text-xs md:text-base">Saved Items</span>
             </div>
-            <span className="text-white text-xl font-semibold">{likedCount}</span>
+            <span className="text-white text-lg md:text-xl font-semibold">{likedCount}</span>
           </div>
         </motion.button>
       </Card>
@@ -352,67 +358,66 @@ const ProfileComponent = () => {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => navigate("my-items")} 
-          className="w-full p-4"
+          className="w-full p-3 md:p-4"
         >
           <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-3">
-              <Package size={24} className="text-[#1db954]" />
-              <span className="text-zinc-400">Products</span>
+            <div className="flex items-center space-x-2 md:space-x-3">
+              <Package size={18} className="md:size-24 text-[#1db954]" />
+              <span className="text-zinc-400 text-xs md:text-base">My-Products</span>
             </div>
-            <span className="text-white text-xl font-semibold">{myCoursesCount}</span>
+            <span className="text-white text-lg md:text-xl font-semibold">{myCoursesCount}</span>
           </div>
         </motion.button>
       </Card>
-            </div>
-          </div>
+    </div>
+  </div>
 
-          {/* Quick Actions */}
-          <div className="space-y-4">
-            <motion.h3 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.6 }}
-              className="text-[#1db954] text-lg font-semibold"
-            >
-              Quick Actions
-            </motion.h3>
-            <Card delay={0.7}>
-              <motion.button 
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => navigate("settings")} 
-                className="w-full text-left p-4"
-              >
-                <div className="flex items-center space-x-3">
-                  <Settings size={24} className="text-[#1db954]" />
-                  <div>
-                    <h4 className="text-white font-medium">Settings</h4>
-                    <p className="text-sm text-zinc-400">Manage your account settings</p>
-                  </div>
-                </div>
-              </motion.button>
-            </Card>
+  {/* Quick Actions */}
+  <div className="space-y-2 md:space-y-4">
+    <motion.h3 
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: 0.6 }}
+      className="text-[#1db954] text-base md:text-lg font-semibold"
+    >
+      Quick Actions
+    </motion.h3>
+    <Card delay={0.7}>
+      <motion.button 
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        onClick={() => navigate("settings")} 
+        className="w-full text-left p-3 md:p-4"
+      >
+        <div className="flex items-center space-x-2 md:space-x-3">
+          <Settings size={18} className="md:size-24 text-[#1db954]" />
+          <div>
+            <h4 className="text-white text-xs md:text-base font-medium">Settings</h4>
+            <p className="text-xs md:text-sm text-zinc-400">Manage your account settings</p>
           </div>
         </div>
+      </motion.button>
+    </Card>
+  </div>
+</div>
 
-        {/* Logout Button */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
-          className="mt-6"
-        >
-          <motion.button
-            whileHover={{ scale: 1.02, backgroundColor: 'rgba(239, 68, 68, 0.2)' }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => setIsLogoutModalOpen(true)}
-            className="w-full p-3 rounded-lg bg-red-500/10 text-red-500 hover:bg-red-500/20 flex items-center justify-center space-x-3"
-          >
-            <LogOut size={20} />
-            <span>Logout</span>
-          </motion.button>
-        </motion.div>
-
+{/* Logout Button */}
+<motion.div 
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.8 }}
+  className="mt-4 md:mt-6"
+>
+  <motion.button
+    whileHover={{ scale: 1.02, backgroundColor: 'rgba(239, 68, 68, 0.2)' }}
+    whileTap={{ scale: 0.98 }}
+    onClick={() => setIsLogoutModalOpen(true)}
+    className="w-full p-2 md:p-3 rounded-lg bg-red-500/10 text-red-500 hover:bg-red-500/20 flex items-center justify-center space-x-2 md:space-x-3 text-xs md:text-base"
+  >
+    <LogOut size={16} className="md:size-20" />
+    <span>Logout</span>
+  </motion.button>
+</motion.div>
         {/* Custom Logout Modal */}
         <LogoutModal
           isOpen={isLogoutModalOpen}

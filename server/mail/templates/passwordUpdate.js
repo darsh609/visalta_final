@@ -123,7 +123,7 @@ exports.passwordUpdated = (email, name) => {
     <body>
         <div class="container">
             <a href="">
-                <img class="logo" src="https://i.postimg.cc/25V8F6Nh/Visalta.jpg" alt="Visalta Logo" border="0" />
+                <img class="logo" src="https://iili.io/3H2mdI1.jpg" alt="Visalta Logo" border="0" />
             </a>
             <div class="message">Password Update Successful</div>
             <div class="body">

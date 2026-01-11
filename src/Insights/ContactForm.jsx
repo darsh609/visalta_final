@@ -66,7 +66,7 @@ const ContactForm = () => {
   }, [reset, isSubmitSuccessful]);
 
   return (
-    <div className="min-h-screen bg-zinc-950 flex items-center justify-center p-4 sm:p-6 md:p-8">
+    <div id="contact-form" className="min-h-screen bg-zinc-950 flex items-center justify-center p-4 sm:p-6 md:p-8">
       <div className="container max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-6 lg:gap-8">
         {/* Contact Info Card */}
         <div className="bg-zinc-900 text-zinc-100 p-6 sm:p-8 rounded-lg w-full md:w-[380px] lg:w-[420px] shadow-lg">
@@ -74,7 +74,7 @@ const ContactForm = () => {
             <div className="text-center md:text-left">
               <h3 className="text-lg sm:text-xl font-semibold mb-2">Chat on us</h3>
               <p className="text-sm sm:text-base text-zinc-400">Our friendly team is here to help.</p>
-              <p className="text-sm sm:text-base text-zinc-400">darshkumar0609@gmail.com</p>
+              <p className="text-sm sm:text-base text-zinc-400">teamvisalta@gmail.com</p>
             </div>
             
             <div className="text-center md:text-left">
@@ -87,6 +87,7 @@ const ContactForm = () => {
               <h3 className="text-lg sm:text-xl font-semibold mb-2">Call us</h3>
               <p className="text-sm sm:text-base text-zinc-400">Mon - Fri From 8am to 5pm</p>
               <p className="text-sm sm:text-base text-zinc-400">+91 8081792286</p>
+              <p className="text-sm sm:text-base text-zinc-400">+91 8273463662</p>
             </div>
           </div>
         </div>

@@ -258,22 +258,7 @@ exports.deleteCourse = async (req, res) => {
 		$pull:{ courses: courseId }, // Remove the course from the user's courses
 	  });
   
-	  // Delete sections and sub-sections
-	//   const courseSections = course.courseContent
-	//   for (const sectionId of courseSections) {
-	// 	// Delete sub-sections of the section
-	// 	const section = await Section.findById(sectionId)
-	// 	if (section) {
-	// 	  const subSections = section.subSection
-	// 	  for (const subSectionId of subSections) {
-	// 		await SubSection.findByIdAndDelete(subSectionId)
-	// 	  }
-	// 	}
-  
-	// 	// Delete the section
-	// 	await Section.findByIdAndDelete(sectionId)
-	//   }
-  
+
 	  // Delete the course
 	  await Course.findByIdAndDelete(courseId)
   

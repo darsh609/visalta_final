@@ -1,41 +1,54 @@
 import React, { useState, useEffect } from 'react';
-import { BookOpen, Calendar, Trophy, Users, Code, Star } from 'lucide-react';
+import { ShoppingBag, Bell, MapPin, Users, Shield, Heart } from 'lucide-react';
+import ContactForm from './ContactForm';
+import {useNavigate} from 'react-router-dom';
 
 const featuresList = [
   {
-    icon: <BookOpen className="w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8" />,
-    title: "Expert-Led Learning",
-    description: "Learn from industry professionals with years of experience"
+    icon: <ShoppingBag className="w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8" />,
+    title: "Campus Marketplace",
+    description: "Buy and sell items easily within your college community"
   },
   {
-    icon: <Calendar className="w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8" />,
-    title: "Flexible Schedule",
-    description: "Study at your own pace with 24/7 access to resources"
+    icon: <Bell className="w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8" />,
+    title: "TAPs Updates",
+    description: "Stay informed about campus events, club activities, and official announcements"
   },
   {
-    icon: <Trophy className="w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8" />,
-    title: "Practical Projects",
-    description: "Build real-world applications with hands-on experience"
+    icon: <MapPin className="w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8" />,
+    title: "Local Discoveries",
+    description: "Find perfect spots for celebrations, weekend getaways, and entertainment near campus"
   },
   {
     icon: <Users className="w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8" />,
-    title: "Community Support",
-    description: "Join a thriving community of developers"
+    title: "Student Community",
+    description: "Connect with fellow students through buying, selling, and campus activities"
   },
   {
-    icon: <Code className="w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8" />,
-    title: "Live Coding",
-    description: "Interactive coding sessions with real-time feedback"
+    icon: <Shield className="w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8" />,
+    title: "Secure Trading",
+    description: "Safe and trusted platform for student-to-student transactions"
   },
   {
-    icon: <Star className="w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8" />,
-    title: "Career Growth",
-    description: "Get guidance for your professional development"
+    icon: <Heart className="w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8" />,
+    title: "Spiritual Spaces",
+    description: "Discover peaceful temples and churches for reflection near your campus"
   }
 ];
 
+
 const SlidingFeatures = () => {
+  const handleScrollToForm = () => {
+    const formElement = document.getElementById('contact-form');
+    if (formElement) {
+      formElement.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
   const [scrollPosition, setScrollPosition] = useState(0);
+  const navigate = useNavigate();
   const itemHeight = {
     base: 80,    // Height for mobile
     sm: 90,      // Height for small tablets
@@ -63,13 +76,15 @@ const SlidingFeatures = () => {
             Who are We
           </h2>
           <h1 className="text-2xl md:text-3xl lg:text-5xl font-bold leading-tight">
-            Navigating,<br />
+            Navigating,
+            <br/>
             Students life
           </h1>
           <p className="text-xs md:text-sm lg:text-lg text-gray-300">
-            Visalta enhances campus life at NIT Warangal with curated guides to eateries, events, serene spots, and skill-building resources. From weekend getaways to technical prep, we make your college journey fun, easy, and enriching.
+            A one-stop platform for students to buy, sell, and stay updated. From our marketplace to TAPs (Timely Alerts & Posts) and curated event recommendations, we make campus life easier and more connected.
           </p>
-          <button className="bg-[#1db954] hover:bg-green-700 text-white text-sm md:text-base px-4 py-2 md:px-6 md:py-2 lg:px-8 lg:py-3 rounded-lg font-semibold transition-colors">
+          <button className="bg-[#1db954] hover:bg-green-700 text-white text-sm md:text-base px-4 py-2 md:px-6 md:py-2 lg:px-8 lg:py-3 rounded-lg font-semibold transition-colors"
+              onClick={handleScrollToForm}>
             Let's Connect
           </button>
         </div>
@@ -104,8 +119,8 @@ const SlidingFeatures = () => {
         </div>
       </div>
 
-      {/* Venn Diagram Section */}
-      <div className="p-4 sm:p-6 md:p-8 lg:p-12 w-full max-w-3xl mx-auto">
+      {/* Venn Diagram Section - Hidden on mobile, visible from sm breakpoint up */}
+      <div className="hidden sm:block p-4 sm:p-6 md:p-8 lg:p-12 w-full max-w-3xl mx-auto">
         <div className="relative h-[300px] sm:h-[350px] md:h-[400px] lg:h-[500px] w-full">
           {/* First circle - Experience */}
           <div className="absolute top-8 left-1/4 transform -translate-x-1/4 w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-64 lg:h-64 rounded-full bg-blue-500/50 flex items-center justify-center mix-blend-screen transition-transform duration-300 hover:scale-105 cursor-pointer">
@@ -124,8 +139,8 @@ const SlidingFeatures = () => {
           </div>
 
           {/* Third circle - Enjoy */}
-          <div className="absolute top-20 sm:top-24 md:top-28 left-1/2 transform -translate-x-1/2 w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-64 lg:h-64 rounded-full bg-fuchsia-500/50 flex items-center justify-center mix-blend-screen transition-transform duration-300 hover:scale-105 cursor-pointer">
-            <div className="text-center translate-y-4 p-2 sm:p-3 md:p-4">
+          <div className="absolute top-24 sm:top-28 md:top-32 lg:top-40 left-1/2 transform -translate-x-1/2 w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-64 lg:h-64 rounded-full bg-fuchsia-500/50 flex items-center justify-center mix-blend-screen transition-transform duration-300 hover:scale-105 cursor-pointer">
+            <div className="text-center translate-y-8 sm:translate-y-10 md:translate-y-12 lg:translate-y-16 p-2 sm:p-3 md:p-4">
               <h3 className="font-bold text-black text-sm sm:text-base md:text-lg lg:text-xl mb-0.5 md:mb-1">Enjoy</h3>
               <p className="text-black text-xs md:text-sm">Community</p>
             </div>
@@ -134,7 +149,7 @@ const SlidingFeatures = () => {
           {/* Center intersection text */}
           <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center z-10">
             <div className="p-2 md:p-4">
-              <h2 className="font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl text-black">Visalta</h2>
+              <h2 className="font-bold text-2xl sm:text-xl md:text-2xl lg:text-3xl text-[black]">Visalta</h2>
             </div>
           </div>
         </div>

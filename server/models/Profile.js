@@ -11,9 +11,6 @@ const profileSchema = new mongoose.Schema({
 	hostel:{
 		type:String
 	},
-	
-	
-
 	contactNumber: {
 		type: Number,
 		trim: true,

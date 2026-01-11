@@ -34,11 +34,8 @@ const contactSchema = new mongoose.Schema({
     type: String,
     required: true,
     match: [/^\+\d{1,4}$/, 'Country code must start with a + followed by up to 4 digits.']
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
   }
-});
+},
+{ timestamps: true });
 
 module.exports = mongoose.model('Contact', contactSchema);

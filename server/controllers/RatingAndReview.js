@@ -21,7 +21,8 @@ exports.createRatingAndReview = async (req, res) => {
       message: "Rating and review created successfully",
       data: newRatingAndReview,
     });
-  } catch (error) {
+  }
+   catch (error) {
     res.status(500).json({ success: false, message: "Failed to create rating and review", error: error.message });
   }
 };
@@ -31,7 +32,8 @@ exports.getAllRatingsAndReviews = async (req, res) => {
   try {
     const reviews = await RatingAndReview.find().populate("user", "name email");
     res.status(200).json({ success: true, data: reviews });
-  } catch (error) {
+  } 
+  catch (error) {
     res.status(500).json({ success: false, message: "Failed to fetch ratings and reviews", error: error.message });
   }
 };

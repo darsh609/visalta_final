@@ -63,28 +63,29 @@ const Footer = () => {
             </h2>
             <div className="flex flex-col space-y-2 text-xl md:text-3xl">
               <a
-                href="https://www.instagram.com"
+                href="https://www.instagram.com/visalta.in/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="cursor-pointer hover:text-[#1db954] transition-colors duration-300"
               >
                 Instagram
               </a>
+              
               <a
-                href="https://www.facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="cursor-pointer hover:text-[#1db954] transition-colors duration-300"
-              >
-                Facebook
-              </a>
-              <a
-                href="https://www.linkedin.com"
+                href="https://www.linkedin.com/company/visalta/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="cursor-pointer hover:text-[#1db954] transition-colors duration-300"
               >
                 LinkedIn
+              </a>
+              <a
+                href="https://x.com/VISALTA172933"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cursor-pointer hover:text-[#1db954] transition-colors duration-300"
+              >
+                X
               </a>
             </div>
             <div className="mt-6 md:mt-10">
@@ -121,21 +122,21 @@ const Footer = () => {
               <div className="text-xl md:text-3xl flex gap-2">
                 <a
                   href="tel:8273463662"
-                  className="hover:text-[#1db954] transition-colors duration-300"
+                  className=" transition-colors duration-300"
                 >
-                  827
+                  808
                 </a>
                 <a
                   href="tel:8273463662"
-                  className="hover:text-[#1db954] transition-colors duration-300"
+                  className=" transition-colors duration-300"
                 >
-                  346
+                  179
                 </a>
                 <a
                   href="tel:8273463662"
-                  className="hover:text-[#1db954] transition-colors duration-300"
+                  className="transition-colors duration-300"
                 >
-                  3662
+                  2286
                 </a>
               </div>
               <div className="text-xs md:text-sm font-light flex flex-col">
@@ -282,13 +283,13 @@ const Footer = () => {
         <div className=" mt-20 text-center text-xs md:text-sm text-gray-500">
           <div className="flex flex-col md:flex-row md:justify-between md:px-4 space-y-2 md:space-y-0">
             <p>VISALTA, INC. © 2024</p>
-            <a href="#" className="hover:text-[#1db954] cursor-pointer">
+            <a href="" className="hover:text-[#1db954] cursor-pointer">
               TERMS AND CONDITIONS
             </a>
-            <a href="#" className="hover:text-[#1db954] cursor-pointer">
+            <a href="" className="hover:text-[#1db954] cursor-pointer">
               COOKIES POLICY
             </a>
-            <a href="#" className="hover:text-[#1db954] cursor-pointer">
+            <a href="" className="hover:text-[#1db954] cursor-pointer">
               WARRANTY AGREEMENT
             </a>
           </div>

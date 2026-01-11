@@ -26,7 +26,9 @@ exports.addTemple = async (req, res) => {
 
     await temple.save();
     res.status(201).json({ message: 'Temple added successfully', temple });
-  } catch (error) {
+  }
+   
+  catch (error) {
     console.error('Error adding temple:', error);
     res.status(500).json({ message: 'Server error' });
   }

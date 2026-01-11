@@ -4,8 +4,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 // import Select from "react-select";
+import { useNavigate } from "react-router-dom";
+import { use } from "react";
+
 
 const UploadItemForm = () => {
+  const navigate= useNavigate();  
   const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.profile);
 
@@ -109,6 +113,7 @@ const UploadItemForm = () => {
       data.tag.length > 0;
     setIsFormValid(isValid);
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -149,8 +154,17 @@ const UploadItemForm = () => {
       }
 
       const result = await response.json();
-      toast.success("Product Listed successfully!", { id: loadingToastId });
-
+      toast.success("Product Listed successfully! Check 'My-Products' for your listing.", {
+        id: loadingToastId,
+        // onClose: () => {
+        //   // history.push('/my-profile/my-items');
+        //   navigate('/my-profile/my-items');
+        // }
+      });
+      setTimeout(() => {
+        // Replace with your navigation logic (e.g., using react-router)
+        navigate('/my-profile/my-items');
+      }, 2000);
       // Clear form and localStorage after successful submission
       setFormData({
         courseName: "",
@@ -257,7 +271,7 @@ const UploadItemForm = () => {
 
               <div className="col-span-2">
                 <label className="block text-sm md:text-base text-black mb-2 font-medium">Tags</label>
-                <div className="flex gap-2 mb-2">
+                <div className="flex flex-wrap gap-2 mb-2">
                   <input
                     type="text"
                     value={tagInput}
