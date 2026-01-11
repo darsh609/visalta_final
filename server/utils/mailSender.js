@@ -90,7 +90,7 @@ const mailSender = async (email, title, body) => {
       htmlContent: body,
     });
 
-    console.log("BREVO MESSAGE ID:", response.messageId);
+    console.log("BREVO MESSAGE IDDDDD:", response.messageId);
     return response;
 
   } catch (error) {
